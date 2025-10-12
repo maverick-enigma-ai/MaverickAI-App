@@ -5,7 +5,6 @@ import { BrandHeader } from './BrandHeader';
 import { RadarIcon } from './RadarIcon';
 import { ErrorModal } from './ErrorModal';
 import { PlatformCapabilitiesModal } from './PlatformCapabilitiesModal';
-import radarLogo from 'figma:asset/919388dc4d04697158bf4bad0facd25f4c685559.png';
 
 interface HomeScreenProps {
   onStartAnalysis: () => void;

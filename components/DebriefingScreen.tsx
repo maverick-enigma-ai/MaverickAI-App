@@ -3,7 +3,6 @@ import { Activity, Home, Info } from 'lucide-react';
 import { BrandHeader } from './BrandHeader';
 import { PlatformCapabilitiesModal } from './PlatformCapabilitiesModal';
 import { motion } from 'motion/react';
-import radarLogo from 'figma:asset/919388dc4d04697158bf4bad0facd25f4c685559.png';
 
 interface DebriefingScreenProps {
   inputText: string;

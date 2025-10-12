@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
-import radarLogo from 'figma:asset/919388dc4d04697158bf4bad0facd25f4c685559.png';
+import { MasterAppIcon } from './icons/MasterAppIcon';
 import { ForgotPasswordModal } from './ForgotPasswordModal';
 
 interface AuthScreenProps {
@@ -67,7 +67,7 @@ export function AuthScreen({ onSignIn, onSignUp, onGoogleSignIn, onPasswordReset
       {/* Header */}
       <div className="p-6 pt-16 text-center">
         <div className="flex items-center justify-center gap-3 mb-6">
-          <img src={radarLogo} alt="MaverickAI Radar" className="w-16 h-16" />
+          <MasterAppIcon size={64} />
           <div className="text-left">
             <h1 className="text-xl text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
               MaverickAI

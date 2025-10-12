@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import radarLogo from 'figma:asset/919388dc4d04697158bf4bad0facd25f4c685559.png';
+import { MasterAppIcon } from './icons/MasterAppIcon';
 
 interface BrandHeaderProps {
   subtitle?: string;
@@ -19,7 +19,7 @@ export function BrandHeader({
       <div className={`flex items-center ${rightContent ? 'justify-between' : 'justify-center'} mb-2`}>
         <div className="flex items-center gap-3">
           <div className="relative">
-            <img src={radarLogo} alt="Radar Logo" className="w-10 h-10" />
+            <MasterAppIcon size={40} />
             {showPulse && (
               <div className="absolute inset-0 bg-cyan-400/20 rounded-full blur-xl animate-pulse" />
             )}

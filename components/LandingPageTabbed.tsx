@@ -800,11 +800,12 @@ function ServicesSection({
                   {/* Profile Photo with Beautiful Circular Glow */}
                   <div className="relative shrink-0">
                     <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-cyan shadow-lg shadow-cyan/50">
-                      <ImageWithFallback
-                        src="figma:asset/62575fed542cbf4ac9d8c8a595c1368524df6f22.png"
-                        alt="Muhammad Qureshi - Founder, MaverickAI"
-                        className="w-full h-full object-cover"
-                      />
+                      {/* TODO: Replace with actual founder photo URL */}
+                      <div className="w-full h-full bg-gradient-to-br from-[#342FA5] to-[#14123F] flex items-center justify-center">
+                        <svg className="w-20 h-20 text-cyan" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                      </div>
                     </div>
                     {/* Beautiful circular glow effect behind photo */}
                     <div className="absolute inset-0 bg-cyan/30 rounded-full blur-2xl -z-10" />

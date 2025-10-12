@@ -3,7 +3,6 @@ import { Plus, Paperclip, Lightbulb } from 'lucide-react';
 import { FileUploadModal } from './FileUploadModal';
 import { SampleScenariosModal } from './SampleScenariosModal';
 import { BrandHeader } from './BrandHeader';
-import radarLogo from 'figma:asset/919388dc4d04697158bf4bad0facd25f4c685559.png';
 import { type ScenarioCategory } from '../types/sample-scenarios';
 
 interface ChatInterfaceProps {
