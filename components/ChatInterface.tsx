@@ -3,6 +3,7 @@ import { Plus, Paperclip, Lightbulb } from 'lucide-react';
 import { FileUploadModal } from './FileUploadModal';
 import { SampleScenariosModal } from './SampleScenariosModal';
 import { BrandHeader } from './BrandHeader';
+import { RadarIcon } from './RadarIcon';
 import { type ScenarioCategory } from '../types/sample-scenarios';
 
 interface ChatInterfaceProps {
@@ -218,7 +219,7 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
                 }`}
                 data-name="btn_submit_radar"
               >
-                <img src={radarLogo} alt="Submit" className="w-8 h-8" />
+                <RadarIcon className="w-8 h-8 text-white" />
                 
                 {/* Pulse rings - only show when can submit */}
                 {canSubmit && !isSubmitting && (
