@@ -5,7 +5,7 @@ import { NavigationBar } from './NavigationBar';
 import { RadarIcon } from './RadarIcon';
 import { ProcessedAnalysis } from '../types/runradar-api';
 import { exportAnalysisToPDF, canExportToPDF } from '../utils/pdf-export';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   getActionItems, 
