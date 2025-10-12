@@ -48,7 +48,7 @@ export function AnimatedSplashScreen({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
           className="fixed inset-0 z-[9999] bg-gradient-to-b from-[#14123F] via-[#342FA5] to-[#14123F] flex items-center justify-center overflow-hidden"
-          style={{ minHeight: '100vh', minHeight: '100dvh' }}
+          style={{ minHeight: '100dvh' }}
         >
           {/* Ambient background glow */}
           <div className="absolute inset-0 overflow-hidden">
