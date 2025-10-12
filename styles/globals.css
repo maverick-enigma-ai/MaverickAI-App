@@ -1,0 +1,261 @@
+@import "tailwindcss";
+
+:root {
+  --font-size: 16px;
+
+  /* Text size preferences */
+  &[data-text-size="small"] { --font-size: 14px; }
+  &[data-text-size="medium"] { --font-size: 16px; }
+  &[data-text-size="large"] { --font-size: 18px; }
+
+  /* ===== MAVERICK AI BRAND COLORS ===== */
+  --color-navy: #14123F;
+  --color-deep-blue: #342FA5;
+  --color-cyan: #00d4ff;
+  --color-teal: #14b8a6;
+  --color-purple: #8b5cf6;
+  --color-gold: #fbbf24;
+  --color-pink: #ec4899;
+
+  /* Glass Effects */
+  --color-glass-subtle: rgba(255, 255, 255, 0.05);
+  --color-glass: rgba(255, 255, 255, 0.1);
+  --color-glass-strong: rgba(255, 255, 255, 0.15);
+  --color-glass-intense: rgba(255, 255, 255, 0.25);
+
+  /* Semantic Colors */
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #00d4ff;
+
+  /* Border Colors */
+  --color-border-subtle: rgba(255, 255, 255, 0.05);
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-strong: rgba(255, 255, 255, 0.2);
+  --color-border-cyan: rgba(0, 212, 255, 0.3);
+  --color-border-purple: rgba(139, 92, 246, 0.3);
+
+  /* Legacy Variables */
+  --maverick-navy: var(--color-navy);
+  --maverick-deep-blue: var(--color-deep-blue);
+  --maverick-purple: var(--color-purple);
+  --maverick-cyan: var(--color-cyan);
+  --maverick-teal: var(--color-teal);
+  --maverick-gold: var(--color-gold);
+  --maverick-glass: var(--color-glass);
+  --maverick-glass-strong: var(--color-glass-strong);
+
+  --background: var(--maverick-navy);
+  --foreground: #ffffff;
+  --card: var(--maverick-glass);
+  --card-foreground: #ffffff;
+  --popover: var(--maverick-deep-blue);
+  --popover-foreground: #ffffff;
+  --primary: var(--maverick-cyan);
+  --primary-foreground: var(--maverick-navy);
+  --secondary: var(--maverick-purple);
+  --secondary-foreground: #ffffff;
+  --muted: rgba(255, 255, 255, 0.1);
+  --muted-foreground: rgba(255, 255, 255, 0.7);
+  --accent: var(--maverick-teal);
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: transparent;
+  --input-background: var(--maverick-glass);
+  --switch-background: var(--maverick-glass);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: var(--maverick-cyan);
+  --chart-1: var(--maverick-purple);
+  --chart-2: var(--maverick-cyan);
+  --chart-3: var(--maverick-teal);
+  --chart-4: var(--maverick-gold);
+  --chart-5: #ec4899;
+  --radius: 1rem;
+  --sidebar: var(--maverick-glass);
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: var(--maverick-cyan);
+  --sidebar-primary-foreground: var(--maverick-navy);
+  --sidebar-accent: var(--maverick-glass-strong);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: var(--maverick-cyan);
+}
+
+.dark {
+  --background: var(--maverick-navy);
+  --foreground: #ffffff;
+  --card: var(--maverick-glass);
+  --card-foreground: #ffffff;
+  --popover: var(--maverick-deep-blue);
+  --popover-foreground: #ffffff;
+  --primary: var(--maverick-cyan);
+  --primary-foreground: var(--maverick-navy);
+  --secondary: var(--maverick-purple);
+  --secondary-foreground: #ffffff;
+  --muted: rgba(255, 255, 255, 0.1);
+  --muted-foreground: rgba(255, 255, 255, 0.7);
+  --accent: var(--maverick-teal);
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: var(--maverick-glass);
+  --ring: var(--maverick-cyan);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: var(--maverick-purple);
+  --chart-2: var(--maverick-cyan);
+  --chart-3: var(--maverick-teal);
+  --chart-4: var(--maverick-gold);
+  --chart-5: #ec4899;
+  --sidebar: var(--maverick-glass);
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: var(--maverick-cyan);
+  --sidebar-primary-foreground: var(--maverick-navy);
+  --sidebar-accent: var(--maverick-glass-strong);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: var(--maverick-cyan);
+}
+
+/* Base layer */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* ===== MICRO-INTERACTIONS ===== */
+@layer utilities {
+  /* Button press feedback */
+  .btn-press {
+    @apply transition-transform duration-150;
+  }
+  .btn-press:active {
+    @apply scale-95;
+  }
+
+  /* Stronger press */
+  .btn-press-strong {
+    @apply transition-transform duration-150;
+  }
+  .btn-press-strong:active {
+    @apply scale-[0.92];
+  }
+
+  /* Gentle hover lift */
+  .btn-hover-lift {
+    @apply transition-all duration-200;
+  }
+  .btn-hover-lift:hover {
+    @apply -translate-y-0.5 shadow-lg;
+  }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-200;
+  }
+  .card-hover:hover {
+    @apply scale-[1.02] shadow-xl;
+  }
+
+  /* Smooth transitions */
+  .smooth-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  /* Subtle pulse animation */
+  @keyframes subtle-pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+  }
+  
+  .animate-subtle-pulse {
+    animation: subtle-pulse 3s ease-in-out infinite;
+  }
+
+  /* Skeleton shimmer animation */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
+  .skeleton-pulse {
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.10),
+      rgba(255, 255, 255, 0.05)
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+}
+
+/* ===== SOVEREIGNTY FEATURES STYLES ===== */
+@layer utilities {
+  /* Alerts */
+  .alert-high {
+    @apply border-error bg-error/10;
+  }
+  
+  .alert-medium {
+    @apply border-warning bg-warning/10;
+  }
+  
+  .alert-low {
+    @apply border-info bg-info/10;
+  }
+
+  /* Metric cards */
+  .metric-card {
+    @apply rounded-2xl bg-glass border border-border p-4 backdrop-blur-md;
+  }
+
+  /* What-If Lab styles */
+  .scenario-card {
+    @apply rounded-2xl bg-glass-strong border border-border-purple p-6 backdrop-blur-md;
+  }
+
+  /* Drill cards */
+  .drill-card {
+    @apply rounded-2xl bg-glass border border-border-cyan p-4 transition-transform duration-150;
+  }
+  
+  .drill-card:hover {
+    @apply scale-[1.02];
+  }
+
+  /* Mode indicators */
+  .mode-standard {
+    @apply bg-cyan text-navy;
+  }
+  
+  .mode-whatif {
+    @apply bg-purple text-white;
+  }
+  
+  .mode-targeted {
+    @apply bg-teal text-white;
+  }
+}

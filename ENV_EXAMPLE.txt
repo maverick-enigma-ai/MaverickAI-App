@@ -1,0 +1,27 @@
+# MaverickAI Environment Variables
+# Copy this file to `.env` and fill in your actual values
+# NEVER commit .env to Git - it contains secrets!
+
+# ===== SUPABASE CONFIGURATION =====
+# Get these from: https://supabase.com/dashboard/project/_/settings/api
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key-here
+
+# ===== OPENAI CONFIGURATION =====
+# Get API key from: https://platform.openai.com/api-keys
+# Create assistant at: https://platform.openai.com/assistants
+VITE_OPENAI_API_KEY=sk-your-openai-api-key-here
+VITE_OPENAI_ASSISTANT_ID=asst-your-assistant-id-here
+
+# ===== MAKE.COM WEBHOOK (Optional) =====
+# For file upload processing
+# Create webhook at: https://www.make.com
+VITE_MAKE_WEBHOOK_URL=https://hook.eu2.make.com/your-webhook-id-here
+
+# ===== STRIPE PAYMENT (Optional) =====
+# Get keys from: https://dashboard.stripe.com/apikeys
+VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your-key-here
+
+# ===== DEPLOYMENT URLS (Auto-set by Vercel) =====
+# No need to set these manually
+# VITE_APP_URL=https://your-app.vercel.app

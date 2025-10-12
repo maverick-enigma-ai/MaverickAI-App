@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download PWA Icons - MaverickAI Enigma Radar™</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(180deg, #14123F 0%, #342FA5 50%, #14123F 100%);
+      color: white;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    
+    .subtitle {
+      text-align: center;
+      opacity: 0.8;
+      margin-bottom: 40px;
+    }
+    
+    .status {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .status h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #00d4ff;
+    }
+    
+    .icon-list {
+      display: grid;
+      gap: 12px;
+    }
+    
+    .icon-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+    
+    .icon-item.success {
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+    }
+    
+    .icon-item.error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    
+    .icon-status {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    
+    .icon-status.pending {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .icon-status.success {
+      background: #00d4ff;
+      color: #14123F;
+    }
+    
+    .icon-status.error {
+      background: #ef4444;
+    }
+    
+    .icon-name {
+      flex: 1;
+      font-weight: 500;
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 16px 24px;
+      font-size: 18px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: linear-gradient(135deg, #00d4ff 0%, #14b8a6 100%);
+      color: #14123F;
+      margin-top: 20px;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
+    }
+    
+    .btn:active {
+      transform: scale(0.98);
+    }
+    
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .instructions {
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 30px;
+    }
+    
+    .instructions h3 {
+      color: #8b5cf6;
+      margin-bottom: 12px;
+    }
+    
+    .instructions ol {
+      margin-left: 20px;
+      line-height: 1.8;
+    }
+    
+    .instructions li {
+      margin-bottom: 8px;
+    }
+    
+    .success-message {
+      background: rgba(0, 212, 255, 0.1);
+      border: 2px solid #00d4ff;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 30px;
+      display: none;
+    }
+    
+    .success-message.show {
+      display: block;
+      animation: slideIn 0.5s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .spinner {
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top: 3px solid #00d4ff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 Download PWA Icons</h1>
+    <p class="subtitle">MaverickAI Enigma Radar™</p>
+    
+    <div class="status">
+      <h2>📦 Icon Download Status</h2>
+      <div class="icon-list" id="iconList"></div>
+      
+      <button class="btn" id="downloadBtn" onclick="downloadAllIcons()">
+        📥 Download All Icons to /public/ Folder
+      </button>
+    </div>
+    
+    <div class="instructions">
+      <h3>📋 After Download:</h3>
+      <ol>
+        <li><strong>Check your Downloads folder</strong> - you should see 8 PNG files</li>
+        <li><strong>Upload to your hosting:</strong>
+          <ul style="margin-top: 8px;">
+            <li>If using Vercel/Netlify: Add files to <code>/public/</code> folder</li>
+            <li>If using Figma Make: Contact support for file upload</li>
+          </ul>
+        </li>
+        <li><strong>Clear browser cache</strong> and reload your app</li>
+        <li><strong>Test on iPhone:</strong> Safari → Share → "Add to Home Screen"</li>
+      </ol>
+    </div>
+    
+    <div class="success-message" id="successMessage">
+      <h2 style="color: #00d4ff; margin-bottom: 12px;">✅ All Icons Downloaded!</h2>
+      <p>Check your Downloads folder for 8 PNG files.</p>
+      <p style="margin-top: 12px; opacity: 0.8;">Upload them to /public/ and test on your iPhone! 📱</p>
+    </div>
+  </div>
+
+  <script>
+    // Icon configuration with image2url.com URLs
+    const icons = [
+      { name: 'icon-72.png', size: '72x72', url: 'https://image2url.com/images/1759528584375-442d15a8-4388-429a-9e50-381e1865bd0f.png' },
+      { name: 'icon-96.png', size: '96x96', url: 'https://image2url.com/images/1759528646605-1f57286a-065e-409d-a625-97afac56588d.png' },
+      { name: 'icon-128.png', size: '128x128', url: 'https://image2url.com/images/1759528670306-7a69c3c6-a284-4b99-b47f-95224c79f2fd.png' },
+      { name: 'icon-144.png', size: '144x144', url: 'https://image2url.com/images/1759528696478-f5122301-13d7-497b-933d-04e668e2dd26.png' },
+      { name: 'icon-152.png', size: '152x152', url: 'https://image2url.com/images/1759528719570-baaf67f9-1b86-4087-9c72-c4e040578111.png' },
+      { name: 'icon-192.png', size: '192x192', url: 'https://image2url.com/images/1759528750933-5104335b-7d13-440e-ab86-66dc977cb443.png' },
+      { name: 'icon-384.png', size: '384x384', url: 'https://image2url.com/images/1759528775203-7823a320-ddbb-42a8-b772-4cea1e4c5e58.png' },
+      { name: 'icon-512.png', size: '512x512', url: 'https://image2url.com/images/1759528798748-0dbb0447-f688-4962-ba8f-08ec490a9f1c.png' }
+    ];
+    
+    // Render icon list
+    function renderIconList(status = 'pending') {
+      const iconList = document.getElementById('iconList');
+      iconList.innerHTML = icons.map((icon, index) => `
+        <div class="icon-item" id="icon-${index}">
+          <div class="icon-status ${status}" id="status-${index}">
+            ${status === 'pending' ? '⏳' : status === 'success' ? '✓' : '✗'}
+          </div>
+          <div class="icon-name">${icon.name}</div>
+          <div style="opacity: 0.6; font-size: 14px;">${icon.size}</div>
+        </div>
+      `).join('');
+    }
+    
+    // Download a single icon
+    async function downloadIcon(icon, index) {
+      try {
+        // Update status to downloading
+        const statusEl = document.getElementById(`status-${index}`);
+        const itemEl = document.getElementById(`icon-${index}`);
+        statusEl.innerHTML = '<div class="spinner"></div>';
+        
+        // Fetch the image
+        const response = await fetch(icon.url);
+        if (!response.ok) throw new Error(`Failed to fetch ${icon.name}`);
+        
+        const blob = await response.blob();
+        
+        // Create download link
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = icon.name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+        
+        // Update status to success
+        statusEl.className = 'icon-status success';
+        statusEl.textContent = '✓';
+        itemEl.className = 'icon-item success';
+        
+        // Small delay between downloads to avoid overwhelming the browser
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        return true;
+      } catch (error) {
+        console.error(`Failed to download ${icon.name}:`, error);
+        
+        // Update status to error
+        const statusEl = document.getElementById(`status-${index}`);
+        const itemEl = document.getElementById(`icon-${index}`);
+        statusEl.className = 'icon-status error';
+        statusEl.textContent = '✗';
+        itemEl.className = 'icon-item error';
+        
+        return false;
+      }
+    }
+    
+    // Download all icons sequentially
+    async function downloadAllIcons() {
+      const btn = document.getElementById('downloadBtn');
+      const successMessage = document.getElementById('successMessage');
+      
+      // Disable button
+      btn.disabled = true;
+      btn.textContent = '⏳ Downloading...';
+      
+      // Reset success message
+      successMessage.classList.remove('show');
+      
+      let successCount = 0;
+      
+      // Download each icon
+      for (let i = 0; i < icons.length; i++) {
+        const success = await downloadIcon(icons[i], i);
+        if (success) successCount++;
+      }
+      
+      // Update button
+      btn.disabled = false;
+      if (successCount === icons.length) {
+        btn.textContent = '✅ All Downloaded! Download Again?';
+        btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+        successMessage.classList.add('show');
+      } else {
+        btn.textContent = `⚠️ ${successCount}/${icons.length} Downloaded - Try Again?`;
+        btn.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+      }
+    }
+    
+    // Initialize
+    renderIconList('pending');
+  </script>
+</body>
+</html>

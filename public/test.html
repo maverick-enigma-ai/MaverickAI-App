@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MaverickAI - Hosting Test</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: linear-gradient(to bottom, #14123F, #342FA5, #14123F);
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    
+    .container {
+      max-width: 600px;
+      text-align: center;
+    }
+    
+    .logo {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 2rem;
+      border-radius: 50%;
+      background: radial-gradient(circle, #00d4ff, #342FA5);
+      box-shadow: 0 0 40px rgba(0, 212, 255, 0.5);
+      animation: pulse 3s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, white, #00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      color: #00d4ff;
+      margin-bottom: 2rem;
+    }
+    
+    .status {
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 1rem;
+      backdrop-filter: blur(10px);
+    }
+    
+    .success {
+      color: #10b981;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .info {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    
+    .next-steps {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: rgba(139, 92, 246, 0.2);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 1rem;
+    }
+    
+    .next-steps h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #8b5cf6;
+    }
+    
+    .next-steps ol {
+      text-align: left;
+      margin-left: 2rem;
+    }
+    
+    .next-steps li {
+      margin-bottom: 0.5rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo"></div>
+    
+    <h1>MaverickAI Enigma Radar™</h1>
+    <p class="subtitle">Psychological Intelligence Platform</p>
+    
+    <div class="status">
+      <div class="success">✅ Hosting Test Successful!</div>
+      <p class="info">
+        If you can see this page, your domain and hosting are working correctly.
+        <br><br>
+        The blank white screen issue is likely caused by:<br>
+        • React app not building correctly<br>
+        • Missing environment variables<br>
+        • SPA routing not configured
+      </p>
+    </div>
+    
+    <div class="next-steps">
+      <h2>Next Steps:</h2>
+      <ol>
+        <li>Check browser console (F12) for errors</li>
+        <li>Verify all files uploaded to hosting</li>
+        <li>Add SPA routing configuration</li>
+        <li>Set environment variables</li>
+        <li>Rebuild and redeploy</li>
+      </ol>
+    </div>
+  </div>
+  
+  <script>
+    // Log successful load
+    console.log('✅ Test page loaded successfully!');
+    console.log('📊 Domain:', window.location.hostname);
+    console.log('🔗 Full URL:', window.location.href);
+    console.log('🕐 Loaded at:', new Date().toLocaleString());
+    console.log('');
+    console.log('👉 Read LANDING_PAGE_BLANK_SCREEN_FIX.md for solutions!');
+  </script>
+</body>
+</html>
