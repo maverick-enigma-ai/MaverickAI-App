@@ -2,6 +2,27 @@ import { ProcessedAnalysis } from '../types/runradar-api';
 import { createClient } from '@supabase/supabase-js';
 import { getSupabaseConfig, debugEnv } from '../utils/env-adapter';
 import { getOpenAIKey, getOpenAIAssistantID, getOpenAIVectorStoreID } from '../utils/openai-config';
+import { getEnv } from '../utils/env-adapter'
+
+// --- Unified backend caller (secure, used in production) --------------------
+const USE_SECURE_API = getEnv('VITE_USE_SECURE_API') === 'true' // set this in Vercel
+
+async function analyzeViaBackend(
+  prompt: string,
+  attachments?: Array<{ name: string; text: string }>
+) {
+  const r = await fetch('/api/analyze', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt, attachments }),
+  })
+  if (!r.ok) {
+    const msg = await r.text().catch(() => '')
+    throw new Error(`API error ${r.status}: ${msg || r.statusText}`)
+  }
+  const data = await r.json()
+  return (data?.text ?? '') as string
+}
 
 // Get Supabase configuration (works in Figma Make AND Vercel)
 const supabaseConfig = getSupabaseConfig();
