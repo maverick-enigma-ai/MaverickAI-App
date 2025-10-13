@@ -146,21 +146,34 @@ export function LandingPageTabbed({
       <SEOHead {...SEO_CONFIGS[activeTab]} />
 
       {/* Fixed Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-navy/80 border-b border-border">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <button 
-              onClick={() => setActiveTab('services')}
-              className="flex items-center gap-3 hover:opacity-80 transition-opacity"
-              data-name="btn_logo"
-            >
-              <MasterAppIcon size={56} />
-              <div className="text-left">
-                <h1 className="text-white">MaverickAI Enigma Radar™</h1>
-                <p className="text-cyan text-xs">Psychological Intelligence Platform</p>
-              </div>
-            </button>
+<nav className="fixed top-0 left-0 right-0 z-50 bg-white/5 backdrop-blur-xl ring-1 ring-cyan-400/10 shadow-[0_0_25px_rgba(56,189,248,0.15)] transition-all duration-700 relative">
+  <div className="max-w-7xl mx-auto px-6 py-4">
+    <div className="flex items-center justify-between">
+      {/* Logo */}
+      <button
+        onClick={() => setActiveTab('services')}
+        className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+        data-name="btn_logo"
+      >
+        <MasterAppIcon size={56} />
+        <div className="text-left">
+          <h1
+  className="text-white transition-all duration-700 hover:text-cyan-300 hover:scale-[1.02] hover:drop-shadow-[0_0_12px_rgba(56,189,248,0.5)]"
+>
+  MaverickAI Enigma Radar™
+</h1>
+<p className="text-cyan text-xs opacity-90 transition-opacity duration-700 hover:opacity-100">
+  Psychological Intelligence Platform
+</p>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  {/* ✨ Cyan shimmer line at bottom */}
+  <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
+</nav>
+
 
             {/* Desktop: Tab Navigation */}
             <div className="hidden md:flex items-center gap-2">

@@ -64,6 +64,8 @@ export function AuthScreen({ onSignIn, onSignUp, onGoogleSignIn, onPasswordReset
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-b from-[#14123F] via-[#342FA5] to-[#14123F] flex flex-col">
+      {/* Frosted glass login card */}
+    <div className="rounded-2xl bg-white/5 backdrop-blur-xl ring-1 ring-cyan-400/10 shadow-[0_0_30px_rgba(56,189,248,0.15)] hover:shadow-[0_0_40px_rgba(56,189,248,0.25)] transition-all duration-700 p-10 w-full max-w-md"></div>
       {/* Header */}
       <div className="p-6 pt-16 text-center">
         <div className="flex items-center justify-center gap-3 mb-6">
@@ -291,5 +293,7 @@ export function AuthScreen({ onSignIn, onSignUp, onGoogleSignIn, onPasswordReset
         />
       )}
     </div>
+        </div> {/* end frosted glass wrapper */}
+  </div>
   );
 }

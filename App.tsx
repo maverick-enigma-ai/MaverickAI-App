@@ -1353,7 +1353,7 @@ export default function App() {
   // Show auth screen if not signed in (unless viewing legal pages or landing)
   if (!user && !['privacy', 'terms', 'landing'].includes(appState)) {
     return (
-      <div className="size-full bg-app relative">
+      <div className="size-full relative bg-[radial-gradient(900px_600px_at_70%_110%,rgba(56,189,248,0.15),transparent_60%),radial-gradient(800px_500px_at_25%_-10%,rgba(99,102,241,0.12),transparent_60%),linear-gradient(180deg,var(--color-navy)_0%,var(--color-deep-blue)_50%,var(--color-navy)_100%)]">
               {/* [UI restore] ambient radar blobs */}
       <div className="pointer-events-none absolute inset-0">
         <div className="bg-radar w-80 h-80 rounded-full absolute left-[8%] top-[14%] animate-spin-slow" />
