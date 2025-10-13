@@ -7,6 +7,11 @@ export default {
     "./main.tsx",
     "./{components,imports,public,services,styles,supabase,types,utils}/**/*.{js,ts,jsx,tsx,html}",
   ],
+  // ⬇️ add this block temporarily
+  safelist: [{ pattern: /.*/ }],
+  theme: { extend: {} },
+  plugins: [],
+  
   theme: {
     extend: {
       colors: {
