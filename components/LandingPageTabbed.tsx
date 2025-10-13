@@ -232,7 +232,7 @@ export function LandingPageTabbed({
               Sign In
             </button>
           </div>
-
+  )
           {/* Mobile: Tab Navigation */}
           <div className="md:hidden flex items-center gap-2 mt-4">
             <button
