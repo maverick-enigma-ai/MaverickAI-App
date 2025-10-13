@@ -293,7 +293,4 @@ export function AuthScreen({ onSignIn, onSignUp, onGoogleSignIn, onPasswordReset
         />
       )}
     </div>
-        </div> {/* end frosted glass wrapper */}
-  </div>
-  );
-}
+  )}
