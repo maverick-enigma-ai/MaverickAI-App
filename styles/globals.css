@@ -336,27 +336,47 @@ html {
 
   .btn-primary { @apply px-6 py-3 rounded-2xl text-white bg-gradient-to-r from-[var(--color-cyan)] to-[var(--color-purple)] shadow-[0_0_40px_rgba(56,189,248,.45),0_0_80px_rgba(99,102,241,.35)] hover:scale-[1.01] transition; }
 }
+/* UI: soften radar blobs */
 @layer utilities {
-  .bg-app {
-    @apply min-h-screen;
-    background:
-      radial-gradient(1200px 600px at 85% 110%, rgba(99,102,241,.18), transparent 60%),
-      radial-gradient(900px 500px at 20% -10%, rgba(56,189,248,.20), transparent 60%),
-      linear-gradient(180deg, var(--color-navy) 0%, var(--color-deep-blue) 40%, var(--color-navy) 100%);
+  .bg-radar-soft {
+    position: relative;
+    overflow: hidden;
   }
-    .bg-radar {
-    background: conic-gradient(from 220deg at 50% 50%, rgba(56,189,248,0.25), rgba(99,102,241,0.20), rgba(56,189,248,0.25));
-    filter: blur(64px) opacity(.20);
-    mix-blend-mode: screen;
-    transition: opacity 1s ease-in-out, filter 1s ease-in-out;
+
+  .bg-radar-soft::before,
+  .bg-radar-soft::after {
+    content: "";
+    position: absolute;
+    border-radius: 9999px; /* fully rounded */
+    filter: blur(40px);
+    opacity: 0.22;
+    pointer-events: none;
+    transform: translateZ(0);
   }
+
+  /* cyan glow (top-left) */
+  .bg-radar-soft::before {
+    width: 480px;
+    height: 480px;
+    left: 8%;
+    top: 14%;
+    background: radial-gradient(
+      closest-side,
+      rgba(56, 189, 248, 0.25),
+      rgba(56, 189, 248, 0) 70%
+    );
   }
-  .glass { @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl shadow-[0_10px_40px_rgba(16,24,40,.35)]; }
-  .panel { @apply bg-white/5 border border-white/10 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,.25)]; }
-  .ring-neon {
-    box-shadow:
-      0 0 0 1px rgba(99,102,241,.25),
-      0 0 30px rgba(56,189,248,.35),
-      inset 0 0 30px rgba(99,102,241,.15);
+
+  /* purple glow (bottom-right) */
+  .bg-radar-soft::after {
+    width: 560px;
+    height: 560px;
+    right: 10%;
+    bottom: 8%;
+    background: radial-gradient(
+      closest-side,
+      rgba(192, 132, 252, 0.22),
+      rgba(192, 132, 252, 0) 70%
+    );
   }
 }
