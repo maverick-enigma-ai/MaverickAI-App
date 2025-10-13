@@ -269,3 +269,91 @@ html {
 :root[data-text-size="large"] {
   --font-size: 18px;
 }
+@layer utilities {
+  /* Page gradient + two subtle spotlights */
+  .bg-app {
+    @apply min-h-screen;
+    background:
+      radial-gradient(1200px 600px at 85% 110%, rgba(99,102,241,.18), transparent 60%),
+      radial-gradient(900px 500px at 20% -10%, rgba(56,189,248,.20), transparent 60%),
+      linear-gradient(180deg, var(--color-navy) 0%, var(--color-deep-blue) 40%, var(--color-navy) 100%);
+  }
+
+  /* Frosted glass card */
+  .glass { @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl shadow-glass; }
+
+  /* Inner panel (used for sections/lists) */
+  .panel { @apply bg-white/5 border border-white/10 rounded-2xl shadow-soft; }
+
+  /* Neon ring for buttons/icons */
+  .ring-neon {
+    box-shadow:
+      0 0 0 1px rgba(99,102,241,.25),
+      0 0 30px rgba(56,189,248,.35),
+      inset 0 0 30px rgba(99,102,241,.15);
+  }
+
+  /* Ambient conic “radar” blur blob */
+  .bg-radar {
+    background: conic-gradient(from 220deg at 50% 50%, rgba(56,189,248,.7), rgba(99,102,241,.6), rgba(56,189,248,.7));
+    filter: blur(24px) opacity(.35);
+  }
+
+  /* CTA gradient */
+  .btn-primary {
+    @apply px-6 py-3 rounded-2xl text-white bg-gradient-to-r from-[var(--color-cyan)] to-[var(--color-purple)] shadow-glow hover:scale-[1.01] transition;
+  }
+
+  /* Meter bars */
+  .meter { @apply h-3 rounded-full bg-white/10 overflow-hidden; }
+  .fill-orange { @apply h-full bg-gradient-to-r from-orange-400 to-pink-500 rounded-full; }
+  .fill-purple { @apply h-full bg-gradient-to-r from-fuchsia-400 to-violet-500 rounded-full; }
+  .fill-red    { @apply h-full bg-gradient-to-r from-rose-500 to-red-500 rounded-full; }
+}
+@layer utilities {
+  .bg-app {
+    @apply min-h-screen;
+    background:
+      radial-gradient(1200px 600px at 85% 110%, rgba(99,102,241,.18), transparent 60%),
+      radial-gradient(900px 500px at 20% -10%, rgba(56,189,248,.20), transparent 60%),
+      linear-gradient(180deg, var(--color-navy) 0%, var(--color-deep-blue) 40%, var(--color-navy) 100%);
+  }
+
+  .bg-radar {
+    background: conic-gradient(from 220deg at 50% 50%, rgba(56,189,248,.7), rgba(99,102,241,.6), rgba(56,189,248,.7));
+    filter: blur(24px) opacity(.35);
+  }
+
+  .glass { @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl shadow-[0_10px_40px_rgba(16,24,40,.35)]; }
+  .panel { @apply bg-white/5 border border-white/10 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,.25)]; }
+
+  .ring-neon {
+    box-shadow:
+      0 0 0 1px rgba(99,102,241,.25),
+      0 0 30px rgba(56,189,248,.35),
+      inset 0 0 30px rgba(99,102,241,.15);
+  }
+
+  .btn-primary { @apply px-6 py-3 rounded-2xl text-white bg-gradient-to-r from-[var(--color-cyan)] to-[var(--color-purple)] shadow-[0_0_40px_rgba(56,189,248,.45),0_0_80px_rgba(99,102,241,.35)] hover:scale-[1.01] transition; }
+}
+@layer utilities {
+  .bg-app {
+    @apply min-h-screen;
+    background:
+      radial-gradient(1200px 600px at 85% 110%, rgba(99,102,241,.18), transparent 60%),
+      radial-gradient(900px 500px at 20% -10%, rgba(56,189,248,.20), transparent 60%),
+      linear-gradient(180deg, var(--color-navy) 0%, var(--color-deep-blue) 40%, var(--color-navy) 100%);
+  }
+  .bg-radar {
+    background: conic-gradient(from 220deg at 50% 50%, rgba(56,189,248,.7), rgba(99,102,241,.6), rgba(56,189,248,.7));
+    filter: blur(24px) opacity(.35);
+  }
+  .glass { @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl shadow-[0_10px_40px_rgba(16,24,40,.35)]; }
+  .panel { @apply bg-white/5 border border-white/10 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,.25)]; }
+  .ring-neon {
+    box-shadow:
+      0 0 0 1px rgba(99,102,241,.25),
+      0 0 30px rgba(56,189,248,.35),
+      inset 0 0 30px rgba(99,102,241,.15);
+  }
+}

@@ -135,7 +135,13 @@ export function LandingPageTabbed({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-navy via-deep-blue to-navy">
+  <div className="min-h-screen bg-app relative">
+    {/* [UI restore] ambient radar blobs */}
+    <div className="pointer-events-none absolute inset-0">
+      <div className="bg-radar w-80 h-80 rounded-full absolute left-[8%] top-[14%] animate-spin-slow" />
+      <div className="bg-radar w-96 h-96 rounded-full absolute right-[10%] bottom-[8%] animate-spin-slow" />
+    </div>
+
       {/* Dynamic SEO based on active tab */}
       <SEOHead {...SEO_CONFIGS[activeTab]} />
 
