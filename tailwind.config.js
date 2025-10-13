@@ -1,3 +1,6 @@
+// tailwind.config.js (ESM)
+import animate from "tailwindcss-animate";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
@@ -7,11 +10,10 @@ export default {
     "./main.tsx",
     "./{components,imports,public,services,styles,supabase,types,utils}/**/*.{js,ts,jsx,tsx,html}",
   ],
-  // ⬇️ add this block temporarily
+
+  // (Optional) super-broad; consider removing once debugging is done
   safelist: [{ pattern: /.*/ }],
-  theme: { extend: {} },
-  plugins: [],
-  
+
   theme: {
     extend: {
       colors: {
@@ -22,36 +24,15 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
 
-        primary: {
-          DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
-        },
-        secondary: {
-          DEFAULT: "var(--secondary)",
-          foreground: "var(--secondary-foreground)",
-        },
-        destructive: {
-          DEFAULT: "var(--destructive)",
-          foreground: "var(--destructive-foreground)",
-        },
-        muted: {
-          DEFAULT: "var(--muted)",
-          foreground: "var(--muted-foreground)",
-        },
-        accent: {
-          DEFAULT: "var(--accent)",
-          foreground: "var(--accent-foreground)",
-        },
-        popover: {
-          DEFAULT: "var(--popover)",
-          foreground: "var(--popover-foreground)",
-        },
-        card: {
-          DEFAULT: "var(--card)",
-          foreground: "var(--card-foreground)",
-        },
+        primary: { DEFAULT: "var(--primary)", foreground: "var(--primary-foreground)" },
+        secondary: { DEFAULT: "var(--secondary)", foreground: "var(--secondary-foreground)" },
+        destructive: { DEFAULT: "var(--destructive)", foreground: "var(--destructive-foreground)" },
+        muted: { DEFAULT: "var(--muted)", foreground: "var(--muted-foreground)" },
+        accent: { DEFAULT: "var(--accent)", foreground: "var(--accent-foreground)" },
+        popover: { DEFAULT: "var(--popover)", foreground: "var(--popover-foreground)" },
+        card: { DEFAULT: "var(--card)", foreground: "var(--card-foreground)" },
 
-        // 🎨 MaverickAI brand (via CSS vars you already use)
+        // MaverickAI brand
         navy: "var(--color-navy)",
         "deep-blue": "var(--color-deep-blue)",
         cyan: "var(--color-cyan)",
@@ -89,17 +70,18 @@ export default {
         xs: "2px",
       },
 
-      /* 🟣 Added: shadows + animations used by the glow/radar UI */
       boxShadow: {
         glass: "0 10px 40px rgba(16,24,40,.35)",
         glow: "0 0 40px rgba(56,189,248,.45), 0 0 80px rgba(99,102,241,.35)",
         soft: "0 8px 30px rgba(0,0,0,.25)",
       },
+
       animation: {
         "spin-slow": "spin 6s linear infinite",
         "pulse-soft": "pulse-soft 3s ease-in-out infinite",
         "radar-sweep": "radar 2.6s linear infinite",
       },
+
       keyframes: {
         "pulse-soft": {
           "0%, 100%": { opacity: 0.85 },
@@ -112,6 +94,6 @@ export default {
       },
     },
   },
-  /* 🟣 Added: helpful animation utilities */
-  plugins: [require("tailwindcss-animate")],
+
+  plugins: [animate],
 };
