@@ -1,6 +1,5 @@
-import { animate } from 'motion';
-
 /** @type {import('tailwindcss').Config} */
+// Build: 2025-10-13 - Clean config, no motion imports
 export default {
   darkMode: ["class"],
   content: [
@@ -88,5 +87,10 @@ export default {
       },
     },
   },
-  plugins: [animate],
+  plugins: [
+    // Explicitly empty - no motion or animation plugins
+  ],
+  corePlugins: {
+    // Ensure we're not loading any problematic plugins
+  },
 };
