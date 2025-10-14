@@ -5,6 +5,7 @@ import { BrandHeader } from './BrandHeader';
 import { RadarIcon } from './RadarIcon';
 import { ErrorModal } from './ErrorModal';
 import { PlatformCapabilitiesModal } from './PlatformCapabilitiesModal';
+import { BRAND_COLORS } from '../utils/brand-colors';
 
 interface HomeScreenProps {
   onStartAnalysis: () => void;
@@ -15,11 +16,19 @@ interface HomeScreenProps {
 export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenProps) {
   const [showCapabilities, setShowCapabilities] = useState(false);
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-[#14123F] via-[#342FA5] to-[#14123F] relative overflow-hidden pb-32">
+    <div className="w-full min-h-screen relative overflow-hidden pb-32" style={{
+      background: BRAND_COLORS.gradients.background
+    }}>
       {/* Background Enhancement */}
-      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5" />
-      <div className="absolute top-1/4 left-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl" />
+      <div className="absolute inset-0" style={{
+        background: `linear-gradient(to bottom right, ${BRAND_COLORS.cyan}0D 0%, transparent 50%, ${BRAND_COLORS.purple}0D 100%)`
+      }} />
+      <div className="absolute top-1/4 left-1/2 w-96 h-96 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" style={{
+        background: `${BRAND_COLORS.cyan}1A`
+      }} />
+      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full blur-3xl" style={{
+        background: `${BRAND_COLORS.purple}1A`
+      }} />
 
       {/* Content */}
       <div className="relative z-10">
@@ -43,10 +52,15 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
             whileHover={{ 
               scale: 1.15,
               backgroundColor: "rgba(255, 255, 255, 0.25)",
-              borderColor: "rgba(0, 212, 255, 0.8)"
+              borderColor: `${BRAND_COLORS.cyan}CC`
             }}
             whileTap={{ scale: 0.95 }}
-            className="w-14 h-14 rounded-full bg-white/15 backdrop-blur-md border-2 border-cyan-400/40 flex items-center justify-center transition-all duration-300 btn-press shadow-xl shadow-cyan-500/30 hover:shadow-cyan-500/50 relative overflow-hidden group"
+            className="w-14 h-14 rounded-full backdrop-blur-md flex items-center justify-center transition-all duration-300 btn-press shadow-xl relative overflow-hidden group"
+            style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              border: `2px solid ${BRAND_COLORS.cyan}66`,
+              boxShadow: `0 20px 60px ${BRAND_COLORS.cyan}4D`
+            }}
             data-name="btn_info_capabilities"
             aria-label="View platform capabilities"
           >
@@ -61,7 +75,10 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
                 repeat: Infinity,
                 repeatDelay: 0.5
               }}
-              className="absolute inset-0 rounded-full border-2 border-cyan-300"
+              className="absolute inset-0 rounded-full"
+              style={{
+                border: `2px solid ${BRAND_COLORS.cyan}`
+              }}
             />
             <motion.div
               animate={{
@@ -74,10 +91,15 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
                 repeatDelay: 0.5,
                 delay: 1
               }}
-              className="absolute inset-0 rounded-full border-2 border-cyan-400"
+              className="absolute inset-0 rounded-full"
+              style={{
+                border: `2px solid ${BRAND_COLORS.cyan}`
+              }}
             />
             
-            <Info className="w-7 h-7 text-cyan-200 group-hover:text-white transition-colors relative z-10 drop-shadow-lg" />
+            <Info className="w-7 h-7 group-hover:text-white transition-colors relative z-10 drop-shadow-lg" style={{
+              color: `${BRAND_COLORS.cyan}E6`  // 90% opacity
+            }} />
           </motion.button>
         </motion.div>
 
@@ -85,9 +107,15 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
         <div className="px-6">
           {/* Hero Card */}
           <div className="mb-8">
-            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/20 text-center shadow-2xl shadow-cyan-500/10 relative overflow-hidden">
+            <div className="backdrop-blur-xl rounded-3xl p-8 border text-center shadow-2xl relative overflow-hidden" style={{
+              background: 'linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
+              borderColor: 'rgba(255, 255, 255, 0.2)',
+              boxShadow: `0 25px 50px ${BRAND_COLORS.cyan}1A`
+            }}>
               {/* Animated gradient border effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-teal-500/20 rounded-3xl blur-xl opacity-50" />
+              <div className="absolute inset-0 rounded-3xl blur-xl opacity-50" style={{
+                background: `linear-gradient(to right, ${BRAND_COLORS.cyan}33, ${BRAND_COLORS.purple}33, ${BRAND_COLORS.teal}33)`
+              }} />
               
               <div className="relative">
                 {/* Award-winning Radar Icon */}
@@ -95,28 +123,62 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
                   <RadarIcon size={96} animated />
                 </div>
                 
-                <h3 className="text-white text-2xl mb-3" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 700 }}>
+                <h3 style={{ 
+                  color: BRAND_COLORS.text.white,
+                  fontSize: '1.5rem',
+                  marginBottom: '0.75rem',
+                  fontFamily: 'system-ui, -apple-system, sans-serif', 
+                  fontWeight: 700 
+                }}>
                   Strategic Intelligence<br />Analysis
                 </h3>
                 
-                <p className="text-cyan-200/90 text-sm mb-8 px-2 max-w-xs mx-auto" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <p className="text-sm mb-8 px-2 max-w-xs mx-auto" style={{ 
+                  color: `${BRAND_COLORS.cyan}E6`,  // 90% opacity for bright readable text
+                  fontFamily: 'system-ui, -apple-system, sans-serif' 
+                }}>
                   Describe your situation for psychological power dynamics analysis
                 </p>
 
-                {/* CTA Button */}
+                {/* CTA Button - FIGMA MATCH CYAN GRADIENT */}
                 <button
                   onClick={onStartAnalysis}
-                  className="w-full bg-gradient-to-r from-cyan-400 via-cyan-500 to-blue-500 hover:from-cyan-300 hover:via-cyan-400 hover:to-blue-400 text-white py-5 rounded-full transition-all duration-300 shadow-xl shadow-cyan-500/20 min-h-[60px] relative overflow-hidden group btn-press-strong btn-hover-lift animate-subtle-pulse"
+                  className="w-full py-5 rounded-full transition-all duration-300 shadow-xl min-h-[60px] relative overflow-hidden group btn-press-strong btn-hover-lift animate-subtle-pulse"
+                  style={{
+                    background: BRAND_COLORS.gradients.cyanBlue,
+                    color: BRAND_COLORS.text.white,
+                    boxShadow: `0 20px 60px ${BRAND_COLORS.cyanSoft}40`
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = `0 25px 80px ${BRAND_COLORS.cyanSoft}50`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = `0 20px 60px ${BRAND_COLORS.cyanSoft}40`;
+                  }}
                   data-name="btn_start_analysis"
                 >
                   {/* Shimmer effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                  <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" style={{
+                    background: 'linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent)'
+                  }} />
                   
                   {/* Pulse rings */}
-                  <div className="absolute inset-0 rounded-full border-2 border-cyan-300/30 animate-ping" style={{ animationDuration: '3s' }} />
-                  <div className="absolute inset-2 rounded-full border-2 border-cyan-300/20 animate-ping" style={{ animationDuration: '3s', animationDelay: '1s' }} />
+                  <div className="absolute inset-0 rounded-full animate-ping" style={{ 
+                    border: `2px solid ${BRAND_COLORS.cyan}4D`,
+                    animationDuration: '3s' 
+                  }} />
+                  <div className="absolute inset-2 rounded-full animate-ping" style={{ 
+                    border: `2px solid ${BRAND_COLORS.cyan}33`,
+                    animationDuration: '3s', 
+                    animationDelay: '1s' 
+                  }} />
                   
-                  <span className="relative flex items-center justify-center gap-2 text-lg" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 700 }}>
+                  <span className="relative flex items-center justify-center gap-2 text-lg" style={{ 
+                    fontFamily: 'system-ui, -apple-system, sans-serif', 
+                    fontWeight: 700 
+                  }}>
                     <Zap className="w-5 h-5" />
                     Start Analysis
                   </span>
@@ -127,7 +189,10 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
 
           {/* Legal Footer - Single Line */}
           <div className="text-center mt-12 mb-8 px-4">
-            <p className="text-white/40 text-xs" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            <p className="text-xs" style={{ 
+              color: 'rgba(255, 255, 255, 0.4)',
+              fontFamily: 'system-ui, -apple-system, sans-serif' 
+            }}>
               © 2025 MaverickAI Enigma Radar™. All Rights Reserved.
             </p>
           </div>

@@ -10,4 +10,5 @@ export default defineConfig({
     target: 'esnext',
   },
 })
-
+assetFileNames: 'assets/[name]-[hash][extname]'
+cssCodeSplit: true

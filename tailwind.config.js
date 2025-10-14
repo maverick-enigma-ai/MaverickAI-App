@@ -11,6 +11,12 @@ export default {
     "./utils/**/*.{js,ts,jsx,tsx}",
     "./types/**/*.{js,ts,jsx,tsx}"
   ],
+safelist: [
+  'from-[#00d4ff]',
+  'to-[#14b8a6]',
+  // ... other critical classes
+],
+
   theme: {
     extend: {
       colors: {

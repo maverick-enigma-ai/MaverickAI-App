@@ -207,6 +207,13 @@ html {
     background-size: 200% 100%;
     animation: shimmer 2s infinite;
   }
+
+  /* Placeholder text styling */
+  textarea::placeholder,
+  input::placeholder {
+    color: rgba(34, 211, 238, 0.4) !important; /* cyan with 40% opacity */
+    opacity: 1 !important;
+  }
 }
 
 /* ===== SOVEREIGNTY FEATURES STYLES ===== */
@@ -540,5 +547,26 @@ body {
   ::-moz-selection {
     background: rgba(0, 212, 255, 0.3);
     color: white;
+  }
+}
+
+/* ===== RADAR ICON ANIMATIONS ===== */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
   }
 }

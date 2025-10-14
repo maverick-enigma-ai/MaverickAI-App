@@ -92,8 +92,10 @@ export function AnimatedSplashScreen({
             >
               {/* MaverickAI */}
               <motion.h1
-                className="text-cyan-400 tracking-[0.15em] mb-1"
                 style={{ 
+                  color: '#00d4ff',
+                  letterSpacing: '0.15em',
+                  marginBottom: '4px',
                   fontFamily: 'system-ui, -apple-system, sans-serif',
                   fontWeight: 600,
                   fontSize: '1.125rem'
@@ -107,8 +109,9 @@ export function AnimatedSplashScreen({
 
               {/* Enigma Radar™ */}
               <motion.h2
-                className="text-white tracking-[0.18em]"
                 style={{ 
+                  color: 'white',
+                  letterSpacing: '0.18em',
                   fontFamily: 'system-ui, -apple-system, sans-serif',
                   fontWeight: 500,
                   fontSize: '1.5rem'
@@ -118,13 +121,16 @@ export function AnimatedSplashScreen({
                 transition={{ delay: 0.8, duration: 0.4 }}
               >
                 ENIGMA RADAR
-                <span className="text-teal-400 text-xs ml-1 opacity-80">™</span>
+                <span style={{ color: '#14b8a6', fontSize: '0.75rem', marginLeft: '4px', opacity: 0.8 }}>™</span>
               </motion.h2>
 
               {/* Tagline */}
               <motion.p
-                className="text-teal-400 tracking-[0.2em] mt-4 text-xs opacity-70"
                 style={{ 
+                  color: '#14b8a6',
+                  letterSpacing: '0.2em',
+                  marginTop: '16px',
+                  fontSize: '0.75rem',
                   fontFamily: 'system-ui, -apple-system, sans-serif',
                   fontWeight: 400
                 }}
@@ -139,17 +145,22 @@ export function AnimatedSplashScreen({
             {/* Loading indicator - Only shows while actually loading */}
             {isLoading && (
               <motion.div
-                className="mt-12"
+                style={{ marginTop: '48px' }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.2 }}
               >
                 {/* Animated dots */}
-                <div className="flex gap-2">
+                <div style={{ display: 'flex', gap: '8px' }}>
                   {[0, 1, 2].map((i) => (
                     <motion.div
                       key={i}
-                      className="w-2 h-2 rounded-full bg-cyan-400"
+                      style={{
+                        width: '8px',
+                        height: '8px',
+                        borderRadius: '50%',
+                        background: '#00d4ff'
+                      }}
                       animate={{
                         scale: [1, 1.5, 1],
                         opacity: [0.5, 1, 0.5],
@@ -168,14 +179,24 @@ export function AnimatedSplashScreen({
 
           {/* Bottom text */}
           <motion.div
-            className="absolute bottom-12 left-0 right-0 text-center"
+            style={{
+              position: 'absolute',
+              bottom: '48px',
+              left: 0,
+              right: 0,
+              textAlign: 'center'
+            }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.5 }}
             transition={{ delay: 1.4, duration: 0.6 }}
           >
             <p 
-              className="text-white/50 text-xs tracking-wider"
-              style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+              style={{
+                color: 'rgba(255, 255, 255, 0.5)',
+                fontSize: '0.75rem',
+                letterSpacing: '0.1em',
+                fontFamily: 'system-ui, -apple-system, sans-serif'
+              }}
             >
               Advanced Psychological Intelligence
             </p>

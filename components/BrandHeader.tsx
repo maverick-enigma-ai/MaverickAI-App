@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { MasterAppIcon } from './icons/MasterAppIcon';
+import { BRAND_COLORS } from '../utils/brand-colors';
 
 interface BrandHeaderProps {
   subtitle?: string;
@@ -15,17 +16,31 @@ export function BrandHeader({
   showBorder = true
 }: BrandHeaderProps) {
   return (
-    <div className={`flex-shrink-0 p-6 pt-16 ${showBorder ? 'border-b border-white/10' : ''} bg-gradient-to-b from-[#14123F] to-transparent`}>
+    <div style={{
+      flexShrink: 0,
+      padding: '4rem 1.5rem 1.5rem',
+      borderBottom: showBorder ? `1px solid ${BRAND_COLORS.borders.normal}` : 'none',
+      background: `linear-gradient(to bottom, ${BRAND_COLORS.navy}, transparent)`
+    }}>
       <div className={`flex items-center ${rightContent ? 'justify-between' : 'justify-center'} mb-2`}>
         <div className="flex items-center gap-3">
           <div className="relative">
             <MasterAppIcon size={40} />
             {showPulse && (
-              <div className="absolute inset-0 bg-cyan-400/20 rounded-full blur-xl animate-pulse" />
+              <div 
+                className="absolute inset-0 rounded-full blur-xl animate-pulse"
+                style={{
+                  background: `${BRAND_COLORS.cyan}33`  // 20% opacity
+                }}
+              />
             )}
           </div>
           <div className="text-left">
-            <h1 className="text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+            <h1 style={{ 
+              color: BRAND_COLORS.text.white,
+              fontFamily: 'system-ui, -apple-system, sans-serif', 
+              fontWeight: 600 
+            }}>
               MaverickAI Enigma Radar™
             </h1>
           </div>
@@ -35,7 +50,13 @@ export function BrandHeader({
       </div>
       
       {subtitle && (
-        <p className={`text-sm text-cyan-400 ${rightContent ? 'text-left' : 'text-center'} leading-relaxed`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+        <p 
+          className={`text-sm ${rightContent ? 'text-left' : 'text-center'} leading-relaxed`}
+          style={{ 
+            color: BRAND_COLORS.cyan,
+            fontFamily: 'system-ui, -apple-system, sans-serif' 
+          }}
+        >
           {subtitle}
         </p>
       )}

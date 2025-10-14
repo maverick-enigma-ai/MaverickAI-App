@@ -11,47 +11,120 @@ export function RadarIcon({ size = 80, className = '', animated = true }: RadarI
       style={{ width: size, height: size }}
     >
       {/* Outer glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-purple-500/20 rounded-full blur-xl" />
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(to bottom right, rgba(0, 212, 255, 0.2), rgba(139, 92, 246, 0.2))',
+        borderRadius: '50%',
+        filter: 'blur(20px)'
+      }} />
       
       {/* Outer ring - rotating */}
       {animated && (
         <div 
-          className="absolute inset-0 rounded-full border-2 border-cyan-400/30"
           style={{
+            position: 'absolute',
+            inset: 0,
+            borderRadius: '50%',
+            border: '2px solid rgba(0, 212, 255, 0.3)',
             animation: 'spin 8s linear infinite'
           }}
         >
-          <div className="absolute top-0 left-1/2 w-1 h-1 bg-cyan-400 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: '50%',
+            width: '4px',
+            height: '4px',
+            background: '#00d4ff',
+            borderRadius: '50%',
+            transform: 'translate(-50%, -50%)'
+          }} />
         </div>
       )}
       
       {/* Middle ring - pulsing */}
       <div 
-        className={`absolute inset-3 rounded-full border-2 border-purple-400/40 ${animated ? 'animate-pulse' : ''}`}
-        style={animated ? { animationDuration: '2s' } : {}}
+        style={{
+          position: 'absolute',
+          inset: size * 0.15,
+          borderRadius: '50%',
+          border: '2px solid rgba(139, 92, 246, 0.4)',
+          animation: animated ? 'pulse 2s ease-in-out infinite' : 'none'
+        }}
       >
-        <div className="absolute top-1/4 right-0 w-1 h-1 bg-purple-400 rounded-full transform translate-x-1/2" />
+        <div style={{
+          position: 'absolute',
+          top: '25%',
+          right: 0,
+          width: '4px',
+          height: '4px',
+          background: '#8b5cf6',
+          borderRadius: '50%',
+          transform: 'translateX(50%)'
+        }} />
       </div>
       
       {/* Inner ring - static */}
-      <div className="absolute inset-6 rounded-full border border-teal-400/50">
-        <div className="absolute bottom-0 left-1/2 w-1 h-1 bg-teal-400 rounded-full transform -translate-x-1/2 translate-y-1/2" />
+      <div style={{
+        position: 'absolute',
+        inset: size * 0.3,
+        borderRadius: '50%',
+        border: '1px solid rgba(20, 184, 166, 0.5)'
+      }}>
+        <div style={{
+          position: 'absolute',
+          bottom: 0,
+          left: '50%',
+          width: '4px',
+          height: '4px',
+          background: '#14b8a6',
+          borderRadius: '50%',
+          transform: 'translate(-50%, 50%)'
+        }} />
       </div>
       
       {/* Center circle with gradient */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
         <div 
-          className="relative rounded-full bg-gradient-to-br from-cyan-400 via-purple-500 to-teal-500 shadow-lg shadow-cyan-500/50"
-          style={{ width: size * 0.4, height: size * 0.4 }}
+          style={{
+            position: 'relative',
+            width: size * 0.4,
+            height: size * 0.4,
+            borderRadius: '50%',
+            background: 'linear-gradient(to bottom right, #00d4ff, #8b5cf6, #14b8a6)',
+            boxShadow: '0 10px 30px rgba(0, 212, 255, 0.5)'
+          }}
         >
           {/* Inner glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent rounded-full" />
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(to bottom right, rgba(255, 255, 255, 0.4), transparent)',
+            borderRadius: '50%'
+          }} />
           
           {/* Center dot */}
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
             <div 
-              className="bg-white rounded-full"
-              style={{ width: size * 0.15, height: size * 0.15 }}
+              style={{
+                width: size * 0.15,
+                height: size * 0.15,
+                background: 'white',
+                borderRadius: '50%'
+              }}
             />
           </div>
         </div>
@@ -60,8 +133,10 @@ export function RadarIcon({ size = 80, className = '', animated = true }: RadarI
       {/* Scanning beam - rotating */}
       {animated && (
         <div 
-          className="absolute inset-0 opacity-30"
           style={{
+            position: 'absolute',
+            inset: 0,
+            opacity: 0.3,
             background: 'conic-gradient(from 0deg, transparent 0deg, rgba(0, 212, 255, 0.5) 30deg, transparent 60deg)',
             animation: 'spin 4s linear infinite',
             borderRadius: '50%'

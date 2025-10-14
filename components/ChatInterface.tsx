@@ -5,6 +5,7 @@ import { SampleScenariosModal } from './SampleScenariosModal';
 import { BrandHeader } from './BrandHeader';
 import { RadarIcon } from './RadarIcon';
 import { type ScenarioCategory } from '../types/sample-scenarios';
+import { BRAND_COLORS } from '../utils/brand-colors';
 
 interface ChatInterfaceProps {
   onSubmit: (text: string, files: File[]) => void;
@@ -20,7 +21,6 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Prevent back navigation after submission
   useEffect(() => {
     if (hasSubmitted) {
       const handlePopState = (e: PopStateEvent) => {
@@ -40,7 +40,6 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputText(e.target.value);
     
-    // Auto-resize textarea - increased max height to 200px
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
@@ -53,7 +52,6 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
   };
 
   const handleSubmit = async () => {
-    // Strong duplicate prevention
     if ((!inputText.trim() && uploadedFiles.length === 0) || isSubmitting) {
       console.log('🚫 DUPLICATE SUBMIT PREVENTED in ChatInterface');
       return;
@@ -61,16 +59,13 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
     
     console.log('🔒 LOCKING ChatInterface submit button...');
     setIsSubmitting(true);
-    setHasSubmitted(true); // Mark as submitted to prevent back navigation
+    setHasSubmitted(true);
     
-    // Call onSubmit immediately - no artificial delay
     onSubmit(inputText, uploadedFiles);
     
-    // Clear inputs
     setInputText('');
     setUploadedFiles([]);
     
-    // Keep button disabled for 2 seconds to prevent rapid double-clicks
     setTimeout(() => {
       setIsSubmitting(false);
       console.log('🔓 ChatInterface submit button unlocked');
@@ -84,12 +79,10 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
   const handleScenarioSelect = (text: string, shouldFocus: boolean) => {
     setInputText(text);
     
-    // Auto-resize textarea
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
       
-      // Focus and move cursor to end if editing
       if (shouldFocus) {
         setTimeout(() => {
           textareaRef.current?.focus();
@@ -104,7 +97,9 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
 
   return (
     <>
-      <div className="w-full h-screen bg-gradient-to-b from-[#14123F] via-[#342FA5] to-[#14123F] flex flex-col overflow-hidden">
+      <div className="w-full h-screen flex flex-col overflow-hidden" style={{
+        background: BRAND_COLORS.gradients.background
+      }}>
         {/* Header */}
         <BrandHeader subtitle="Upload content for strategic analysis" />
 
@@ -112,11 +107,21 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
         <div className="flex-1 overflow-y-auto p-4 pb-64">
           <div className="max-w-md mx-auto">
             {/* Welcome Message - More Compact */}
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 mb-4 border border-white/20">
-              <p className="text-white text-sm mb-3" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+            <div className="rounded-2xl p-4 mb-4 backdrop-blur-md" style={{
+              background: BRAND_COLORS.glass.normal,
+              border: `1px solid ${BRAND_COLORS.borders.normal}`
+            }}>
+              <p className="text-sm mb-3" style={{ 
+                color: BRAND_COLORS.text.white,
+                fontFamily: 'system-ui, -apple-system, sans-serif', 
+                fontWeight: 600 
+              }}>
                 🎯 Strategic Intelligence Analysis
               </p>
-              <ul className="space-y-2 text-sm text-cyan-300 mb-4" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+              <ul className="space-y-2 text-sm mb-4" style={{ 
+                color: `${BRAND_COLORS.cyan}E6`,
+                fontFamily: 'system-ui, -apple-system, sans-serif' 
+              }}>
                 <li>• Decode psychological patterns in communications</li>
                 <li>• Analyze power dynamics in documents</li>
                 <li>• Extract strategic insights from content</li>
@@ -126,17 +131,31 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
               {enabledScenarios.length > 0 && (
                 <button
                   onClick={() => setIsScenariosModalOpen(true)}
-                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-500/20 to-purple-500/20 hover:from-cyan-500/30 hover:to-purple-500/30 border border-white/20 transition-all duration-200 active:scale-[0.98]"
+                  className="w-full py-3 px-4 rounded-xl transition-all duration-200 active:scale-[0.98]"
+                  style={{
+                    background: `linear-gradient(to right, ${BRAND_COLORS.cyan}33, ${BRAND_COLORS.purple}33)`,
+                    border: `1px solid ${BRAND_COLORS.borders.normal}`
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = `linear-gradient(to right, ${BRAND_COLORS.cyan}4D, ${BRAND_COLORS.purple}4D)`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = `linear-gradient(to right, ${BRAND_COLORS.cyan}33, ${BRAND_COLORS.purple}33)`;
+                  }}
                   data-name="btn_view_sample_scenarios"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Lightbulb className="w-4 h-4 text-cyan-400" />
-                      <span className="text-white text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                      <Lightbulb className="w-4 h-4" style={{ color: BRAND_COLORS.cyan }} />
+                      <span className="text-sm" style={{ 
+                        color: BRAND_COLORS.text.white,
+                        fontFamily: 'system-ui, -apple-system, sans-serif', 
+                        fontWeight: 600 
+                      }}>
                         View Sample Scenarios
                       </span>
                     </div>
-                    <span className="text-cyan-400 text-xs">→</span>
+                    <span className="text-xs" style={{ color: BRAND_COLORS.cyan }}>→</span>
                   </div>
                 </button>
               )}
@@ -145,23 +164,36 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
             {/* Uploaded Files Display */}
             {uploadedFiles.length > 0 && (
               <div className="mb-4 space-y-2">
-                <p className="text-xs text-gray-400 px-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <p className="text-xs px-1" style={{ 
+                  color: 'rgba(156, 163, 175, 1)',
+                  fontFamily: 'system-ui, -apple-system, sans-serif' 
+                }}>
                   Attached Files ({uploadedFiles.length}):
                 </p>
                 {uploadedFiles.map((file, index) => (
-                  <div key={index} className="flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-lg p-3 border border-white/20">
-                    <Paperclip className="w-4 h-4 text-cyan-400 shrink-0" />
+                  <div key={index} className="flex items-center gap-3 backdrop-blur-md rounded-lg p-3" style={{
+                    background: BRAND_COLORS.glass.normal,
+                    border: `1px solid ${BRAND_COLORS.borders.normal}`
+                  }}>
+                    <Paperclip className="w-4 h-4 shrink-0" style={{ color: BRAND_COLORS.cyan }} />
                     <div className="flex-1 min-w-0">
-                      <p className="text-white text-sm truncate" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                      <p className="text-sm truncate" style={{ 
+                        color: BRAND_COLORS.text.white,
+                        fontFamily: 'system-ui, -apple-system, sans-serif' 
+                      }}>
                         {file.name}
                       </p>
-                      <p className="text-xs text-cyan-300" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                      <p className="text-xs" style={{ 
+                        color: `${BRAND_COLORS.cyan}E6`,
+                        fontFamily: 'system-ui, -apple-system, sans-serif' 
+                      }}>
                         {(file.size / 1024).toFixed(1)} KB
                       </p>
                     </div>
                     <button
                       onClick={() => removeFile(index)}
-                      className="text-red-400 hover:text-red-300 transition-colors text-sm min-h-[44px] min-w-[44px] flex items-center justify-center"
+                      className="transition-colors text-sm min-h-[44px] min-w-[44px] flex items-center justify-center"
+                      style={{ color: '#f87171' }}
                       data-name={`btn_remove_file_${index}`}
                     >
                       ×
@@ -173,32 +205,56 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
           </div>
         </div>
 
-        {/* Input Area - Fixed at bottom, always visible */}
-        <div className="fixed bottom-0 left-0 right-0 p-4 border-t border-white/10 bg-gradient-to-b from-[#342FA5] to-[#14123F] z-10">
+        {/* Input Area - Fixed at bottom */}
+        <div className="fixed bottom-0 left-0 right-0 p-4 z-10" style={{
+          borderTop: `1px solid ${BRAND_COLORS.borders.normal}`,
+          background: `linear-gradient(to bottom, ${BRAND_COLORS.deepBlue}, ${BRAND_COLORS.navy})`
+        }}>
           <div className="max-w-md mx-auto">
             {/* Text Input with side buttons */}
             <div className="flex items-start gap-3 mb-3">
-              {/* File Upload Button - Left Side */}
+              {/* File Upload Button */}
               <button
                 onClick={() => setIsFileModalOpen(true)}
-                className="flex-shrink-0 w-[52px] h-[52px] rounded-full bg-cyan-500/20 hover:bg-cyan-500/30 flex items-center justify-center transition-colors"
+                className="flex-shrink-0 w-[52px] h-[52px] rounded-full flex items-center justify-center transition-colors"
+                style={{
+                  background: `${BRAND_COLORS.cyan}33`,
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = `${BRAND_COLORS.cyan}4D`}
+                onMouseLeave={(e) => e.currentTarget.style.background = `${BRAND_COLORS.cyan}33`}
                 data-name="btn_attach_files"
               >
-                <Plus className="w-6 h-6 text-cyan-400" />
+                <Plus className="w-6 h-6" style={{ color: BRAND_COLORS.cyan }} />
               </button>
 
-              {/* Text Input - WRAPPED IN GLOWING CONTAINER - TALLER */}
+              {/* Text Input - GLOWING CONTAINER */}
               <div className="relative flex-1">
                 {/* Glowing frame animation */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-2xl opacity-60 blur-sm animate-pulse" />
+                <div className="absolute -inset-0.5 rounded-2xl opacity-60 blur-sm animate-pulse" style={{
+                  background: `linear-gradient(to right, ${BRAND_COLORS.cyan}, ${BRAND_COLORS.deepBlue}, ${BRAND_COLORS.purple})`
+                }} />
                 
                 <textarea
                   ref={textareaRef}
                   value={inputText}
                   onChange={handleTextChange}
                   placeholder="Describe your situation or challenge here...&#10;&#10;Be as detailed as you like. The more context you provide, the better the analysis."
-                  className="relative w-full min-h-[120px] max-h-[200px] px-4 py-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-cyan-300/30 resize-none scrollbar-hide focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
-                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                  className="relative w-full min-h-[120px] max-h-[200px] px-4 py-3 rounded-2xl backdrop-blur-md resize-none scrollbar-hide focus:outline-none transition-all placeholder-shown:text-cyan-300/40"
+                  style={{
+                    background: BRAND_COLORS.glass.normal,
+                    border: `1px solid ${BRAND_COLORS.borders.normal}`,
+                    color: BRAND_COLORS.text.white,
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    ['--placeholder-opacity' as any]: '0.4'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = `${BRAND_COLORS.cyan}80`;
+                    e.target.style.boxShadow = `0 0 0 2px ${BRAND_COLORS.cyan}33`;
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = BRAND_COLORS.borders.normal;
+                    e.target.style.boxShadow = 'none';
+                  }}
                   data-name="input_chat_text"
                   autoComplete="off"
                   autoCorrect="off"
@@ -208,31 +264,40 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
                 />
               </div>
               
-              {/* Radar Submit Button - Right Side */}
+              {/* Radar Submit Button */}
               <button
                 onClick={handleSubmit}
                 disabled={!canSubmit || isSubmitting}
-                className={`flex-shrink-0 w-[52px] h-[52px] rounded-full flex items-center justify-center transition-all relative ${
-                  canSubmit && !isSubmitting
-                    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 cursor-pointer active:scale-95'
-                    : 'bg-white/10 cursor-not-allowed opacity-50'
-                }`}
+                className="flex-shrink-0 w-[52px] h-[52px] rounded-full flex items-center justify-center transition-all relative active:scale-95"
+                style={{
+                  background: canSubmit && !isSubmitting ? BRAND_COLORS.gradients.cyan : BRAND_COLORS.glass.normal,
+                  cursor: !canSubmit || isSubmitting ? 'not-allowed' : 'pointer',
+                  opacity: !canSubmit || isSubmitting ? 0.5 : 1
+                }}
                 data-name="btn_submit_radar"
               >
-                <RadarIcon className="w-8 h-8 text-white" />
+                <RadarIcon className="w-8 h-8" style={{ color: BRAND_COLORS.text.white }} />
                 
-                {/* Pulse rings - only show when can submit */}
+                {/* Pulse rings */}
                 {canSubmit && !isSubmitting && (
                   <>
-                    <div className="absolute inset-0 rounded-full border-2 border-cyan-400/30 animate-ping" />
-                    <div className="absolute inset-1 rounded-full border-2 border-cyan-400/20 animate-ping" style={{ animationDelay: '0.5s' }} />
+                    <div className="absolute inset-0 rounded-full animate-ping" style={{
+                      border: `2px solid ${BRAND_COLORS.cyan}4D`
+                    }} />
+                    <div className="absolute inset-1 rounded-full animate-ping" style={{
+                      border: `2px solid ${BRAND_COLORS.cyan}33`,
+                      animationDelay: '0.5s'
+                    }} />
                   </>
                 )}
               </button>
             </div>
 
             {/* Input Hint */}
-            <p className="text-center text-xs text-cyan-400/70" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            <p className="text-center text-xs" style={{ 
+              color: `${BRAND_COLORS.cyan}B3`,
+              fontFamily: 'system-ui, -apple-system, sans-serif' 
+            }}>
               {isSubmitting ? 'Initiating Radar Scan...' : canSubmit ? '✨ Tap radar to begin psychological analysis' : '💡 Upload files + add text, then tap radar'}
             </p>
           </div>
@@ -251,7 +316,7 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
         isOpen={isScenariosModalOpen}
         onClose={() => setIsScenariosModalOpen(false)}
         onSelectScenario={handleScenarioSelect}
-        enabledScenarios={enabledScenarios}
+        enabledCategories={enabledScenarios}
       />
     </>
   );

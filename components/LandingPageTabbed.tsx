@@ -26,6 +26,7 @@ import { MasterAppIcon } from './icons/MasterAppIcon';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { SEOHead, SEO_CONFIGS } from './SEOHead';
 import { supabase } from '../utils/supabase/client';
+import { BRAND_COLORS } from '../utils/brand-colors';
 
 type TabSection = 'services' | 'book' | 'app';
 
@@ -135,12 +136,24 @@ export function LandingPageTabbed({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-navy via-deep-blue to-navy">
+    <div style={{ 
+      minHeight: '100vh',
+      background: BRAND_COLORS.gradients.background
+    }}>
       {/* Dynamic SEO based on active tab */}
       <SEOHead {...SEO_CONFIGS[activeTab]} />
 
       {/* Fixed Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-navy/80 border-b border-border">
+      <nav style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        backdropFilter: 'blur(20px)',
+        background: `${BRAND_COLORS.navy}CC`,  // 80% opacity
+        borderBottom: `1px solid ${BRAND_COLORS.borders.normal}`
+      }}>
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -160,11 +173,11 @@ export function LandingPageTabbed({
             <div className="hidden md:flex items-center gap-2">
               <button
                 onClick={() => setActiveTab('services')}
-                className={`px-6 py-2 rounded-xl transition-all btn-press ${
-                  activeTab === 'services'
-                    ? 'bg-cyan text-navy'
-                    : 'bg-glass text-white/80 hover:text-white hover:bg-glass-strong'
-                }`}
+                className="px-6 py-2 rounded-xl transition-all btn-press"
+                style={{
+                  background: activeTab === 'services' ? BRAND_COLORS.cyan : BRAND_COLORS.glass.normal,
+                  color: activeTab === 'services' ? BRAND_COLORS.navy : 'rgba(255, 255, 255, 0.8)'
+                }}
                 data-name="btn_tab_services"
               >
                 <div className="flex items-center gap-2">
@@ -175,11 +188,11 @@ export function LandingPageTabbed({
 
               <button
                 onClick={() => setActiveTab('book')}
-                className={`px-6 py-2 rounded-xl transition-all btn-press ${
-                  activeTab === 'book'
-                    ? 'bg-purple text-white'
-                    : 'bg-glass text-white/80 hover:text-white hover:bg-glass-strong'
-                }`}
+                className="px-6 py-2 rounded-xl transition-all btn-press"
+                style={{
+                  background: activeTab === 'book' ? BRAND_COLORS.purple : BRAND_COLORS.glass.normal,
+                  color: BRAND_COLORS.text.white
+                }}
                 data-name="btn_tab_book"
               >
                 <div className="flex items-center gap-2">
@@ -190,11 +203,11 @@ export function LandingPageTabbed({
 
               <button
                 onClick={() => setActiveTab('app')}
-                className={`px-6 py-2 rounded-xl transition-all btn-press ${
-                  activeTab === 'app'
-                    ? 'bg-gradient-to-r from-cyan to-teal text-navy'
-                    : 'bg-glass text-white/80 hover:text-white hover:bg-glass-strong'
-                }`}
+                className="px-6 py-2 rounded-xl transition-all btn-press"
+                style={{
+                  background: activeTab === 'app' ? BRAND_COLORS.gradients.cyan : BRAND_COLORS.glass.normal,
+                  color: activeTab === 'app' ? BRAND_COLORS.navy : 'rgba(255, 255, 255, 0.8)'
+                }}
                 data-name="btn_tab_app"
               >
                 <div className="flex items-center gap-2">
@@ -207,7 +220,14 @@ export function LandingPageTabbed({
             {/* Sign In Button */}
             <button
               onClick={onSignIn}
-              className="px-6 py-2 rounded-xl bg-glass border border-border-cyan text-white hover:bg-glass-strong transition-all btn-press"
+              className="px-6 py-2 rounded-xl transition-all btn-press"
+              style={{
+                background: BRAND_COLORS.glass.normal,
+                border: `1px solid ${BRAND_COLORS.borders.cyan}`,
+                color: BRAND_COLORS.text.white
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = BRAND_COLORS.glass.strong}
+              onMouseLeave={(e) => e.currentTarget.style.background = BRAND_COLORS.glass.normal}
               data-name="btn_sign_in"
             >
               Sign In
@@ -218,11 +238,11 @@ export function LandingPageTabbed({
           <div className="md:hidden flex items-center gap-2 mt-4">
             <button
               onClick={() => setActiveTab('services')}
-              className={`flex-1 px-4 py-2 rounded-xl transition-all btn-press text-sm ${
-                activeTab === 'services'
-                  ? 'bg-cyan text-navy'
-                  : 'bg-glass text-white/80'
-              }`}
+              className="flex-1 px-4 py-2 rounded-xl transition-all btn-press text-sm"
+              style={{
+                background: activeTab === 'services' ? BRAND_COLORS.cyan : BRAND_COLORS.glass.normal,
+                color: activeTab === 'services' ? BRAND_COLORS.navy : 'rgba(255, 255, 255, 0.8)'
+              }}
               data-name="btn_tab_services_mobile"
             >
               Services
@@ -230,11 +250,11 @@ export function LandingPageTabbed({
 
             <button
               onClick={() => setActiveTab('book')}
-              className={`flex-1 px-4 py-2 rounded-xl transition-all btn-press text-sm ${
-                activeTab === 'book'
-                  ? 'bg-purple text-white'
-                  : 'bg-glass text-white/80'
-              }`}
+              className="flex-1 px-4 py-2 rounded-xl transition-all btn-press text-sm"
+              style={{
+                background: activeTab === 'book' ? BRAND_COLORS.purple : BRAND_COLORS.glass.normal,
+                color: BRAND_COLORS.text.white
+              }}
               data-name="btn_tab_book_mobile"
             >
               Book
@@ -242,11 +262,11 @@ export function LandingPageTabbed({
 
             <button
               onClick={() => setActiveTab('app')}
-              className={`flex-1 px-4 py-2 rounded-xl transition-all btn-press text-sm ${
-                activeTab === 'app'
-                  ? 'bg-gradient-to-r from-cyan to-teal text-navy'
-                  : 'bg-glass text-white/80'
-              }`}
+              className="flex-1 px-4 py-2 rounded-xl transition-all btn-press text-sm"
+              style={{
+                background: activeTab === 'app' ? BRAND_COLORS.gradients.cyan : BRAND_COLORS.glass.normal,
+                color: activeTab === 'app' ? BRAND_COLORS.navy : 'rgba(255, 255, 255, 0.8)'
+              }}
               data-name="btn_tab_app_mobile"
             >
               App
@@ -1014,7 +1034,14 @@ function BookSection({ onPreOrder }: { onPreOrder: () => void }) {
               <div className="flex flex-wrap gap-4">
                 <button
                   onClick={onPreOrder}
-                  className="px-8 py-4 rounded-xl bg-gradient-to-r from-purple to-pink text-white hover:shadow-lg hover:shadow-purple/50 transition-all btn-press"
+                  className="px-8 py-4 rounded-xl transition-all btn-press"
+                  style={{
+                    background: BRAND_COLORS.gradients.purple,
+                    color: BRAND_COLORS.text.white,
+                    boxShadow: `0 10px 30px ${BRAND_COLORS.purple}4D`
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.boxShadow = `0 15px 40px ${BRAND_COLORS.purple}66`}
+                  onMouseLeave={(e) => e.currentTarget.style.boxShadow = `0 10px 30px ${BRAND_COLORS.purple}4D`}
                   data-name="btn_book_preorder"
                 >
                   <div className="flex items-center gap-2">
@@ -1028,7 +1055,14 @@ function BookSection({ onPreOrder }: { onPreOrder: () => void }) {
                     const chaptersSection = document.getElementById('book-chapters');
                     chaptersSection?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="px-8 py-4 rounded-xl bg-glass border border-border-purple text-white hover:bg-glass-strong transition-all btn-press"
+                  className="px-8 py-4 rounded-xl transition-all btn-press"
+                  style={{
+                    background: BRAND_COLORS.glass.normal,
+                    border: `1px solid ${BRAND_COLORS.borders.purple}`,
+                    color: BRAND_COLORS.text.white
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = BRAND_COLORS.glass.strong}
+                  onMouseLeave={(e) => e.currentTarget.style.background = BRAND_COLORS.glass.normal}
                   data-name="btn_read_preview"
                 >
                   Read Preview
