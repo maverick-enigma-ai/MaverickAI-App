@@ -222,12 +222,18 @@ export function LandingPageTabbed({
               onClick={onSignIn}
               className="px-6 py-2 rounded-xl transition-all btn-press"
               style={{
-                background: BRAND_COLORS.glass.normal,
-                border: `1px solid ${BRAND_COLORS.borders.cyan}`,
+                background: `${BRAND_COLORS.deepBlue}80`,  // Semi-transparent deep blue
+                border: `1px solid ${BRAND_COLORS.borders.subtle}`,
                 color: BRAND_COLORS.text.white
               }}
-              onMouseEnter={(e) => e.currentTarget.style.background = BRAND_COLORS.glass.strong}
-              onMouseLeave={(e) => e.currentTarget.style.background = BRAND_COLORS.glass.normal}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = `${BRAND_COLORS.deepBlue}CC`;
+                e.currentTarget.style.borderColor = BRAND_COLORS.borders.cyan;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = `${BRAND_COLORS.deepBlue}80`;
+                e.currentTarget.style.borderColor = BRAND_COLORS.borders.subtle;
+              }}
               data-name="btn_sign_in"
             >
               Sign In

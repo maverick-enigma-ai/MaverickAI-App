@@ -285,14 +285,26 @@ export function AuthScreen({ onSignIn, onSignUp, onGoogleSignIn, onPasswordReset
             <button
               type="submit"
               disabled={isSubmitting || loading}
-              className="w-full py-4 rounded-full transition-all duration-300 min-h-[56px]"
+              className="w-full py-4 rounded-full transition-all duration-300 min-h-[56px] hover:scale-[1.02]"
               style={{
-                background: BRAND_COLORS.gradients.cyanBlue,
+                background: BRAND_COLORS.cyan,  // Pure vibrant cyan
                 color: BRAND_COLORS.navy,
-                boxShadow: `0 10px 30px ${BRAND_COLORS.cyan}30`,
+                boxShadow: `0 20px 60px ${BRAND_COLORS.cyan}4D`,
                 opacity: (isSubmitting || loading) ? 0.5 : 1,
                 fontFamily: 'system-ui, -apple-system, sans-serif',
-                fontWeight: 600
+                fontWeight: 700
+              }}
+              onMouseEnter={(e) => {
+                if (!isSubmitting && !loading) {
+                  e.currentTarget.style.boxShadow = `0 25px 70px ${BRAND_COLORS.cyan}66`;
+                  e.currentTarget.style.filter = 'brightness(1.1)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isSubmitting && !loading) {
+                  e.currentTarget.style.boxShadow = `0 20px 60px ${BRAND_COLORS.cyan}4D`;
+                  e.currentTarget.style.filter = 'brightness(1)';
+                }
               }}
               data-name={isSignUp ? "btn_sign_up" : "btn_sign_in"}
             >
