@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { X, Upload, CheckCircle } from 'lucide-react';
 import { MobileFilePreview } from './MobileFilePreview';
 import { motion, AnimatePresence } from 'framer-motion';
+import { BRAND_COLORS } from '../utils/brand-colors';
 
 interface FileUploadModalProps {
   isOpen: boolean;
@@ -77,7 +78,11 @@ export function FileUploadModal({ isOpen, onClose, onFilesUploaded }: FileUpload
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-md bg-gradient-to-b from-[#14123F] via-[#342FA5] to-[#14123F] rounded-t-3xl sm:rounded-3xl border border-white/20 max-h-[90vh] overflow-hidden backdrop-blur-md"
+            className="w-full max-w-md rounded-t-3xl sm:rounded-3xl border max-h-[90vh] overflow-hidden backdrop-blur-md"
+            style={{
+              background: BRAND_COLORS.gradients.background,
+              borderColor: BRAND_COLORS.borders.normal
+            }}
             data-name="modal_file_upload"
           >
         {/* Modal Header */}

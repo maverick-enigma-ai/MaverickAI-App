@@ -130,7 +130,126 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
                 <li>• Extract strategic insights from content</li>
               </ul>
               
-              {/* Sample Scenarios Button */}
+              {/* Quick Start Examples - Visible Sample Profiles */}
+              <div className="space-y-2 mb-3">
+                <p className="text-xs px-1" style={{ 
+                  color: BRAND_COLORS.cyanText,
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                  fontWeight: 600
+                }}>
+                  👆 Quick Start Examples - Tap to Use:
+                </p>
+                
+                {/* Corporate Example */}
+                <button
+                  onClick={() => handleScenarioSelect('My colleague is using passive-aggressive tactics in meetings, undermining my contributions while maintaining a friendly facade. They consistently interrupt me during presentations, then later present similar ideas as their own.', true)}
+                  className="w-full py-2.5 px-3 rounded-xl text-left transition-all duration-200 active:scale-[0.98]"
+                  style={{
+                    background: `${BRAND_COLORS.cyan}1A`,
+                    border: `1px solid ${BRAND_COLORS.cyan}33`
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = `${BRAND_COLORS.cyan}26`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = `${BRAND_COLORS.cyan}1A`;
+                  }}
+                  data-name="btn_sample_corporate"
+                >
+                  <div className="flex items-start gap-2">
+                    <span className="text-base flex-shrink-0">💼</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs" style={{ 
+                        color: BRAND_COLORS.text.white,
+                        fontFamily: 'system-ui, -apple-system, sans-serif',
+                        fontWeight: 600
+                      }}>
+                        Undermining Colleague
+                      </p>
+                      <p className="text-xs mt-0.5 line-clamp-2" style={{ 
+                        color: BRAND_COLORS.cyanText,
+                        fontFamily: 'system-ui, -apple-system, sans-serif'
+                      }}>
+                        Passive-aggressive tactics in meetings...
+                      </p>
+                    </div>
+                  </div>
+                </button>
+
+                {/* Personal Example */}
+                <button
+                  onClick={() => handleScenarioSelect('A close friend constantly uses guilt and emotional manipulation to get their way. They\'ll make plans, then cancel last minute with dramatic reasons, but expect me to drop everything when they need support. When I set boundaries, they accuse me of being "selfish."', true)}
+                  className="w-full py-2.5 px-3 rounded-xl text-left transition-all duration-200 active:scale-[0.98]"
+                  style={{
+                    background: `${BRAND_COLORS.purple}1A`,
+                    border: `1px solid ${BRAND_COLORS.purple}33`
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = `${BRAND_COLORS.purple}26`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = `${BRAND_COLORS.purple}1A`;
+                  }}
+                  data-name="btn_sample_personal"
+                >
+                  <div className="flex items-start gap-2">
+                    <span className="text-base flex-shrink-0">👥</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs" style={{ 
+                        color: BRAND_COLORS.text.white,
+                        fontFamily: 'system-ui, -apple-system, sans-serif',
+                        fontWeight: 600
+                      }}>
+                        Manipulative Friend
+                      </p>
+                      <p className="text-xs mt-0.5 line-clamp-2" style={{ 
+                        color: `${BRAND_COLORS.purple}E6`,
+                        fontFamily: 'system-ui, -apple-system, sans-serif'
+                      }}>
+                        Guilt and emotional manipulation...
+                      </p>
+                    </div>
+                  </div>
+                </button>
+
+                {/* Wealth Example */}
+                <button
+                  onClick={() => handleScenarioSelect('A financial advisor is pushing aggressive investment strategies that feel misaligned with my risk tolerance. They use technical jargon to make me feel uninformed, then emphasize limited-time opportunities and the success of "smart clients" who acted quickly.', true)}
+                  className="w-full py-2.5 px-3 rounded-xl text-left transition-all duration-200 active:scale-[0.98]"
+                  style={{
+                    background: `${BRAND_COLORS.teal}1A`,
+                    border: `1px solid ${BRAND_COLORS.teal}33`
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = `${BRAND_COLORS.teal}26`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = `${BRAND_COLORS.teal}1A`;
+                  }}
+                  data-name="btn_sample_wealth"
+                >
+                  <div className="flex items-start gap-2">
+                    <span className="text-base flex-shrink-0">💰</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs" style={{ 
+                        color: BRAND_COLORS.text.white,
+                        fontFamily: 'system-ui, -apple-system, sans-serif',
+                        fontWeight: 600
+                      }}>
+                        Investment Pressure
+                      </p>
+                      <p className="text-xs mt-0.5 line-clamp-2" style={{ 
+                        color: `${BRAND_COLORS.teal}E6`,
+                        fontFamily: 'system-ui, -apple-system, sans-serif'
+                      }}>
+                        Aggressive investment strategies...
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              </div>
+
+              {/* Sample Scenarios Button - More Examples */}
               {safeEnabledScenarios.length > 0 && (
                 <button
                   onClick={() => setIsScenariosModalOpen(true)}
@@ -155,7 +274,7 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
                         fontFamily: 'system-ui, -apple-system, sans-serif', 
                         fontWeight: 600 
                       }}>
-                        View Sample Scenarios
+                        View More Scenarios (15+)
                       </span>
                     </div>
                     <span className="text-xs" style={{ color: BRAND_COLORS.cyanText }}>→</span>

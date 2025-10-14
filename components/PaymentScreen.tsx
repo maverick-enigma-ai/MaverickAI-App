@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Crown, Check, CreditCard, Zap, Shield, TrendingUp } from 'lucide-react';
 import { createCheckoutSession, redirectToCheckout } from '../services/stripe-service';
+import { BRAND_COLORS } from '../utils/brand-colors';
 
 interface PaymentScreenProps {
   onSubscribe: (planId: string) => Promise<void>;
@@ -87,7 +88,7 @@ export function PaymentScreen({ onSubscribe, onClose, user }: PaymentScreenProps
   };
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-[#14123F] via-[#342FA5] to-[#14123F] pb-24">
+    <div className="w-full min-h-screen pb-24" style={{ background: BRAND_COLORS.gradients.background }}>
       {/* Header */}
       <div className="p-6 pt-16 text-center">
         <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">

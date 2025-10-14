@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Mail, X, CheckCircle } from 'lucide-react';
+import { BRAND_COLORS } from '../utils/brand-colors';
 
 interface ForgotPasswordModalProps {
   onClose: () => void;
@@ -29,7 +30,10 @@ export function ForgotPasswordModal({ onClose, onSubmit }: ForgotPasswordModalPr
   if (isSuccess) {
     return (
       <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-6">
-        <div className="bg-gradient-to-b from-[#14123F] to-[#342FA5] rounded-3xl p-6 max-w-md w-full border border-white/20">
+        <div className="rounded-3xl p-6 max-w-md w-full border" style={{
+          background: BRAND_COLORS.gradients.background,
+          borderColor: BRAND_COLORS.borders.normal
+        }}>
           <div className="text-center">
             <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="w-8 h-8 text-green-400" />
@@ -60,7 +64,10 @@ export function ForgotPasswordModal({ onClose, onSubmit }: ForgotPasswordModalPr
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-6">
-      <div className="bg-gradient-to-b from-[#14123F] to-[#342FA5] rounded-3xl p-6 max-w-md w-full border border-white/20">
+      <div className="rounded-3xl p-6 max-w-md w-full border" style={{
+        background: BRAND_COLORS.gradients.background,
+        borderColor: BRAND_COLORS.borders.normal
+      }}>
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-white text-xl" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
             Reset Password

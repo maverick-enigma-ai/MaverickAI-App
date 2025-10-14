@@ -4,6 +4,7 @@ import { BrandHeader } from './BrandHeader';
 import { DeleteAccountModal } from './DeleteAccountModal';
 import { categoryInfo, type ScenarioCategory } from '../types/sample-scenarios';
 import { APP_VERSION, APP_NAME } from '../utils/constants';
+import { BRAND_COLORS } from '../utils/brand-colors';
 
 interface ProfileScreenProps {
   user: any;
@@ -81,7 +82,7 @@ export function ProfileScreen({
   });
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-[#14123F] via-[#342FA5] to-[#14123F] pb-24">
+    <div className="w-full min-h-screen pb-24" style={{ background: BRAND_COLORS.gradients.background }}>
       {/* Header */}
       <BrandHeader subtitle="Profile" />
       

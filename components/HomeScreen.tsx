@@ -140,22 +140,22 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
                   Describe your situation for psychological power dynamics analysis
                 </p>
 
-                {/* CTA Button - FIGMA MATCH CYAN GRADIENT */}
+                {/* CTA Button - AWARD-WINNING FIGMA BASELINE MATCH */}
                 <button
                   onClick={onStartAnalysis}
                   className="w-full py-5 rounded-full transition-all duration-300 shadow-xl min-h-[60px] relative overflow-hidden group btn-press-strong btn-hover-lift animate-subtle-pulse"
                   style={{
                     background: BRAND_COLORS.gradients.cyanBlue,
                     color: BRAND_COLORS.navy,
-                    boxShadow: `0 20px 60px ${BRAND_COLORS.cyan}30`
+                    boxShadow: `0 20px 60px ${BRAND_COLORS.cyan}50, 0 10px 30px ${BRAND_COLORS.cyan}30`
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = `0 25px 80px ${BRAND_COLORS.cyan}40`;
+                    e.currentTarget.style.boxShadow = `0 25px 80px ${BRAND_COLORS.cyan}60, 0 15px 40px ${BRAND_COLORS.cyan}40`;
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = `0 20px 60px ${BRAND_COLORS.cyan}30`;
+                    e.currentTarget.style.boxShadow = `0 20px 60px ${BRAND_COLORS.cyan}50, 0 10px 30px ${BRAND_COLORS.cyan}30`;
                   }}
                   data-name="btn_start_analysis"
                 >

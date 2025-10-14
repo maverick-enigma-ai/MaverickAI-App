@@ -3,6 +3,7 @@ import { Clock, FileText, Image, Paperclip, TrendingUp, Loader2 } from 'lucide-r
 import { BrandHeader } from './BrandHeader';
 import { supabase } from '../utils/supabase/client';
 import { ProcessedAnalysis } from '../types/runradar-api';
+import { BRAND_COLORS } from '../utils/brand-colors';
 
 interface HistoryScan {
   id: string;
@@ -225,7 +226,7 @@ export function HistoryScreen({ onViewScan, userId }: HistoryScreenProps) {
   };
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-[#14123F] via-[#342FA5] to-[#14123F] pb-24">
+    <div className="w-full min-h-screen pb-24" style={{ background: BRAND_COLORS.gradients.background }}>
       {/* Header */}
       <BrandHeader subtitle="Analysis History" />
       

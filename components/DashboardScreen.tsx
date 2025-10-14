@@ -317,7 +317,11 @@ export function DashboardScreen({
         onClick={() => setModalContent(null)}
       >
         <div 
-          className="bg-gradient-to-b from-[#14123F] to-[#342FA5] border border-white/20 rounded-3xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto"
+          className="border rounded-3xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto"
+          style={{
+            background: BRAND_COLORS.gradients.background,
+            borderColor: BRAND_COLORS.borders.normal
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Close Button - Award-Winning */}
@@ -574,7 +578,7 @@ export function DashboardScreen({
   };
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-[#14123F] via-[#342FA5] to-[#14123F] overflow-y-auto pb-32">
+    <div className="w-full min-h-screen overflow-y-auto pb-32" style={{ background: BRAND_COLORS.gradients.background }}>
       {/* Header */}
       <BrandHeader 
         subtitle={isHistorical ? 'Historical' : 'Live Analysis'}
@@ -1266,6 +1270,138 @@ export function DashboardScreen({
           </div>
         </div>
 
+        {/* 🧠 4.5. PSYCHOLOGICAL PROFILE (Gold Nugget #1) - Deep Intelligence */}
+        {analysisData.psychologicalProfile && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.4 }}
+            className="bg-gradient-to-br from-purple-500/10 via-pink-500/10 to-purple-500/10 backdrop-blur-md rounded-3xl p-6 border border-purple-500/30 shadow-xl shadow-purple-500/10"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/30 to-pink-500/30 border border-purple-400/40 flex items-center justify-center">
+                <span className="text-2xl">🧠</span>
+              </div>
+              <div className="flex-1">
+                <h2 className="text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                  Deep Psychological Profile
+                </h2>
+                <p className="text-purple-300 text-xs mt-0.5" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  Advanced behavioral intelligence analysis
+                </p>
+              </div>
+              <span className="text-xs bg-gradient-to-r from-yellow-400 to-orange-400 text-purple-900 px-3 py-1 rounded-full" style={{ fontWeight: 700 }}>
+                GOLD NUGGET #1
+              </span>
+            </div>
+
+            <div className="space-y-4">
+              {/* Primary Motivation */}
+              {analysisData.psychologicalProfile.primaryMotivation && (
+                <div className="bg-white/5 rounded-2xl p-4 border border-purple-400/20">
+                  <div className="flex items-start gap-3 mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center flex-shrink-0">
+                      <Target className="w-4 h-4 text-cyan-400" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-cyan-400 text-xs mb-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                        PRIMARY MOTIVATION
+                      </p>
+                      <p className="text-white/90 text-sm leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                        {analysisData.psychologicalProfile.primaryMotivation}
+                      </p>
+                      {analysisData.psychologicalProfile.motivationEvidence && (
+                        <p className="text-white/60 text-xs mt-2 italic" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                          Evidence: {analysisData.psychologicalProfile.motivationEvidence}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Hidden Driver */}
+              {analysisData.psychologicalProfile.hiddenDriver && (
+                <div className="bg-white/5 rounded-2xl p-4 border border-purple-400/20">
+                  <div className="flex items-start gap-3 mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0">
+                      <Zap className="w-4 h-4 text-purple-400" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-purple-400 text-xs mb-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                        HIDDEN DRIVER
+                      </p>
+                      <p className="text-white/90 text-sm leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                        {analysisData.psychologicalProfile.hiddenDriver}
+                      </p>
+                      {analysisData.psychologicalProfile.hiddenDriverSignal && (
+                        <p className="text-white/60 text-xs mt-2 italic" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                          Signal: {analysisData.psychologicalProfile.hiddenDriverSignal}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Emotional State */}
+              {analysisData.psychologicalProfile.emotionalState && (
+                <div className="bg-white/5 rounded-2xl p-4 border border-purple-400/20">
+                  <div className="flex items-start gap-3 mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-pink-500/20 border border-pink-500/30 flex items-center justify-center flex-shrink-0">
+                      <span className="text-lg">💭</span>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-pink-400 text-xs mb-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                        EMOTIONAL STATE
+                      </p>
+                      <p className="text-white/90 text-sm leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                        {analysisData.psychologicalProfile.emotionalState}
+                      </p>
+                      {analysisData.psychologicalProfile.emotionalEvidence && (
+                        <p className="text-white/60 text-xs mt-2 italic" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                          Evidence: {analysisData.psychologicalProfile.emotionalEvidence}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Power Dynamic */}
+              {analysisData.psychologicalProfile.powerDynamic && (
+                <div className="bg-white/5 rounded-2xl p-4 border border-purple-400/20">
+                  <div className="flex items-start gap-3 mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center flex-shrink-0">
+                      <Shield className="w-4 h-4 text-yellow-400" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-yellow-400 text-xs mb-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                        POWER DYNAMIC
+                      </p>
+                      <p className="text-white/90 text-sm leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                        {analysisData.psychologicalProfile.powerDynamic}
+                      </p>
+                      {analysisData.psychologicalProfile.powerDynamicEvidence && (
+                        <p className="text-white/60 text-xs mt-2 italic" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                          Evidence: {analysisData.psychologicalProfile.powerDynamicEvidence}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Premium Badge */}
+            <div className="mt-4 pt-4 border-t border-purple-400/20">
+              <p className="text-purple-300/60 text-xs text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                🔮 Advanced psychological intelligence • Powered by MaverickAI Deep Learning
+              </p>
+            </div>
+          </motion.div>
+        )}
+
         {/* 5. STRATEGIC PLAN - Collapsible with completion tracking */}
         <div>
           {/* Header - Always Visible */}
@@ -1299,7 +1435,7 @@ export function DashboardScreen({
                       cx="24"
                       cy="24"
                       r="20"
-                      stroke="rgba(255,255,255,0.1)"
+                      stroke={BRAND_COLORS.glass.normal}
                       strokeWidth="4"
                       fill="none"
                     />
@@ -1317,8 +1453,8 @@ export function DashboardScreen({
                     />
                     <defs>
                       <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#22D3EE" />
-                        <stop offset="100%" stopColor="#A855F7" />
+                        <stop offset="0%" stopColor={BRAND_COLORS.cyanText} />
+                        <stop offset="100%" stopColor={BRAND_COLORS.purple} />
                       </linearGradient>
                     </defs>
                   </svg>

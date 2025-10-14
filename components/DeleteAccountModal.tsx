@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { AlertTriangle, X } from 'lucide-react';
+import { BRAND_COLORS } from '../utils/brand-colors';
 
 interface DeleteAccountModalProps {
   onClose: () => void;
@@ -26,7 +27,10 @@ export function DeleteAccountModal({ onClose, onConfirm, userEmail }: DeleteAcco
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-6">
-      <div className="bg-gradient-to-b from-[#14123F] to-[#342FA5] rounded-3xl p-6 max-w-md w-full border border-red-500/30">
+      <div className="rounded-3xl p-6 max-w-md w-full border" style={{
+        background: BRAND_COLORS.gradients.background,
+        borderColor: `${BRAND_COLORS.semantic.error}4D`
+      }}>
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center">

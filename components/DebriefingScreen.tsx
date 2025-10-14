@@ -3,6 +3,7 @@ import { Activity, Home, Info } from 'lucide-react';
 import { BrandHeader } from './BrandHeader';
 import { PlatformCapabilitiesModal } from './PlatformCapabilitiesModal';
 import { motion } from 'framer-motion';
+import { BRAND_COLORS } from '../utils/brand-colors';
 
 interface DebriefingScreenProps {
   inputText: string;
@@ -34,7 +35,7 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-[#14123F] via-[#342FA5] to-[#14123F] flex flex-col relative">
+    <div className="w-full min-h-screen flex flex-col relative" style={{ background: BRAND_COLORS.gradients.background }}>
       {/* Background Enhancement */}
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5" />
       <div className="absolute top-1/4 left-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2 animate-pulse" />
@@ -55,8 +56,8 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
           onClick={() => setShowCapabilities(true)}
           whileHover={{ 
             scale: 1.15,
-            backgroundColor: "rgba(255, 255, 255, 0.25)",
-            borderColor: "rgba(0, 212, 255, 0.8)"
+            backgroundColor: BRAND_COLORS.glass.intense,
+            borderColor: `${BRAND_COLORS.cyan}CC`
           }}
           whileTap={{ scale: 0.95 }}
           className="w-14 h-14 rounded-full bg-white/15 backdrop-blur-md border-2 border-cyan-400/40 flex items-center justify-center transition-all duration-300 btn-press shadow-xl shadow-cyan-500/30 hover:shadow-cyan-500/50 relative overflow-hidden group"

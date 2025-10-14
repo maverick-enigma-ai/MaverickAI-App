@@ -1,4 +1,5 @@
 import { ArrowLeft, Shield } from 'lucide-react';
+import { BRAND_COLORS } from '../utils/brand-colors';
 
 interface PrivacyPolicyScreenProps {
   onBack: () => void;
@@ -6,9 +7,12 @@ interface PrivacyPolicyScreenProps {
 
 export function PrivacyPolicyScreen({ onBack }: PrivacyPolicyScreenProps) {
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-[#14123F] via-[#342FA5] to-[#14123F]">
+    <div className="w-full min-h-screen" style={{ background: BRAND_COLORS.gradients.background }}>
       {/* Header */}
-      <div className="sticky top-0 bg-gradient-to-b from-[#14123F] to-[#342FA5] border-b border-white/10 p-4 z-10">
+      <div className="sticky top-0 border-b p-4 z-10" style={{ 
+        background: BRAND_COLORS.gradients.backgroundHorizontal,
+        borderColor: BRAND_COLORS.borders.normal
+      }}>
         <div className="flex items-center gap-3">
           <button
             onClick={onBack}

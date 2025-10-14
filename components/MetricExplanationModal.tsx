@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { BRAND_COLORS } from '../utils/brand-colors';
 
 interface MetricExplanationModalProps {
   isOpen: boolean;
@@ -80,7 +81,8 @@ export function MetricExplanationModal({ isOpen, onClose, metric }: MetricExplan
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
       <div 
-        className={`w-full max-w-md bg-gradient-to-b from-[#14123F] via-[#342FA5] to-[#14123F] rounded-3xl border ${info.borderColor} backdrop-blur-md overflow-hidden`}
+        className={`w-full max-w-md rounded-3xl border ${info.borderColor} backdrop-blur-md overflow-hidden`}
+        style={{ background: BRAND_COLORS.gradients.background }}
         data-name={`modal_${metric}_explanation`}
       >
         {/* Header */}
