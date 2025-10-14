@@ -91,7 +91,10 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
             className="absolute inset-0 rounded-full border-2 border-cyan-400"
           />
           
-          <Info className="w-7 h-7 text-cyan-200 group-hover:text-white transition-colors relative z-10 drop-shadow-lg" />
+          <Info 
+            className="w-7 h-7 group-hover:text-white transition-colors relative z-10 drop-shadow-lg" 
+            style={{ color: BRAND_COLORS.cyanText }}  // Exact Figma cyan-400
+          />
         </motion.button>
       </motion.div>
       
@@ -102,104 +105,241 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
       <div className="flex-1 flex items-center justify-center p-6 relative z-10">
         <div className="max-w-md w-full">
           
-          {/* Main Processing Indicator */}
-          <div className="bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10 mb-6">
-            <div className="text-center">
-              {/* Radar Animation */}
-              <div className="relative w-32 h-32 mx-auto mb-8">
+          {/* Main Processing Indicator - AWARD-WINNING PREMIUM */}
+          <div 
+            className="rounded-3xl p-8 border mb-6 relative overflow-hidden"
+            style={{
+              background: BRAND_COLORS.glass.strong,
+              backdropFilter: 'blur(30px) saturate(200%)',
+              WebkitBackdropFilter: 'blur(30px) saturate(200%)',
+              borderColor: BRAND_COLORS.borders.cyan,
+              boxShadow: `0 20px 60px rgba(0, 0, 0, 0.3), 0 10px 30px ${BRAND_COLORS.cyan}20, 0 0 80px ${BRAND_COLORS.cyan}10`
+            }}
+          >
+            {/* Premium glow effect background */}
+            <div 
+              className="absolute inset-0 opacity-20 blur-2xl"
+              style={{
+                background: `radial-gradient(circle at 50% 50%, ${BRAND_COLORS.cyan}, transparent 70%)`
+              }}
+            />
+            
+            <div className="text-center relative z-10">
+              {/* Radar Animation - PREMIUM UPGRADE */}
+              <div className="relative w-36 h-36 mx-auto mb-8">
+                {/* Outer glow ring */}
+                <div 
+                  className="absolute inset-0 rounded-full animate-ping"
+                  style={{ 
+                    border: `2px solid ${BRAND_COLORS.cyan}`,
+                    opacity: 0.2,
+                    animationDuration: '3s'
+                  }} 
+                />
+                
                 {/* Outer ring */}
-                <div className="absolute inset-0 rounded-full border-2 border-cyan-400/30" />
+                <div 
+                  className="absolute inset-0 rounded-full"
+                  style={{ border: `2px solid ${BRAND_COLORS.cyan}40` }}
+                />
                 
                 {/* Middle ring */}
-                <div className="absolute inset-4 rounded-full border-2 border-cyan-400/40" />
+                <div 
+                  className="absolute inset-4 rounded-full"
+                  style={{ border: `2px solid ${BRAND_COLORS.cyan}60` }}
+                />
                 
                 {/* Inner ring */}
-                <div className="absolute inset-8 rounded-full border-2 border-cyan-400/50" />
+                <div 
+                  className="absolute inset-8 rounded-full"
+                  style={{ border: `2px solid ${BRAND_COLORS.cyan}80` }}
+                />
                 
-                {/* Center pulse */}
+                {/* Center pulse - EXACT FIGMA GRADIENT */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 animate-pulse" />
+                  <div 
+                    className="w-16 h-16 rounded-full animate-pulse"
+                    style={{ 
+                      background: BRAND_COLORS.gradients.cyanBlue,
+                      boxShadow: `0 0 30px ${BRAND_COLORS.cyan}80, 0 0 60px ${BRAND_COLORS.cyan}40`
+                    }}
+                  />
                 </div>
                 
                 {/* Rotating sweep line */}
                 <div className="absolute inset-0 animate-spin" style={{ animationDuration: '3s' }}>
-                  <div className="w-1 h-16 bg-gradient-to-b from-cyan-400 to-transparent absolute top-0 left-1/2 transform -translate-x-1/2 origin-bottom" />
+                  <div 
+                    className="w-1 h-16 absolute top-0 left-1/2 transform -translate-x-1/2 origin-bottom"
+                    style={{
+                      background: `linear-gradient(to bottom, ${BRAND_COLORS.cyan}, transparent)`
+                    }}
+                  />
                 </div>
                 
-                {/* Scanning dots */}
+                {/* Scanning dots - EXACT FIGMA COLORS */}
                 <div className="absolute inset-0">
-                  <div className="absolute top-1/4 right-1/4 w-2 h-2 rounded-full bg-purple-400 animate-ping" />
-                  <div className="absolute bottom-1/3 left-1/3 w-2 h-2 rounded-full bg-cyan-400 animate-ping" style={{ animationDelay: '0.5s' }} />
-                  <div className="absolute top-1/2 right-1/3 w-2 h-2 rounded-full bg-teal-400 animate-ping" style={{ animationDelay: '1s' }} />
+                  <div 
+                    className="absolute top-1/4 right-1/4 w-3 h-3 rounded-full animate-ping" 
+                    style={{ backgroundColor: BRAND_COLORS.purple }}
+                  />
+                  <div 
+                    className="absolute bottom-1/3 left-1/3 w-3 h-3 rounded-full animate-ping" 
+                    style={{ 
+                      backgroundColor: BRAND_COLORS.cyan,
+                      animationDelay: '0.5s' 
+                    }} 
+                  />
+                  <div 
+                    className="absolute top-1/2 right-1/3 w-3 h-3 rounded-full animate-ping" 
+                    style={{ 
+                      backgroundColor: BRAND_COLORS.teal,
+                      animationDelay: '1s' 
+                    }} 
+                  />
                 </div>
               </div>
               
               {/* Processing Status */}
-              <div className="space-y-3">
-                <h3 className="text-white text-lg" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+              <div className="space-y-3 mb-6">
+                <h3 style={{ 
+                  color: BRAND_COLORS.text.white,
+                  fontFamily: 'system-ui, -apple-system, sans-serif', 
+                  fontWeight: 600,
+                  fontSize: '1.25rem'
+                }}>
                   {processingSteps[processingStep].text}
                 </h3>
                 
-                <p className="text-cyan-300/80 text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <p style={{ 
+                  color: BRAND_COLORS.cyanText,
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                  fontSize: '0.875rem'
+                }}>
                   {processingSteps[processingStep].subtext}
                 </p>
               </div>
               
-              {/* Infinite Progress Bar */}
-              <div className="mt-6 w-full bg-white/10 rounded-full h-2 overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 animate-pulse" 
-                     style={{ 
-                       width: '100%',
-                       animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-                     }} 
+              {/* Infinite Progress Bar - EXACT FIGMA GRADIENT */}
+              <div 
+                className="w-full rounded-full h-2 overflow-hidden"
+                style={{ backgroundColor: BRAND_COLORS.glass.normal }}
+              >
+                <div 
+                  className="h-full animate-pulse" 
+                  style={{ 
+                    background: BRAND_COLORS.gradients.cyanBlue,
+                    width: '100%',
+                    animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    boxShadow: `0 0 10px ${BRAND_COLORS.cyan}80`
+                  }} 
                 />
               </div>
               
-              <p className="mt-4 text-xs text-gray-400" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+              <p 
+                className="mt-4"
+                style={{ 
+                  color: BRAND_COLORS.text.whiteSubtle,
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                  fontSize: '0.75rem'
+                }}
+              >
                 This typically takes 20-40 seconds
               </p>
             </div>
           </div>
 
-          {/* What's Happening Behind the Scenes */}
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 mb-6">
+          {/* What's Happening Behind the Scenes - PREMIUM */}
+          <div 
+            className="rounded-2xl p-6 border mb-6"
+            style={{
+              background: BRAND_COLORS.glass.normal,
+              backdropFilter: 'blur(24px)',
+              WebkitBackdropFilter: 'blur(24px)',
+              borderColor: BRAND_COLORS.borders.normal,
+              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)'
+            }}
+          >
             <div className="flex items-start gap-3 mb-4">
-              <Activity className="w-5 h-5 text-cyan-400 mt-0.5 shrink-0" />
+              <Activity 
+                className="w-5 h-5 mt-0.5 shrink-0" 
+                style={{ color: BRAND_COLORS.cyan }}
+              />
               <div>
-                <h4 className="text-white mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                <h4 style={{ 
+                  color: BRAND_COLORS.text.white,
+                  fontFamily: 'system-ui, -apple-system, sans-serif', 
+                  fontWeight: 600,
+                  marginBottom: '0.5rem'
+                }}>
                   Behind the Scenes
                 </h4>
-                <ul className="space-y-2 text-sm text-gray-300" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <ul 
+                  className="space-y-2" 
+                  style={{ 
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    fontSize: '0.875rem'
+                  }}
+                >
                   <li className="flex items-start gap-2">
-                    <span className="text-cyan-400 mt-0.5">•</span>
-                    <span>Advanced AI analyzing psychological power dynamics</span>
+                    <span style={{ color: BRAND_COLORS.cyan, marginTop: '0.125rem' }}>•</span>
+                    <span style={{ color: BRAND_COLORS.text.whiteSubtle }}>
+                      Advanced AI analyzing psychological power dynamics
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-purple-400 mt-0.5">•</span>
-                    <span>Calculating strategic metrics and risk factors</span>
+                    <span style={{ color: BRAND_COLORS.purple, marginTop: '0.125rem' }}>•</span>
+                    <span style={{ color: BRAND_COLORS.text.whiteSubtle }}>
+                      Calculating strategic metrics and risk factors
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-teal-400 mt-0.5">•</span>
-                    <span>Generating personalized strategic recommendations</span>
+                    <span style={{ color: BRAND_COLORS.teal, marginTop: '0.125rem' }}>•</span>
+                    <span style={{ color: BRAND_COLORS.text.whiteSubtle }}>
+                      Generating personalized strategic recommendations
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-0.5">•</span>
-                    <span>Preparing comprehensive tactical debrief</span>
+                    <span style={{ color: BRAND_COLORS.blue, marginTop: '0.125rem' }}>•</span>
+                    <span style={{ color: BRAND_COLORS.text.whiteSubtle }}>
+                      Preparing comprehensive tactical debrief
+                    </span>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
 
-          {/* Input Summary (Collapsed) */}
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
-            <h4 className="text-white text-sm mb-3" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+          {/* Input Summary (Collapsed) - PREMIUM */}
+          <div 
+            className="rounded-2xl p-4 border"
+            style={{
+              background: BRAND_COLORS.glass.normal,
+              backdropFilter: 'blur(24px)',
+              WebkitBackdropFilter: 'blur(24px)',
+              borderColor: BRAND_COLORS.borders.subtle
+            }}
+          >
+            <h4 style={{ 
+              color: BRAND_COLORS.text.white,
+              fontFamily: 'system-ui, -apple-system, sans-serif', 
+              fontWeight: 600,
+              fontSize: '0.875rem',
+              marginBottom: '0.75rem'
+            }}>
               Your Request:
             </h4>
             
             {inputText && (
               <div className="mb-2">
-                <p className="text-gray-200 text-xs bg-white/5 rounded-lg p-3 line-clamp-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <p 
+                  className="line-clamp-2 rounded-lg p-3" 
+                  style={{ 
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    fontSize: '0.75rem',
+                    color: BRAND_COLORS.text.whiteSubtle,
+                    background: BRAND_COLORS.glass.subtle
+                  }}
+                >
                   {inputText}
                 </p>
               </div>
@@ -207,7 +347,12 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
             
             {uploadedFiles.length > 0 && (
               <div>
-                <p className="text-xs text-gray-400 mb-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <p style={{ 
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                  fontSize: '0.75rem',
+                  color: BRAND_COLORS.text.whiteFaded,
+                  marginBottom: '0.25rem'
+                }}>
                   + {uploadedFiles.length} file{uploadedFiles.length > 1 ? 's' : ''} attached
                 </p>
               </div>
@@ -217,14 +362,30 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
         </div>
       </div>
 
-      {/* Bottom Section with Home Button */}
-      <div className="flex-shrink-0 p-6 border-t border-white/10 relative z-10">
+      {/* Bottom Section with Home Button - PREMIUM */}
+      <div 
+        className="flex-shrink-0 p-6 relative z-10"
+        style={{
+          borderTop: `1px solid ${BRAND_COLORS.borders.normal}`
+        }}
+      >
         {/* Reassurance Text */}
         <div className="text-center mb-4">
-          <p className="text-xs text-cyan-300/70" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <p style={{ 
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+            fontSize: '0.75rem',
+            color: BRAND_COLORS.cyanText
+          }}>
             ✨ Your analysis will appear automatically when ready
           </p>
-          <p className="text-xs text-gray-500 mt-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <p 
+            className="mt-1" 
+            style={{ 
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+              fontSize: '0.75rem',
+              color: BRAND_COLORS.text.whiteFaded
+            }}
+          >
             Advanced AI Processing • Secure & Encrypted
           </p>
         </div>

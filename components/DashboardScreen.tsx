@@ -7,6 +7,7 @@ import { ProcessedAnalysis } from '../types/runradar-api';
 import { exportAnalysisToPDF, canExportToPDF } from '../utils/pdf-export';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
+import { BRAND_COLORS } from '../utils/brand-colors';
 import { 
   getActionItems, 
   toggleActionItem, 
