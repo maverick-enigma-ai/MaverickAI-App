@@ -176,7 +176,8 @@ export function LandingPageTabbed({
                 className="px-6 py-2 rounded-xl transition-all btn-press"
                 style={{
                   background: activeTab === 'services' ? BRAND_COLORS.cyan : BRAND_COLORS.glass.normal,
-                  color: activeTab === 'services' ? BRAND_COLORS.navy : 'rgba(255, 255, 255, 0.8)'
+                  color: activeTab === 'services' ? '#ffffff' : 'rgba(255, 255, 255, 0.8)',  // White text on cyan
+                  fontWeight: activeTab === 'services' ? 600 : 400
                 }}
                 data-name="btn_tab_services"
               >
@@ -205,8 +206,9 @@ export function LandingPageTabbed({
                 onClick={() => setActiveTab('app')}
                 className="px-6 py-2 rounded-xl transition-all btn-press"
                 style={{
-                  background: activeTab === 'app' ? BRAND_COLORS.gradients.cyan : BRAND_COLORS.glass.normal,
-                  color: activeTab === 'app' ? BRAND_COLORS.navy : 'rgba(255, 255, 255, 0.8)'
+                  background: activeTab === 'app' ? BRAND_COLORS.gradients.cyanBlue : BRAND_COLORS.glass.normal,
+                  color: activeTab === 'app' ? '#ffffff' : 'rgba(255, 255, 255, 0.8)',  // White text on gradient
+                  fontWeight: activeTab === 'app' ? 600 : 400
                 }}
                 data-name="btn_tab_app"
               >
@@ -247,7 +249,8 @@ export function LandingPageTabbed({
               className="flex-1 px-4 py-2 rounded-xl transition-all btn-press text-sm"
               style={{
                 background: activeTab === 'services' ? BRAND_COLORS.cyan : BRAND_COLORS.glass.normal,
-                color: activeTab === 'services' ? BRAND_COLORS.navy : 'rgba(255, 255, 255, 0.8)'
+                color: '#ffffff',  // White text for all states
+                fontWeight: activeTab === 'services' ? 600 : 400
               }}
               data-name="btn_tab_services_mobile"
             >
@@ -259,7 +262,8 @@ export function LandingPageTabbed({
               className="flex-1 px-4 py-2 rounded-xl transition-all btn-press text-sm"
               style={{
                 background: activeTab === 'book' ? BRAND_COLORS.purple : BRAND_COLORS.glass.normal,
-                color: BRAND_COLORS.text.white
+                color: '#ffffff',
+                fontWeight: activeTab === 'book' ? 600 : 400
               }}
               data-name="btn_tab_book_mobile"
             >
@@ -270,8 +274,9 @@ export function LandingPageTabbed({
               onClick={() => setActiveTab('app')}
               className="flex-1 px-4 py-2 rounded-xl transition-all btn-press text-sm"
               style={{
-                background: activeTab === 'app' ? BRAND_COLORS.gradients.cyan : BRAND_COLORS.glass.normal,
-                color: activeTab === 'app' ? BRAND_COLORS.navy : 'rgba(255, 255, 255, 0.8)'
+                background: activeTab === 'app' ? BRAND_COLORS.gradients.cyanBlue : BRAND_COLORS.glass.normal,
+                color: '#ffffff',  // White text for all states
+                fontWeight: activeTab === 'app' ? 600 : 400
               }}
               data-name="btn_tab_app_mobile"
             >

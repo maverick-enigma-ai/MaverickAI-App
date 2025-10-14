@@ -12,23 +12,31 @@ export const BRAND_COLORS = {
   // Primary Brand Colors
   navy: '#14123F',
   deepBlue: '#342FA5',
-  cyan: '#5eaec5',           // MUTED gray-teal (FIGMA BASELINE MATCH)
-  cyanText: '#7eb9cc',       // For text - even more muted
-  blue: '#2563eb',           // Rich blue for gradients
+  cyan: '#06b6d4',           // EXACT FIGMA CYAN (Tailwind cyan-500) ✨
+  cyanBright: '#00d4ff',     // Brighter cyan for accents
+  cyanText: '#22D3EE',       // Cyan-400 for text readability
+  blue: '#3b82f6',           // EXACT FIGMA BLUE (Tailwind blue-500) ✨
   teal: '#14b8a6',
   purple: '#8b5cf6',
   gold: '#fbbf24',
   pink: '#ec4899',
 
-  // Gradients - MATCHING FIGMA BASELINE ✨
+  // Gradients - EXACT FIGMA MATCH ✨
   gradients: {
     background: 'linear-gradient(to bottom, #14123F 0%, #342FA5 50%, #14123F 100%)',
     backgroundHorizontal: 'linear-gradient(135deg, #14123F 0%, #342FA5 100%)',
-    cyan: 'linear-gradient(135deg, #5eaec5 0%, #4a8fa0 100%)',      // Muted teal gradient
-    cyanBlue: 'linear-gradient(135deg, #5eaec5 0%, #6b7fd9 100%)',  // Muted cyan to purple-blue
-    cyanTeal: 'linear-gradient(135deg, #5eaec5 0%, #14b8a6 100%)',  // Cyan to Teal variant
+    
+    // PRIMARY BUTTON GRADIENT (Start Analysis, Sign In) - EXACT FIGMA
+    cyanBlue: 'linear-gradient(to right, #06b6d4, #3b82f6)',
+    
+    // ALTERNATE GRADIENT (Purple to Cyan) - EXACT FIGMA
+    purpleCyan: 'linear-gradient(135deg, #8b5cf6, #06b6d4)',
+    
+    // Legacy gradients (keep for compatibility)
+    cyan: 'linear-gradient(135deg, #00d4ff 0%, #22D3EE 100%)',
+    cyanTeal: 'linear-gradient(135deg, #00d4ff 0%, #14b8a6 100%)',
     purple: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)',
-    radar: 'linear-gradient(to bottom right, #5eaec5, #8b5cf6, #14b8a6)',
+    radar: 'linear-gradient(to bottom right, #00d4ff, #8b5cf6, #14b8a6)',
   },
 
   // Glass Effects

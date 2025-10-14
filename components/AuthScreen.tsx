@@ -287,22 +287,22 @@ export function AuthScreen({ onSignIn, onSignUp, onGoogleSignIn, onPasswordReset
               disabled={isSubmitting || loading}
               className="w-full py-4 rounded-full transition-all duration-300 min-h-[56px] hover:scale-[1.02]"
               style={{
-                background: BRAND_COLORS.cyan,  // Pure vibrant cyan
-                color: BRAND_COLORS.navy,
-                boxShadow: `0 20px 60px ${BRAND_COLORS.cyan}4D`,
+                background: BRAND_COLORS.gradients.cyanBlue,  // Exact Figma: #06b6d4 → #3b82f6
+                color: '#ffffff',  // White text for best contrast
+                boxShadow: `0 20px 60px rgba(6, 182, 212, 0.5), 0 10px 30px rgba(6, 182, 212, 0.3)`,
                 opacity: (isSubmitting || loading) ? 0.5 : 1,
                 fontFamily: 'system-ui, -apple-system, sans-serif',
                 fontWeight: 700
               }}
               onMouseEnter={(e) => {
                 if (!isSubmitting && !loading) {
-                  e.currentTarget.style.boxShadow = `0 25px 70px ${BRAND_COLORS.cyan}66`;
+                  e.currentTarget.style.boxShadow = `0 25px 70px rgba(6, 182, 212, 0.6), 0 15px 40px rgba(6, 182, 212, 0.4)`;
                   e.currentTarget.style.filter = 'brightness(1.1)';
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isSubmitting && !loading) {
-                  e.currentTarget.style.boxShadow = `0 20px 60px ${BRAND_COLORS.cyan}4D`;
+                  e.currentTarget.style.boxShadow = `0 20px 60px rgba(6, 182, 212, 0.5), 0 10px 30px rgba(6, 182, 212, 0.3)`;
                   e.currentTarget.style.filter = 'brightness(1)';
                 }
               }}

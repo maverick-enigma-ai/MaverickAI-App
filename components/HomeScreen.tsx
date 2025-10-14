@@ -98,7 +98,7 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
             />
             
             <Info className="w-7 h-7 group-hover:text-white transition-colors relative z-10 drop-shadow-lg" style={{
-              color: `${BRAND_COLORS.cyan}E6`  // 90% opacity
+              color: BRAND_COLORS.cyanText  // Exact Figma cyan (#22D3EE)
             }} />
           </motion.button>
         </motion.div>
@@ -145,17 +145,17 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
                   onClick={onStartAnalysis}
                   className="w-full py-5 rounded-full transition-all duration-300 shadow-xl min-h-[60px] relative overflow-hidden group btn-press-strong btn-hover-lift animate-subtle-pulse"
                   style={{
-                    background: BRAND_COLORS.gradients.cyanBlue,
-                    color: BRAND_COLORS.navy,
-                    boxShadow: `0 20px 60px ${BRAND_COLORS.cyan}50, 0 10px 30px ${BRAND_COLORS.cyan}30`
+                    background: BRAND_COLORS.gradients.cyanBlue,  // Exact Figma: #06b6d4 → #3b82f6
+                    color: '#ffffff',  // White text for best contrast on gradient
+                    boxShadow: `0 20px 60px rgba(6, 182, 212, 0.5), 0 10px 30px rgba(6, 182, 212, 0.3)`
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = `0 25px 80px ${BRAND_COLORS.cyan}60, 0 15px 40px ${BRAND_COLORS.cyan}40`;
+                    e.currentTarget.style.boxShadow = `0 25px 80px rgba(6, 182, 212, 0.6), 0 15px 40px rgba(6, 182, 212, 0.4)`;
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = `0 20px 60px ${BRAND_COLORS.cyan}50, 0 10px 30px ${BRAND_COLORS.cyan}30`;
+                    e.currentTarget.style.boxShadow = `0 20px 60px rgba(6, 182, 212, 0.5), 0 10px 30px rgba(6, 182, 212, 0.3)`;
                   }}
                   data-name="btn_start_analysis"
                 >
