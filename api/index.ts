@@ -12,13 +12,21 @@ const OPENAI_ASSISTANT_ID = process.env.VITE_OPENAI_ASSISTANT_ID || process.env.
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
 
-// Validate environment variables
+// Validate environment variables on module load
+console.log('🔍 Environment variable check:');
+console.log(`  OPENAI_API_KEY: ${OPENAI_API_KEY ? 'SET (length: ' + OPENAI_API_KEY.length + ')' : 'MISSING'}`);
+console.log(`  OPENAI_ASSISTANT_ID: ${OPENAI_ASSISTANT_ID ? 'SET (' + OPENAI_ASSISTANT_ID + ')' : 'MISSING'}`);
+console.log(`  SUPABASE_URL: ${SUPABASE_URL ? 'SET' : 'MISSING'}`);
+console.log(`  SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY ? 'SET (length: ' + SUPABASE_ANON_KEY.length + ')' : 'MISSING'}`);
+
 if (!OPENAI_API_KEY || !OPENAI_ASSISTANT_ID) {
-  console.error('❌ Missing OpenAI configuration in environment variables');
+  console.error('❌ CRITICAL: Missing OpenAI configuration in environment variables');
+  console.error('   Add VITE_OPENAI_API_KEY and VITE_OPENAI_ASSISTANT_ID in Vercel');
 }
 
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-  console.error('❌ Missing Supabase configuration in environment variables');
+  console.error('❌ CRITICAL: Missing Supabase configuration in environment variables');
+  console.error('   Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Vercel');
 }
 
 const supabase = createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!);
@@ -110,10 +118,74 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     console.log('✅ Pending record created');
 
-    // STEP 2: Call OpenAI Assistant API
-    console.log('🤖 Step 2: Calling OpenAI Assistant...');
+    // STEP 2: Verify Assistant Exists and Has Instructions
+    console.log('🤖 Step 2A: Verifying OpenAI Assistant...');
+    console.log(`🔑 Assistant ID: ${OPENAI_ASSISTANT_ID}`);
+    console.log(`🔑 API Key present: ${OPENAI_API_KEY ? 'YES' : 'NO'}`);
+    
+    // Retrieve the assistant to verify it exists and has instructions
+    const assistantResponse = await fetch(`https://api.openai.com/v1/assistants/${OPENAI_ASSISTANT_ID}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        'OpenAI-Beta': 'assistants=v2'
+      }
+    });
+    
+    if (!assistantResponse.ok) {
+      const errorText = await assistantResponse.text();
+      console.error('❌ Assistant retrieval failed:', errorText);
+      console.error('❌ Status:', assistantResponse.status);
+      
+      // Update database with error
+      await supabase
+        .from('analyses')
+        .update({
+          status: 'failed',
+          is_ready: false,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', jobId);
+      
+      throw new Error(`OpenAI Assistant not found or invalid: ${errorText}`);
+    }
+    
+    const assistant = await assistantResponse.json();
+    console.log(`✅ Assistant found: ${assistant.name || 'Unnamed'}`);
+    console.log(`📋 Model: ${assistant.model}`);
+    console.log(`📝 Has instructions: ${assistant.instructions ? 'YES' : 'NO'}`);
+    
+    if (!assistant.instructions || assistant.instructions.trim().length < 10) {
+      console.error('❌ CRITICAL: Assistant has no instructions configured!');
+      console.error('   Go to https://platform.openai.com/assistants and add instructions');
+      
+      // Update database with error
+      await supabase
+        .from('analyses')
+        .update({
+          status: 'failed',
+          is_ready: false,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', jobId);
+      
+      throw new Error('OpenAI Assistant has no instructions configured. Please add instructions in the OpenAI platform.');
+    }
+    
+    // STEP 2B: Create Thread and Run
+    console.log('🤖 Step 2B: Creating thread and run...');
+    console.log(`📝 Input text preview: "${inputText.substring(0, 100)}..."`);
     
     // Create thread
+    const threadPayload = {
+      messages: [{
+        role: 'user',
+        content: inputText
+      }]
+    };
+    
+    console.log('📤 Creating thread with message...');
+    
     const threadResponse = await fetch('https://api.openai.com/v1/threads', {
       method: 'POST',
       headers: {
@@ -121,25 +193,40 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         'Content-Type': 'application/json',
         'OpenAI-Beta': 'assistants=v2'
       },
-      body: JSON.stringify({
-        messages: [{
-          role: 'user',
-          content: inputText
-        }]
-      })
+      body: JSON.stringify(threadPayload)
     });
 
     if (!threadResponse.ok) {
       const errorText = await threadResponse.text();
       console.error('❌ Thread creation failed:', errorText);
-      throw new Error(`OpenAI thread creation failed: ${threadResponse.status}`);
+      console.error('❌ Status:', threadResponse.status);
+      console.error('❌ Status Text:', threadResponse.statusText);
+      
+      // Update database with error
+      await supabase
+        .from('analyses')
+        .update({
+          status: 'failed',
+          is_ready: false,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', jobId);
+      
+      throw new Error(`OpenAI thread creation failed: ${errorText}`);
     }
 
     const thread = await threadResponse.json();
     const threadId = thread.id;
     console.log(`📎 Thread created: ${threadId}`);
 
-    // Create run
+    // Create run with additional_instructions to ensure proper analysis
+    const runPayload = {
+      assistant_id: OPENAI_ASSISTANT_ID,
+      additional_instructions: 'Analyze the following situation and provide a complete psychological power dynamics analysis in JSON format according to your instructions.'
+    };
+    
+    console.log('📤 Creating run with assistant:', OPENAI_ASSISTANT_ID);
+    
     const runResponse = await fetch(`https://api.openai.com/v1/threads/${threadId}/runs`, {
       method: 'POST',
       headers: {
@@ -147,15 +234,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         'Content-Type': 'application/json',
         'OpenAI-Beta': 'assistants=v2'
       },
-      body: JSON.stringify({
-        assistant_id: OPENAI_ASSISTANT_ID
-      })
+      body: JSON.stringify(runPayload)
     });
 
     if (!runResponse.ok) {
       const errorText = await runResponse.text();
       console.error('❌ Run creation failed:', errorText);
-      throw new Error(`OpenAI run creation failed: ${runResponse.status}`);
+      console.error('❌ Status:', runResponse.status);
+      console.error('❌ Status Text:', runResponse.statusText);
+      
+      // Update database with error
+      await supabase
+        .from('analyses')
+        .update({
+          status: 'failed',
+          is_ready: false,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', jobId);
+      
+      throw new Error(`OpenAI run creation failed: ${errorText}`);
     }
 
     const run = await runResponse.json();
@@ -348,11 +446,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   } catch (error) {
     const elapsedTime = Date.now() - startTime;
     console.error('❌ Analysis failed:', error);
+    console.error('❌ Error stack:', error instanceof Error ? error.stack : 'No stack trace');
+    
+    // Try to extract more details from the error
+    let errorMessage = 'Analysis failed';
+    let errorDetails = '';
+    
+    if (error instanceof Error) {
+      errorMessage = error.message;
+      
+      // Check if it's an OpenAI API error
+      if (errorMessage.includes('OpenAI')) {
+        errorDetails = '\n\nPossible causes:\n' +
+          '1. OpenAI API key is invalid or expired\n' +
+          '2. OpenAI Assistant ID is incorrect\n' +
+          '3. Assistant has no instructions configured\n' +
+          '4. OpenAI API is down or rate limited\n\n' +
+          'Check Vercel logs for details.';
+      }
+    }
     
     return res.status(500).json({
       success: false,
-      error: error instanceof Error ? error.message : 'Analysis failed',
-      elapsedTime
+      error: errorMessage + errorDetails,
+      elapsedTime,
+      timestamp: new Date().toISOString()
     });
   }
 }
