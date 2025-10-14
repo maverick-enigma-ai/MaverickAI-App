@@ -10,12 +10,4 @@ export default defineConfig({
     target: 'esnext',
   },
 })
-resolve: {
-  alias: {
-    'motion/react': 'motion/dist/es/react/index.mjs',
-    'motion': 'motion/dist/es/index.mjs',
-  },
-},
-optimizeDeps: {
-  include: ['motion/react'],  // Pre-bundle motion
-},
+

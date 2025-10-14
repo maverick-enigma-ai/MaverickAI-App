@@ -1,6 +1,6 @@
 import { Activity, Zap, Brain, Target, TrendingUp, Shield, Info } from 'lucide-react';
 import { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { BrandHeader } from './BrandHeader';
 import { RadarIcon } from './RadarIcon';
 import { ErrorModal } from './ErrorModal';

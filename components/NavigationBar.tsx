@@ -1,5 +1,5 @@
 import { Home, Clock, Settings, User } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 
 interface NavigationBarProps {
   activeTab: string;

@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { X, Upload, CheckCircle } from 'lucide-react';
 import { MobileFilePreview } from './MobileFilePreview';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface FileUploadModalProps {
   isOpen: boolean;

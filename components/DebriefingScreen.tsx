@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Activity, Home, Info } from 'lucide-react';
 import { BrandHeader } from './BrandHeader';
 import { PlatformCapabilitiesModal } from './PlatformCapabilitiesModal';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 
 interface DebriefingScreenProps {
   inputText: string;

@@ -1,5 +1,5 @@
 import { Activity, Brain, Shield, Target, X, ChevronDown } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 
 interface PlatformCapabilitiesModalProps {
