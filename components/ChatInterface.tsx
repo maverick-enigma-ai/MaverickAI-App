@@ -13,6 +13,9 @@ interface ChatInterfaceProps {
 }
 
 export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'personal', 'wealth', 'legal'] }: ChatInterfaceProps) {
+  // Ensure enabledScenarios is always an array
+  const safeEnabledScenarios = enabledScenarios || ['corporate', 'personal', 'wealth', 'legal'];
+  
   const [inputText, setInputText] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isFileModalOpen, setIsFileModalOpen] = useState(false);
@@ -128,7 +131,7 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
               </ul>
               
               {/* Sample Scenarios Button */}
-              {enabledScenarios.length > 0 && (
+              {safeEnabledScenarios.length > 0 && (
                 <button
                   onClick={() => setIsScenariosModalOpen(true)}
                   className="w-full py-3 px-4 rounded-xl transition-all duration-200 active:scale-[0.98]"
@@ -316,7 +319,7 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
         isOpen={isScenariosModalOpen}
         onClose={() => setIsScenariosModalOpen(false)}
         onSelectScenario={handleScenarioSelect}
-        enabledCategories={enabledScenarios}
+        enabledCategories={safeEnabledScenarios}
       />
     </>
   );

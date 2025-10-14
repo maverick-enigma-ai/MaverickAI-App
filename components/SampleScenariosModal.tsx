@@ -20,11 +20,12 @@ export function SampleScenariosModal({
   
   // Memoize scenarios
   const scenarios = useMemo(() => {
+    if (!enabledScenarios || enabledScenarios.length === 0) return [];
     return enabledScenarios.map(category => ({
       category,
       scenario: getRandomScenario(category)
     }));
-  }, [scenarioRefreshKey, enabledScenarios.join(',')]);
+  }, [scenarioRefreshKey, enabledScenarios?.join(',') || '']);
 
   const handleRefreshScenarios = () => {
     setScenarioRefreshKey(prev => prev + 1);

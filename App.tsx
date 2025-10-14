@@ -868,7 +868,7 @@ export default function App() {
   const handleOnboardingComplete = (preferences: OnboardingPreferences) => {
     addDebugLog('✅ Onboarding completed');
     addDebugLog(`   Sample scenarios: ${preferences.showSampleScenarios ? 'ON' : 'OFF'}`);
-    addDebugLog(`   Enabled categories: ${preferences.enabledScenarios.join(', ')}`);
+    addDebugLog(`   Enabled categories: ${preferences.enabledScenarios?.join(', ') || 'none'}`);
     addDebugLog(`   Text size: ${preferences.textSize}`);
     addDebugLog(`   Analytics: ${preferences.enableAnalytics ? 'ON' : 'OFF'}`);
     
@@ -1334,13 +1334,7 @@ export default function App() {
   // Show landing page if not signed in and not on special routes
   if (!user && appState === 'landing') {
     return (
-      <div className="size-full bg-app relative">
-              {/* [UI restore] ambient radar blobs */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="bg-radar w-80 h-80 rounded-full absolute left-[8%] top-[14%] animate-spin-slow" />
-        <div className="bg-radar w-96 h-96 rounded-full absolute right-[10%] bottom-[8%] animate-spin-slow" />
-      </div>
-
+      <div className="size-full">
         <LandingPageTabbed
           onGetStarted={() => setAppState('auth')}
           onViewPricing={() => setAppState('payment')}
@@ -1353,13 +1347,7 @@ export default function App() {
   // Show auth screen if not signed in (unless viewing legal pages or landing)
   if (!user && !['privacy', 'terms', 'landing'].includes(appState)) {
     return (
-      <div className="size-full relative bg-[radial-gradient(900px_600px_at_70%_110%,rgba(56,189,248,0.15),transparent_60%),radial-gradient(800px_500px_at_25%_-10%,rgba(99,102,241,0.12),transparent_60%),linear-gradient(180deg,var(--color-navy)_0%,var(--color-deep-blue)_50%,var(--color-navy)_100%)]">
-              {/* [UI restore] ambient radar blobs */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="bg-radar w-80 h-80 rounded-full absolute left-[8%] top-[14%] animate-spin-slow" />
-        <div className="bg-radar w-96 h-96 rounded-full absolute right-[10%] bottom-[8%] animate-spin-slow" />
-      </div>
-
+      <div className="size-full">
         <AuthScreen
           onSignIn={handleSignIn}
           onSignUp={handleSignUp}
@@ -1385,13 +1373,7 @@ export default function App() {
         minimumDisplayTime={3500}
       />
 
-      <div className="dark size-full bg-app min-h-screen relative">
-            {/* [UI restore] ambient radar blobs */}
-    <div className="pointer-events-none absolute inset-0">
-      <div className="bg-radar w-80 h-80 rounded-full absolute left-[8%] top-[14%] animate-spin-slow" />
-      <div className="bg-radar w-96 h-96 rounded-full absolute right-[10%] bottom-[8%] animate-spin-slow" />
-    </div>
-
+      <div className="dark size-full bg-gradient-to-b from-navy via-deep-blue to-navy min-h-screen">
         {/* Main Content */}
         <div className="pb-40">
         {appState === 'home' && (
