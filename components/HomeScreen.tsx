@@ -114,7 +114,7 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
             }}>
               {/* Animated gradient border effect */}
               <div className="absolute inset-0 rounded-3xl blur-xl opacity-50" style={{
-                background: `linear-gradient(to right, ${BRAND_COLORS.cyan}33, ${BRAND_COLORS.purple}33, ${BRAND_COLORS.teal}33)`
+                background: `linear-gradient(to right, ${BRAND_COLORS.cyan}26, ${BRAND_COLORS.purple}26, ${BRAND_COLORS.teal}26)`
               }} />
               
               <div className="relative">
@@ -134,7 +134,7 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
                 </h3>
                 
                 <p className="text-sm mb-8 px-2 max-w-xs mx-auto" style={{ 
-                  color: `${BRAND_COLORS.cyan}E6`,  // 90% opacity for bright readable text
+                  color: BRAND_COLORS.cyanText,
                   fontFamily: 'system-ui, -apple-system, sans-serif' 
                 }}>
                   Describe your situation for psychological power dynamics analysis
@@ -146,16 +146,16 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
                   className="w-full py-5 rounded-full transition-all duration-300 shadow-xl min-h-[60px] relative overflow-hidden group btn-press-strong btn-hover-lift animate-subtle-pulse"
                   style={{
                     background: BRAND_COLORS.gradients.cyanBlue,
-                    color: BRAND_COLORS.text.white,
-                    boxShadow: `0 20px 60px ${BRAND_COLORS.cyanSoft}40`
+                    color: BRAND_COLORS.navy,
+                    boxShadow: `0 20px 60px ${BRAND_COLORS.cyan}30`
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = `0 25px 80px ${BRAND_COLORS.cyanSoft}50`;
+                    e.currentTarget.style.boxShadow = `0 25px 80px ${BRAND_COLORS.cyan}40`;
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = `0 20px 60px ${BRAND_COLORS.cyanSoft}40`;
+                    e.currentTarget.style.boxShadow = `0 20px 60px ${BRAND_COLORS.cyan}30`;
                   }}
                   data-name="btn_start_analysis"
                 >

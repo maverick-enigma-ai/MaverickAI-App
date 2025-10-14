@@ -208,10 +208,10 @@ html {
     animation: shimmer 2s infinite;
   }
 
-  /* Placeholder text styling */
+  /* Placeholder text styling - MUTED */
   textarea::placeholder,
   input::placeholder {
-    color: rgba(34, 211, 238, 0.4) !important; /* cyan with 40% opacity */
+    color: rgba(126, 185, 204, 0.5) !important; /* muted gray-teal with 50% opacity */
     opacity: 1 !important;
   }
 }

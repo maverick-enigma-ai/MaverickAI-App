@@ -12,9 +12,9 @@ export const BRAND_COLORS = {
   // Primary Brand Colors
   navy: '#14123F',
   deepBlue: '#342FA5',
-  cyan: '#06b6d4',           // Muted teal-cyan for text/accents (Tailwind cyan-500)
-  cyanSoft: '#22d3ee',       // Softer cyan for gradients (Tailwind cyan-400)
-  blue: '#2563eb',           // Rich blue for gradients (Tailwind blue-600)
+  cyan: '#5eaec5',           // MUTED gray-teal (FIGMA BASELINE MATCH)
+  cyanText: '#7eb9cc',       // For text - even more muted
+  blue: '#2563eb',           // Rich blue for gradients
   teal: '#14b8a6',
   purple: '#8b5cf6',
   gold: '#fbbf24',
@@ -24,11 +24,11 @@ export const BRAND_COLORS = {
   gradients: {
     background: 'linear-gradient(to bottom, #14123F 0%, #342FA5 50%, #14123F 100%)',
     backgroundHorizontal: 'linear-gradient(135deg, #14123F 0%, #342FA5 100%)',
-    cyan: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)',      // Teal gradient - SOFTER
-    cyanBlue: 'linear-gradient(135deg, #22d3ee 0%, #2563eb 100%)',  // Cyan to Blue - FIGMA BUTTON MATCH
-    cyanTeal: 'linear-gradient(135deg, #22d3ee 0%, #14b8a6 100%)',  // Cyan to Teal variant
+    cyan: 'linear-gradient(135deg, #5eaec5 0%, #4a8fa0 100%)',      // Muted teal gradient
+    cyanBlue: 'linear-gradient(135deg, #5eaec5 0%, #6b7fd9 100%)',  // Muted cyan to purple-blue
+    cyanTeal: 'linear-gradient(135deg, #5eaec5 0%, #14b8a6 100%)',  // Cyan to Teal variant
     purple: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)',
-    radar: 'linear-gradient(to bottom right, #06b6d4, #8b5cf6, #14b8a6)',
+    radar: 'linear-gradient(to bottom right, #5eaec5, #8b5cf6, #14b8a6)',
   },
 
   // Glass Effects

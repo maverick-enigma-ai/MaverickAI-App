@@ -289,7 +289,7 @@ export function AuthScreen({ onSignIn, onSignUp, onGoogleSignIn, onPasswordReset
               style={{
                 background: BRAND_COLORS.gradients.cyanBlue,
                 color: BRAND_COLORS.navy,
-                boxShadow: `0 10px 30px ${BRAND_COLORS.cyanSoft}40`,
+                boxShadow: `0 10px 30px ${BRAND_COLORS.cyan}30`,
                 opacity: (isSubmitting || loading) ? 0.5 : 1,
                 fontFamily: 'system-ui, -apple-system, sans-serif',
                 fontWeight: 600

@@ -30,7 +30,7 @@ export function BrandHeader({
               <div 
                 className="absolute inset-0 rounded-full blur-xl animate-pulse"
                 style={{
-                  background: `${BRAND_COLORS.cyan}33`  // 20% opacity
+                  background: `${BRAND_COLORS.cyan}26`  // Subtle glow
                 }}
               />
             )}
@@ -53,7 +53,7 @@ export function BrandHeader({
         <p 
           className={`text-sm ${rightContent ? 'text-left' : 'text-center'} leading-relaxed`}
           style={{ 
-            color: BRAND_COLORS.cyan,
+            color: BRAND_COLORS.cyanText,
             fontFamily: 'system-ui, -apple-system, sans-serif' 
           }}
         >

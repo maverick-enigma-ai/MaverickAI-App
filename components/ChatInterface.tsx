@@ -122,7 +122,7 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
                 🎯 Strategic Intelligence Analysis
               </p>
               <ul className="space-y-2 text-sm mb-4" style={{ 
-                color: `${BRAND_COLORS.cyan}E6`,
+                color: BRAND_COLORS.cyanText,
                 fontFamily: 'system-ui, -apple-system, sans-serif' 
               }}>
                 <li>• Decode psychological patterns in communications</li>
@@ -136,20 +136,20 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
                   onClick={() => setIsScenariosModalOpen(true)}
                   className="w-full py-3 px-4 rounded-xl transition-all duration-200 active:scale-[0.98]"
                   style={{
-                    background: `linear-gradient(to right, ${BRAND_COLORS.cyan}33, ${BRAND_COLORS.purple}33)`,
+                    background: `linear-gradient(to right, ${BRAND_COLORS.cyan}26, ${BRAND_COLORS.purple}26)`,
                     border: `1px solid ${BRAND_COLORS.borders.normal}`
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = `linear-gradient(to right, ${BRAND_COLORS.cyan}4D, ${BRAND_COLORS.purple}4D)`;
+                    e.currentTarget.style.background = `linear-gradient(to right, ${BRAND_COLORS.cyan}33, ${BRAND_COLORS.purple}33)`;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = `linear-gradient(to right, ${BRAND_COLORS.cyan}33, ${BRAND_COLORS.purple}33)`;
+                    e.currentTarget.style.background = `linear-gradient(to right, ${BRAND_COLORS.cyan}26, ${BRAND_COLORS.purple}26)`;
                   }}
                   data-name="btn_view_sample_scenarios"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Lightbulb className="w-4 h-4" style={{ color: BRAND_COLORS.cyan }} />
+                      <Lightbulb className="w-4 h-4" style={{ color: BRAND_COLORS.cyanText }} />
                       <span className="text-sm" style={{ 
                         color: BRAND_COLORS.text.white,
                         fontFamily: 'system-ui, -apple-system, sans-serif', 
@@ -158,7 +158,7 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
                         View Sample Scenarios
                       </span>
                     </div>
-                    <span className="text-xs" style={{ color: BRAND_COLORS.cyan }}>→</span>
+                    <span className="text-xs" style={{ color: BRAND_COLORS.cyanText }}>→</span>
                   </div>
                 </button>
               )}
@@ -285,10 +285,10 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
                 {canSubmit && !isSubmitting && (
                   <>
                     <div className="absolute inset-0 rounded-full animate-ping" style={{
-                      border: `2px solid ${BRAND_COLORS.cyan}4D`
+                      border: `2px solid ${BRAND_COLORS.cyan}33`
                     }} />
                     <div className="absolute inset-1 rounded-full animate-ping" style={{
-                      border: `2px solid ${BRAND_COLORS.cyan}33`,
+                      border: `2px solid ${BRAND_COLORS.cyan}26`,
                       animationDelay: '0.5s'
                     }} />
                   </>
@@ -298,7 +298,7 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
 
             {/* Input Hint */}
             <p className="text-center text-xs" style={{ 
-              color: `${BRAND_COLORS.cyan}B3`,
+              color: BRAND_COLORS.cyanText,
               fontFamily: 'system-ui, -apple-system, sans-serif' 
             }}>
               {isSubmitting ? 'Initiating Radar Scan...' : canSubmit ? '✨ Tap radar to begin psychological analysis' : '💡 Upload files + add text, then tap radar'}
