@@ -963,16 +963,45 @@ export default function App() {
       
       // ✨ OPTION A vs OPTION B ROUTING
       if (files.length === 0) {
-        // ⚡ OPTION A: Text-only (Direct OpenAI - fast!)
-        addDebugLog('⚡ OPTION A: NO FILES - Using Direct OpenAI integration');
-        addDebugLog('📤 Faster and more reliable for text-only queries');
-        addDebugLog('💳 Payment plan fetched from users table');
+        // ⚡ OPTION A: Text-only (Secure API endpoint - FAST!)
+        addDebugLog('⚡ OPTION A: NO FILES - Using secure /api/analyze endpoint');
+        addDebugLog('🔐 API keys stay on server (NEVER exposed to browser)');
+        addDebugLog('⚡ Direct OpenAI processing (no polling delays)');
         
-        analysisResults = await submitTextAnalysis(
-          text,
-          user.uid,
-          user.email
-        );
+        // Call secure API endpoint
+        const apiStartTime = Date.now();
+        const response = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            inputText: text,
+            userId: user.uid,
+            userEmail: user.email
+          })
+        });
+        
+        const apiElapsedTime = Date.now() - apiStartTime;
+        addDebugLog(`⏱️ API response time: ${apiElapsedTime}ms (${(apiElapsedTime/1000).toFixed(1)}s)`);
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+          addDebugLog(`❌ API error: ${errorData.error || response.statusText}`);
+          throw new Error(errorData.error || `API request failed: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        if (!result.success || !result.data) {
+          addDebugLog(`❌ API returned failure: ${result.error || 'Unknown error'}`);
+          throw new Error(result.error || 'Analysis failed');
+        }
+        
+        addDebugLog(`✅ API analysis complete! Job ID: ${result.jobId}`);
+        addDebugLog(`⏱️ Total processing time: ${result.elapsedTime}ms (${(result.elapsedTime/1000).toFixed(1)}s)`);
+        
+        analysisResults = result.data;
       } else {
         // 🔌 OPTION B: With files (Direct OpenAI with temp vector stores)
         addDebugLog('🔌 OPTION B: FILES DETECTED - Using OpenAI Files Service');
@@ -1020,64 +1049,54 @@ export default function App() {
         addDebugLog(`   Risk: ${result.data.riskScore}`);
       }
       
-      // Log the unique ID immediately after submission (before polling completes)
-      if (analysisResults.jobId) {
-        addDebugLog('🆔 Unique tracking ID generated for this submission:');
-        addDebugLog(`   📦 job_id: ${analysisResults.jobId}`);
-        addDebugLog(`   🔍 query_id: ${analysisResults.jobId} (same value for compatibility)`);
-        addDebugLog('⏳ Now polling Supabase for completed analysis...');
-      }
-      
       // Enhanced result logging
-      addDebugLog(`📊 Submission results:`, true);
-      addDebugLog(`   success: ${analysisResults.success}`);
+      addDebugLog(`📊 Analysis results received:`, true);
       addDebugLog(`   jobId: ${analysisResults.jobId || 'MISSING'}`);
-      addDebugLog(`   error: ${analysisResults.error || 'none'}`);
-      addDebugLog(`   data exists: ${analysisResults.data ? 'YES' : 'NO'}`);
+      addDebugLog(`   data exists: ${analysisResults ? 'YES' : 'NO'}`);
       
-      if (analysisResults.data) {
-        addDebugLog(`   powerScore: ${analysisResults.data.powerScore}`);
-        addDebugLog(`   gravityScore: ${analysisResults.data.gravityScore}`);
-        addDebugLog(`   riskScore: ${analysisResults.data.riskScore}`);
-        addDebugLog(`   whatsHappening: ${analysisResults.data.whatsHappening ? 'EXISTS' : 'MISSING'}`);
+      if (analysisResults) {
+        addDebugLog(`   powerScore: ${analysisResults.powerScore}`);
+        addDebugLog(`   gravityScore: ${analysisResults.gravityScore}`);
+        addDebugLog(`   riskScore: ${analysisResults.riskScore}`);
       }
       
-      if (analysisResults.success && analysisResults.data) {
-        addDebugLog('✅ ✅ ✅ Analysis SUCCESS! Retrieved from Supabase!');
+      if (analysisResults) {
+        // ⏱️ END TIMER - Show total time to dashboard
+        const totalTime = endTimer('time_to_dashboard');
+        addDebugLog(`⏱️ ============================================`);
+        addDebugLog(`⏱️ TOTAL TIME TO DASHBOARD: ${totalTime}ms`);
+        addDebugLog(`⏱️ TOTAL TIME TO DASHBOARD: ${(totalTime/1000).toFixed(1)} seconds`);
+        addDebugLog(`⏱️ ============================================`);
+        
+        addDebugLog('✅ ✅ ✅ Analysis SUCCESS! Results received!');
         addDebugLog(`🆔 Job ID: ${analysisResults.jobId}`);
-        addDebugLog(`📊 Scores - Power: ${analysisResults.data.powerScore}, Gravity: ${analysisResults.data.gravityScore}, Risk: ${analysisResults.data.riskScore}`);
-        addDebugLog('🗄️ Data successfully retrieved from Supabase analyses table');
+        addDebugLog(`📊 Scores - Power: ${analysisResults.powerScore}, Gravity: ${analysisResults.gravityScore}, Risk: ${analysisResults.riskScore}`);
+        addDebugLog('🗄️ Data saved to Supabase analyses table');
         addDebugLog('🎯 TRANSITIONING TO DASHBOARD NOW...');
         
         // Use the analysis data directly (already in ProcessedAnalysis format)
-        setCurrentAnalysis(analysisResults.data);
+        setCurrentAnalysis(analysisResults);
         setAppState('dashboard');
         setActiveTab('home');
         
         addDebugLog('✅ State updated: currentAnalysis set, appState = dashboard');
         
-        // ⏱️ END TIMER - Dashboard reached successfully!
+        // ⏱️ Track dashboard reached
         analytics.trackTimeToDashboard(user.uid, user.email);
         
         // Track successful completion
         trackWithUser('analysis_completed', user.uid, user.email, {
           jobId: analysisResults.jobId,
-          powerScore: analysisResults.data.powerScore,
-          gravityScore: analysisResults.data.gravityScore,
-          riskScore: analysisResults.data.riskScore
+          powerScore: analysisResults.powerScore,
+          gravityScore: analysisResults.gravityScore,
+          riskScore: analysisResults.riskScore
         });
         trackWithUser('dashboard_viewed', user.uid, user.email, {
           is_historical: false
         });
       } else {
-        addDebugLog('❌ ❌ ❌ FAILURE: Could not retrieve analysis from Supabase');
-        addDebugLog(`❌ Reason: ${analysisResults.error || 'Unknown error'}`);
-        
-        // Even if polling failed, data might be in Supabase - user can check History
-        if (analysisResults.jobId) {
-          addDebugLog(`💡 Job ID ${analysisResults.jobId} was submitted - check History screen later`);
-        }
-        setAnalysisError(analysisResults.error || 'Analysis is processing but results not yet available - check History later');
+        addDebugLog('❌ ❌ ❌ FAILURE: Analysis failed');
+        setAnalysisError('Analysis failed - please try again');
         setAppState('home');
         
         // Track submission error
