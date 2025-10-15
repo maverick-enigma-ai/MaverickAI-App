@@ -107,7 +107,17 @@ const RadarViz = () => {
   );
 };
 
-export default function MaverickLandingPremium() {
+interface MaverickLandingPremiumProps {
+  onGetStarted?: () => void;
+  onViewPricing?: () => void;
+  onSignIn?: () => void;
+}
+
+export default function MaverickLandingPremium({ 
+  onGetStarted, 
+  onViewPricing, 
+  onSignIn 
+}: MaverickLandingPremiumProps = {}) {
   const [menuOpen, setMenuOpen] = useState(false);
   
   // smooth scroll handler for primary CTA
@@ -182,6 +192,7 @@ export default function MaverickLandingPremium() {
         {/* Right side */}
         <div className="flex items-center gap-3">
           <Button 
+            onClick={onSignIn}
             className="hidden md:inline-flex px-4 py-2 rounded-xl transition-all duration-200"
             style={{
               background: BRAND_COLORS.gradients.cyanBlue,
@@ -248,6 +259,7 @@ export default function MaverickLandingPremium() {
             </a>
             <div className="pt-2">
               <Button 
+                onClick={onSignIn}
                 className="w-full rounded-xl transition-all"
                 style={{
                   background: BRAND_COLORS.gradients.cyanBlue,

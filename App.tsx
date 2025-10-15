@@ -1386,33 +1386,83 @@ export default function App() {
     // 🎨 MODULAR LANDING PAGE: Configure in /utils/landing-config.ts
     // No need to edit App.tsx - just change ACTIVE_LANDING_PAGE in config
     
-    let LandingComponent;
+    // Landing page action handlers
+    const handleLandingGetStarted = () => {
+      addDebugLog('📱 Get Started clicked from landing page');
+      setAppState('auth');
+    };
+    
+    const handleLandingViewPricing = () => {
+      addDebugLog('💰 View Pricing clicked from landing page');
+      setAppState('auth');
+    };
+    
+    const handleLandingSignIn = () => {
+      addDebugLog('🔐 Sign In clicked from landing page');
+      setAppState('auth');
+    };
+    
+    // Select and render the active landing page
     switch (ACTIVE_LANDING_PAGE) {
       case 'tabbed':
-        LandingComponent = LandingPageTabbed;
-        break;
+        return (
+          <div className="size-full">
+            <LandingPageTabbed
+              onGetStarted={handleLandingGetStarted}
+              onViewPricing={handleLandingViewPricing}
+              onSignIn={handleLandingSignIn}
+            />
+          </div>
+        );
+      
       case 'basic':
-        LandingComponent = LandingPage;
-        break;
+        return (
+          <div className="size-full">
+            <LandingPage
+              onGetStarted={handleLandingGetStarted}
+              onViewPricing={handleLandingViewPricing}
+              onSignIn={handleLandingSignIn}
+            />
+          </div>
+        );
+      
       case 'premium':
-        // Lazy load premium landing to prevent build errors if file is missing
+        // Premium landing with props support
         try {
           const MaverickLandingPremium = require('./components/MaverickLandingPremium').default;
-          LandingComponent = MaverickLandingPremium;
+          return (
+            <div className="size-full">
+              <MaverickLandingPremium
+                onGetStarted={handleLandingGetStarted}
+                onViewPricing={handleLandingViewPricing}
+                onSignIn={handleLandingSignIn}
+              />
+            </div>
+          );
         } catch (error) {
           console.warn('⚠️ MaverickLandingPremium not found, falling back to LandingPageTabbed');
-          LandingComponent = LandingPageTabbed;
+          return (
+            <div className="size-full">
+              <LandingPageTabbed
+                onGetStarted={handleLandingGetStarted}
+                onViewPricing={handleLandingViewPricing}
+                onSignIn={handleLandingSignIn}
+              />
+            </div>
+          );
         }
-        break;
+      
       default:
-        LandingComponent = LandingPageTabbed;
+        return (
+          <div className="size-full">
+            <LandingPageTabbed
+              onGetStarted={handleLandingGetStarted}
+              onViewPricing={handleLandingViewPricing}
+              onSignIn={handleLandingSignIn}
+            />
+          </div>
+        );
     }
-    
-    return (
-      <div className="size-full">
-        <LandingComponent />
-      </div>
-    );
   }
 
   // Show auth screen if not signed in (unless viewing legal pages or landing)
