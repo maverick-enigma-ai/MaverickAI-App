@@ -120,7 +120,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.log('📝 Creating Supabase records...');
       
       // 1A: Insert into analyses table
-      await supabase
+      const { data: analysisData, error: analysisError } = await supabase
         .from('analyses')
         .insert({
           id: jobId,
@@ -133,10 +133,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           created_at: now,
           updated_at: now,
           processing_started_at: now
-        });
+        })
+        .select();
+      
+      if (analysisError) {
+        console.error('❌ Failed to create analyses record:', analysisError);
+        throw new Error(`Database error (analyses): ${analysisError.message}`);
+      }
+      
+      console.log('✅ Created analyses record:', jobId);
       
       // 1B: Insert into submissions table (tracks UI state)
-      await supabase
+      const { data: submissionData, error: submissionError } = await supabase
         .from('submissions')
         .insert({
           id: generateUUID(),
@@ -149,9 +157,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           query_id: jobId,
           created_at: now,
           updated_at: now
-        });
+        })
+        .select();
       
-      console.log('✅ Created records in analyses + submissions tables');
+      if (submissionError) {
+        console.error('❌ Failed to create submissions record:', submissionError);
+        throw new Error(`Database error (submissions): ${submissionError.message}`);
+      }
+      
+      console.log('✅ Created both analyses + submissions records');
     }
 
     // STEP 2: Verify Assistant
@@ -500,19 +514,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         processing_completed_at: new Date().toISOString()
       };
 
-      await supabase
+      const { error: updateAnalysesError } = await supabase
         .from('analyses')
         .update(updateData)
         .eq('id', jobId);
       
+      if (updateAnalysesError) {
+        console.error('❌ Failed to update analyses:', updateAnalysesError);
+        throw new Error(`Failed to update analyses: ${updateAnalysesError.message}`);
+      }
+      
       // Update submissions table status (for UI polling)
-      await supabase
+      const { error: updateSubmissionsError } = await supabase
         .from('submissions')
         .update({
           status: 'completed',
           updated_at: new Date().toISOString()
         })
         .eq('job_id', jobId);
+      
+      if (updateSubmissionsError) {
+        console.error('❌ Failed to update submissions:', updateSubmissionsError);
+        throw new Error(`Failed to update submissions: ${updateSubmissionsError.message}`);
+      }
       
       console.log('✅ Updated both analyses + submissions tables');
     }
