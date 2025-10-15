@@ -116,14 +116,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log(`🔑 Assistant ID: ${OPENAI_ASSISTANT_ID}`);
 
     // STEP 1: Create pending records in BOTH tables (if userId provided)
+    // ✅ CORRECT ORDER: submissions FIRST, then analyses with SAME id
     if (userId && userEmail) {
       console.log('📝 Creating Supabase records...');
       
-      // 1A: Insert into analyses table
+      // 1A: Insert into submissions table FIRST (primary tracking record)
+      const { data: submissionData, error: submissionError } = await supabase
+        .from('submissions')
+        .insert({
+          id: jobId,  // ✅ Use jobId as PRIMARY key
+          analysis_id: jobId,  // ✅ Same as id for now
+          user_id: userId,
+          email: userEmail,
+          status: 'processing',
+          input_querytext: inputText,
+          job_id: jobId,
+          query_id: jobId,
+          created_at: now,
+          updated_at: now
+        })
+        .select();
+      
+      if (submissionError) {
+        console.error('❌ Failed to create submissions record:', submissionError);
+        throw new Error(`Database error (submissions): ${submissionError.message}`);
+      }
+      
+      console.log('✅ Created submissions record:', jobId);
+      
+      // 1B: Insert into analyses table SECOND (with SAME id)
       const { data: analysisData, error: analysisError } = await supabase
         .from('analyses')
         .insert({
-          id: jobId,
+          id: jobId,  // ✅ SAME id as submission
           query_id: jobId,
           job_id: jobId,
           user_id: userId,
@@ -141,31 +166,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         throw new Error(`Database error (analyses): ${analysisError.message}`);
       }
       
-      console.log('✅ Created analyses record:', jobId);
-      
-      // 1B: Insert into submissions table (tracks UI state)
-      const { data: submissionData, error: submissionError } = await supabase
-        .from('submissions')
-        .insert({
-          id: generateUUID(),
-          analysis_id: jobId,
-          user_id: userId,
-          email: userEmail,
-          status: 'processing',
-          input_querytext: inputText,
-          job_id: jobId,
-          query_id: jobId,
-          created_at: now,
-          updated_at: now
-        })
-        .select();
-      
-      if (submissionError) {
-        console.error('❌ Failed to create submissions record:', submissionError);
-        throw new Error(`Database error (submissions): ${submissionError.message}`);
-      }
-      
-      console.log('✅ Created both analyses + submissions records');
+      console.log('✅ Created both submissions + analyses records (same id)');
     }
 
     // STEP 2: Verify Assistant
