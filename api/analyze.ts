@@ -1,11 +1,13 @@
-// UPDATED api/analyze.ts
-// Replace your existing api/analyze.ts with this version
-// It accepts BOTH parameter formats and uses OpenAI Assistants API
+/**
+ * Secure Vercel Serverless Function - OpenAI Analysis with File Upload Support
+ * API keys stay on server - NEVER exposed to browser
+ * Handles both text-only and text+files submissions
+ */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 
-// Server-side environment variables
+// Server-side environment variables (SECURE - not exposed to browser)
 const OPENAI_API_KEY = process.env.VITE_OPENAI_API_KEY || process.env.OPENAI_API_KEY;
 const OPENAI_ASSISTANT_ID = process.env.VITE_OPENAI_ASSISTANT_ID || process.env.OPENAI_ASSISTANT_ID;
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
@@ -13,6 +15,13 @@ const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPA
 
 const supabase = createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!);
 
+// Helper function to join array of strings with bullet points
+function joinWithBullets(arr: string[] | undefined): string {
+  if (!arr || !Array.isArray(arr) || arr.length === 0) return '';
+  return arr.map(item => `• ${item}`).join('\n');
+}
+
+// Generate UUID v4
 function generateUUID(): string {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     const r = Math.random() * 16 | 0;
@@ -21,21 +30,18 @@ function generateUUID(): string {
   });
 }
 
-function joinWithBullets(arr: string[] | undefined): string {
-  if (!arr || !Array.isArray(arr) || arr.length === 0) return '';
-  return arr.map(item => `• ${item}`).join('\n');
-}
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
+  // Handle OPTIONS request
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
+  // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -48,10 +54,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
     
     // Old format: { prompt, attachments }
-    // New format: { inputText, userId, userEmail }
+    // New format: { inputText, userId, userEmail, files }
     const inputText = body.inputText || body.prompt;
     const userId = body.userId;
     const userEmail = body.userEmail;
+    const files = body.files; // Array of { name, type, size, data }
 
     // Validation
     if (!inputText || inputText.trim().length < 10) {
@@ -67,6 +74,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log(`📋 Job ID: ${jobId}`);
     console.log(`👤 User: ${userEmail || 'unknown'}`);
     console.log(`📝 Text length: ${inputText.length} chars`);
+    console.log(`📎 Files: ${files?.length || 0}`);
     console.log(`🔑 Assistant ID: ${OPENAI_ASSISTANT_ID}`);
 
     // STEP 1: Create pending record (if userId provided)
@@ -111,8 +119,98 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log(`📋 Model: ${assistant.model}`);
     console.log(`📝 Has instructions: ${assistant.instructions ? 'YES' : 'NO'}`);
 
-    // STEP 3: Create Thread
+    // STEP 3: Handle File Uploads (if present)
+    let vectorStoreId: string | undefined;
+    
+    if (files && files.length > 0) {
+      console.log(`📎 Uploading ${files.length} file(s)...`);
+      
+      try {
+        // Upload files to OpenAI
+        const uploadedFileIds: string[] = [];
+        
+        for (const file of files) {
+          console.log(`  📤 Uploading: ${file.name} (${file.type})`);
+          
+          // Convert base64 to buffer
+          const base64Data = file.data.split(',')[1] || file.data;
+          const buffer = Buffer.from(base64Data, 'base64');
+          
+          // Create form data
+          const formData = new FormData();
+          const blob = new Blob([buffer], { type: file.type });
+          formData.append('file', blob, file.name);
+          formData.append('purpose', 'assistants');
+          
+          // Upload to OpenAI
+          const uploadResponse = await fetch('https://api.openai.com/v1/files', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${OPENAI_API_KEY}`
+            },
+            body: formData
+          });
+          
+          if (!uploadResponse.ok) {
+            const errorText = await uploadResponse.text();
+            console.error(`  ❌ Upload failed for ${file.name}:`, errorText);
+            throw new Error(`File upload failed: ${errorText}`);
+          }
+          
+          const uploadResult = await uploadResponse.json();
+          uploadedFileIds.push(uploadResult.id);
+          console.log(`  ✅ Uploaded: ${file.name} (ID: ${uploadResult.id})`);
+        }
+        
+        // Create vector store with uploaded files
+        console.log('🗂️ Creating vector store...');
+        
+        const vectorStoreResponse = await fetch('https://api.openai.com/v1/vector_stores', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${OPENAI_API_KEY}`,
+            'Content-Type': 'application/json',
+            'OpenAI-Beta': 'assistants=v2'
+          },
+          body: JSON.stringify({
+            name: `Analysis ${jobId}`,
+            file_ids: uploadedFileIds
+          })
+        });
+        
+        if (!vectorStoreResponse.ok) {
+          const errorText = await vectorStoreResponse.text();
+          console.error('❌ Vector store creation failed:', errorText);
+          throw new Error(`Vector store creation failed: ${errorText}`);
+        }
+        
+        const vectorStore = await vectorStoreResponse.json();
+        vectorStoreId = vectorStore.id;
+        console.log(`✅ Vector store created: ${vectorStoreId}`);
+        
+      } catch (fileError) {
+        console.error('❌ File processing error:', fileError);
+        throw new Error(`File processing failed: ${fileError instanceof Error ? fileError.message : 'Unknown error'}`);
+      }
+    }
+
+    // STEP 4: Create Thread (with vector store if files present)
     console.log('📤 Creating thread...');
+    
+    const threadPayload: any = {
+      messages: [{
+        role: 'user',
+        content: inputText
+      }]
+    };
+    
+    if (vectorStoreId) {
+      threadPayload.tool_resources = {
+        file_search: {
+          vector_store_ids: [vectorStoreId]
+        }
+      };
+    }
     
     const threadResponse = await fetch('https://api.openai.com/v1/threads', {
       method: 'POST',
@@ -121,12 +219,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         'Content-Type': 'application/json',
         'OpenAI-Beta': 'assistants=v2'
       },
-      body: JSON.stringify({
-        messages: [{
-          role: 'user',
-          content: inputText
-        }]
-      })
+      body: JSON.stringify(threadPayload)
     });
 
     if (!threadResponse.ok) {
@@ -138,7 +231,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const thread = await threadResponse.json();
     console.log(`📎 Thread: ${thread.id}`);
 
-    // STEP 4: Create Run
+    // STEP 5: Create Run
     console.log('🏃 Creating run...');
     
     const runResponse = await fetch(`https://api.openai.com/v1/threads/${thread.id}/runs`, {
@@ -162,7 +255,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const run = await runResponse.json();
     console.log(`🏃 Run: ${run.id}`);
 
-    // STEP 5: Poll for completion
+    // STEP 6: Poll for completion
     console.log('⏳ Polling...');
     
     let attempts = 0;
@@ -194,7 +287,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     console.log('✅ Run completed!');
 
-    // STEP 6: Get messages
+    // STEP 7: Get messages
     const messagesResponse = await fetch(`https://api.openai.com/v1/threads/${thread.id}/messages`, {
       headers: {
         'Authorization': `Bearer ${OPENAI_API_KEY}`,
@@ -228,7 +321,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       throw new Error('Failed to parse response');
     }
 
-    // STEP 7: Update Supabase (if userId provided)
+    // STEP 8: Update Supabase (if userId provided)
     if (userId && userEmail) {
       console.log('💾 Saving to Supabase...');
 

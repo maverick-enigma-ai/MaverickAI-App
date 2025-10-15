@@ -106,8 +106,8 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
         {/* Header */}
         <BrandHeader subtitle="Upload content for strategic analysis" />
 
-        {/* Chat Area - Scrollable */}
-        <div className="flex-1 overflow-y-auto p-4 pb-64">
+        {/* Chat Area - Scrollable with hidden scrollbar */}
+        <div className="flex-1 overflow-y-auto p-4 pb-64 scrollbar-hide">
           <div className="max-w-md mx-auto">
             {/* Welcome Message - More Compact */}
             <div className="rounded-2xl p-4 mb-4 backdrop-blur-md" style={{
@@ -361,8 +361,9 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
                   value={inputText}
                   onChange={handleTextChange}
                   placeholder="Describe your situation or challenge here...&#10;&#10;Be as detailed as you like. The more context you provide, the better the analysis."
-                  className="relative w-full min-h-[120px] max-h-[200px] px-4 py-3 rounded-2xl backdrop-blur-md resize-none scrollbar-hide focus:outline-none transition-all placeholder-shown:text-cyan-300/40"
+                  className="relative w-full min-h-[120px] max-h-[200px] px-4 py-3 rounded-2xl resize-none scrollbar-hide focus:outline-none transition-all placeholder-shown:text-cyan-300/40"
                   style={{
+                    backdropFilter: 'blur(16px) saturate(180%)',
                     background: BRAND_COLORS.glass.normal,
                     border: `1px solid ${BRAND_COLORS.borders.normal}`,
                     color: BRAND_COLORS.text.white,
@@ -438,7 +439,7 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
         isOpen={isScenariosModalOpen}
         onClose={() => setIsScenariosModalOpen(false)}
         onSelectScenario={handleScenarioSelect}
-        enabledCategories={safeEnabledScenarios}
+        enabledScenarios={safeEnabledScenarios}
       />
     </>
   );

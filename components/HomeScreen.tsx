@@ -140,14 +140,15 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
                   Describe your situation for psychological power dynamics analysis
                 </p>
 
-                {/* CTA Button - AWARD-WINNING FIGMA BASELINE MATCH */}
+                {/* CTA Button - AWARD-WINNING FIGMA BASELINE MATCH (Reduced Haze) */}
                 <button
                   onClick={onStartAnalysis}
                   className="w-full py-5 rounded-full transition-all duration-300 shadow-xl min-h-[60px] relative overflow-hidden group btn-press-strong btn-hover-lift animate-subtle-pulse"
                   style={{
                     background: BRAND_COLORS.gradients.cyanBlue,  // Exact Figma: #06b6d4 → #3b82f6
                     color: '#ffffff',  // White text for best contrast on gradient
-                    boxShadow: `0 20px 60px rgba(6, 182, 212, 0.5), 0 10px 30px rgba(6, 182, 212, 0.3)`
+                    boxShadow: `0 20px 60px rgba(6, 182, 212, 0.5), 0 10px 30px rgba(6, 182, 212, 0.3)`,
+                    backdropFilter: 'blur(8px) saturate(180%)'  // Reduced blur for clarity
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)';

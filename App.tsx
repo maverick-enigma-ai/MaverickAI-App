@@ -16,6 +16,7 @@ import { IconGeneratorPage } from './components/IconGeneratorPage';
 import { SandboxTestPage } from './components/SandboxTestPage';
 import { LandingPage } from './components/LandingPage';
 import { LandingPageTabbed } from './components/LandingPageTabbed';
+import MaverickLandingPremium from './components/MaverickLandingPremium';
 import { AlertsInboxScreen } from './components/AlertsInboxScreen';
 import { SovereigntyDashboardScreen } from './components/SovereigntyDashboardScreen';
 import { WhatIfLabScreen } from './components/WhatIfLabScreen';
@@ -38,6 +39,11 @@ import { applyScreenshotPolicy } from './utils/screenshot-prevention';
 const isDevelopment = window.location.hostname === 'localhost' || 
                       window.location.hostname === '127.0.0.1' || 
                       window.location.hostname.includes('localhost');
+
+// 🔒 SECURITY: Sanitize sensitive data in production
+const isProduction = !isDevelopment;
+const sanitizeEmail = (email: string) => isProduction ? '[REDACTED]' : email;
+const sanitizeUserId = (id: string) => isProduction ? `user-${id.slice(0, 8)}***` : id;
 
 type AppState = 'landing' | 'auth' | 'home' | 'radar' | 'processing' | 'dashboard' | 'profile' | 'history' | 'payment' | 'moves' | 'settings' | 'privacy' | 'terms' | 'icons' | 'sandbox' | 'alerts' | 'sovereignty-dashboard' | 'whatif' | 'reflex' | 'enhanced-radar' | 'test';
 
@@ -907,7 +913,7 @@ export default function App() {
     addDebugLog('🔍 handleSubmit called');
     addDebugLog(`   Text length: ${text?.length || 0}`);
     addDebugLog(`   Files: ${files?.length || 0}`);
-    addDebugLog(`   User object: ${user ? 'EXISTS' : 'NULL'}`);
+    addDebugLog(`   User: ${user ? sanitizeEmail(user.email) : 'NULL'}`);
     addDebugLog(`   isSubmitting: ${isSubmitting}`);
     
     // Prevent duplicate submissions with STRONG protection
@@ -924,7 +930,7 @@ export default function App() {
       return;
     }
     
-    addDebugLog(`✅ User check passed: ${user.email} (${user.uid})`)
+    addDebugLog(`✅ User check passed: ${sanitizeEmail(user.email)} (${sanitizeUserId(user.uid)})`)
     
     // Input validation
     if (!text || text.trim().length < 10) {
@@ -936,7 +942,7 @@ export default function App() {
     // IMMEDIATELY set isSubmitting to prevent race conditions
     setIsSubmitting(true);
     addDebugLog('🔒 SUBMISSION LOCKED - preventing duplicates');
-    addDebugLog(`🚀 Starting analysis for user: ${user.email}`);
+    addDebugLog(`🚀 Starting analysis for user: ${sanitizeEmail(user.email)}`);
     addDebugLog(`📝 Input text length: ${text.length} characters`);
     addDebugLog(`📎 Files attached: ${files.length}`);
     
@@ -1003,49 +1009,73 @@ export default function App() {
         
         analysisResults = result.data;
       } else {
-        // 🔌 OPTION B: With files (Direct OpenAI with temp vector stores)
-        addDebugLog('🔌 OPTION B: FILES DETECTED - Using OpenAI Files Service');
+        // 🔌 OPTION B: With files (Secure API endpoint)
+        addDebugLog('🔌 OPTION B: FILES DETECTED - Using secure /api/analyze-files endpoint');
+        addDebugLog('🔐 API keys stay on server (NEVER exposed to browser)');
         addDebugLog('📎 Files will be uploaded to OpenAI temporary vector store');
-        addDebugLog('🗂️ Dual vector store processing: Permanent + Temporary');
         addDebugLog('🧹 Auto-cleanup after 24 hours (no storage costs)');
         
-        // Import Option B module dynamically
-        const { submitWithFiles } = await import('./services/openai-files-service');
+        // Convert files to base64 for secure transfer
+        addDebugLog(`📤 Converting ${files.length} files to base64...`);
         
-        // Submit with files (CORRECTED PARAMETER ORDER!)
-        addDebugLog(`📤 Calling submitWithFiles(text, files, userId, userEmail, paymentPlan)`);
-        addDebugLog(`   text: ${text.substring(0, 50)}...`);
-        addDebugLog(`   files: ${files.length} file(s)`);
-        addDebugLog(`   userId: ${user.uid}`);
-        addDebugLog(`   userEmail: ${user.email}`);
-        addDebugLog(`   paymentPlan: ${user.paymentPlan}`);
-        
-        const result = await submitWithFiles(
-          text,
-          files,
-          user.uid,
-          user.email,
-          user.paymentPlan
+        const filesData = await Promise.all(
+          files.map(async (file) => {
+            const buffer = await file.arrayBuffer();
+            const base64 = btoa(
+              new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
+            );
+            return {
+              name: file.name,
+              type: file.type,
+              size: file.size,
+              data: base64
+            };
+          })
         );
         
-        addDebugLog(`✅ Option B submission result: success=${result.success}, jobId=${result.jobId}`);
+        addDebugLog(`✅ Files converted to base64`);
+        addDebugLog(`   text: ${text.substring(0, 50)}...`);
+        addDebugLog(`   files: ${filesData.length} file(s)`);
         
-        // Check if submission was successful
-        if (!result.success || !result.data) {
-          addDebugLog(`❌ Option B failed: ${result.error || 'Unknown error'}`);
-          throw new Error(result.error || 'Analysis submission failed');
+        // Call secure API endpoint with files
+        const apiStartTime = Date.now();
+        const response = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            inputText: text,
+            files: filesData,
+            userId: user.uid,
+            userEmail: user.email
+          })
+        });
+        
+        const apiElapsedTime = Date.now() - apiStartTime;
+        addDebugLog(`⏱️ API response time: ${apiElapsedTime}ms (${(apiElapsedTime/1000).toFixed(1)}s)`);
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+          addDebugLog(`❌ API error: ${errorData.error || response.statusText}`);
+          throw new Error(errorData.error || `API request failed: ${response.status}`);
         }
         
-        // Use the data directly (already processed)
-        analysisResults = {
-          success: result.success,
-          jobId: result.jobId,
-          data: result.data
-        };
+        const result = await response.json();
         
-        addDebugLog('✅ Option B data retrieved successfully!');
-        addDebugLog(`   Power: ${result.data.powerScore}`);
-        addDebugLog(`   Gravity: ${result.data.gravityScore}`);
+        addDebugLog(`✅ API analysis with files complete! Job ID: ${result.jobId}`);
+        addDebugLog(`⏱️ Total processing time: ${result.elapsedTime}ms (${(result.elapsedTime/1000).toFixed(1)}s)`);
+        
+        if (!result.success || !result.data) {
+          addDebugLog(`❌ API returned failure: ${result.error || 'Unknown error'}`);
+          throw new Error(result.error || 'Analysis failed');
+        }
+        
+        analysisResults = result.data;
+        
+        addDebugLog('✅ API file analysis data retrieved successfully!');
+        addDebugLog(`   Power: ${analysisResults.powerScore}`);
+        addDebugLog(`   Gravity: ${analysisResults.gravityScore}`);
         addDebugLog(`   Risk: ${result.data.riskScore}`);
       }
       
@@ -1352,13 +1382,11 @@ export default function App() {
 
   // Show landing page if not signed in and not on special routes
   if (!user && appState === 'landing') {
+    // 🎨 PREVIEW MODE: Switch between landing pages
+    // Change to <LandingPageTabbed> or <LandingPage> to compare
     return (
       <div className="size-full">
-        <LandingPageTabbed
-          onGetStarted={() => setAppState('auth')}
-          onViewPricing={() => setAppState('payment')}
-          onSignIn={() => setAppState('auth')}
-        />
+        <MaverickLandingPremium />
       </div>
     );
   }

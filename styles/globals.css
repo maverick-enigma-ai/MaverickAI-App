@@ -214,6 +214,16 @@ html {
     color: rgba(126, 185, 204, 0.5) !important; /* muted gray-teal with 50% opacity */
     opacity: 1 !important;
   }
+
+  /* 👁️ SCROLLBAR HIDING - Invisible but functional */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+  }
 }
 
 /* ===== SOVEREIGNTY FEATURES STYLES ===== */
