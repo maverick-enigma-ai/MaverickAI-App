@@ -11,9 +11,10 @@ import { createClient } from '@supabase/supabase-js';
 const OPENAI_API_KEY = process.env.VITE_OPENAI_API_KEY || process.env.OPENAI_API_KEY;
 const OPENAI_ASSISTANT_ID = process.env.VITE_OPENAI_ASSISTANT_ID || process.env.OPENAI_ASSISTANT_ID;
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
-const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+const SUPABASE_SERVICE_ROLE_KEY = process.env.VITE_SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const supabase = createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!);
+// 🔐 Use SERVICE_ROLE_KEY for server-side operations (bypasses RLS, full database access)
+const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
 
 // Helper function to join array of strings with bullet points
 function joinWithBullets(arr: string[] | undefined): string {
@@ -77,10 +78,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log(`📎 Files: ${files?.length || 0}`);
     console.log(`🔑 Assistant ID: ${OPENAI_ASSISTANT_ID}`);
 
-    // STEP 1: Create pending record (if userId provided)
+    // STEP 1: Create pending records in BOTH tables (if userId provided)
     if (userId && userEmail) {
-      console.log('📝 Creating Supabase record...');
+      console.log('📝 Creating Supabase records...');
       
+      // 1A: Insert into analyses table
       await supabase
         .from('analyses')
         .insert({
@@ -95,6 +97,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           updated_at: now,
           processing_started_at: now
         });
+      
+      // 1B: Insert into submissions table (tracks UI state)
+      await supabase
+        .from('submissions')
+        .insert({
+          id: generateUUID(),
+          analysis_id: jobId,
+          user_id: userId,
+          email: userEmail,
+          status: 'processing',
+          input_querytext: inputText,
+          job_id: jobId,
+          query_id: jobId,
+          created_at: now,
+          updated_at: now
+        });
+      
+      console.log('✅ Created records in analyses + submissions tables');
     }
 
     // STEP 2: Verify Assistant
@@ -447,6 +467,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         .from('analyses')
         .update(updateData)
         .eq('id', jobId);
+      
+      // Update submissions table status (for UI polling)
+      await supabase
+        .from('submissions')
+        .update({
+          status: 'completed',
+          updated_at: new Date().toISOString()
+        })
+        .eq('job_id', jobId);
+      
+      console.log('✅ Updated both analyses + submissions tables');
     }
 
     const elapsedTime = Date.now() - startTime;
@@ -516,6 +547,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   } catch (error) {
     const elapsedTime = Date.now() - startTime;
     console.error('❌ Error:', error);
+    
+    // Mark submission as failed (if userId provided)
+    if (userId && userEmail) {
+      try {
+        await supabase
+          .from('submissions')
+          .update({
+            status: 'failed',
+            updated_at: new Date().toISOString()
+          })
+          .eq('job_id', jobId);
+        
+        await supabase
+          .from('analyses')
+          .update({
+            status: 'failed',
+            error_json: JSON.stringify({ message: error instanceof Error ? error.message : 'Unknown error' }),
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', jobId);
+      } catch (updateError) {
+        console.error('Failed to update error status:', updateError);
+      }
+    }
     
     return res.status(500).json({
       success: false,
