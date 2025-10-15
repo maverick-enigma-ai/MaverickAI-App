@@ -57,12 +57,13 @@ export const BRAND_COLORS = {
     teal: 'rgba(20, 184, 166, 0.3)',
   },
 
-  // Text Colors with Alpha
+  // Text Colors with Alpha - MOBILE OPTIMIZED FOR READABILITY
   text: {
     white: '#ffffff',
-    whiteSubtle: 'rgba(255, 255, 255, 0.7)',
-    whiteFaded: 'rgba(255, 255, 255, 0.5)',
-    whiteVeryFaded: 'rgba(255, 255, 255, 0.3)',
+    whiteBright: 'rgba(255, 255, 255, 0.95)',     // Almost white - high readability
+    whiteSubtle: 'rgba(255, 255, 255, 0.85)',     // Increased from 0.7 for mobile
+    whiteFaded: 'rgba(255, 255, 255, 0.7)',       // Increased from 0.5 for mobile
+    whiteVeryFaded: 'rgba(255, 255, 255, 0.5)',   // Increased from 0.3 for mobile
   },
 
   // Semantic Colors

@@ -35,7 +35,7 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
         {/* Header */}
         <BrandHeader showPulse />
 
-        {/* Info Button - Top Right */}
+        {/* Info Button - Top Right - Below Header */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.8, y: -10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -45,7 +45,7 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
             stiffness: 200,
             damping: 15
           }}
-          className="absolute top-6 right-6 z-20"
+          className="absolute top-24 right-6 z-20"
         >
           <motion.button
             onClick={() => setShowCapabilities(true)}

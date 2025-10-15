@@ -125,13 +125,35 @@
     @apply border-border;
   }
   
+  /* CRITICAL: Prevent white overscroll on mobile */
+  html,
   body {
     @apply bg-background text-foreground;
+    background: linear-gradient(to bottom, #14123F 0%, #342FA5 50%, #14123F 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    overflow-x: hidden;
+    position: relative;
+  }
+  
+  /* Prevent overscroll bounce showing white */
+  body {
+    overscroll-behavior-y: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Root element */
+  #root {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    position: relative;
   }
 }
 
 html {
   font-size: var(--font-size);
+  height: -webkit-fill-available;
 }
 
 /* ===== MICRO-INTERACTIONS ===== */

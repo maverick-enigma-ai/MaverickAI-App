@@ -863,7 +863,7 @@ export function DashboardScreen({
               </div>
             </motion.button>
 
-            {/* Gravity Score Card */}
+            {/* Gravity Score Card - AWARD WINNING HIGH CONTRAST */}
             <motion.button
               onClick={() => setModalContent({
                 type: 'gravity',
@@ -882,7 +882,7 @@ export function DashboardScreen({
                 WebkitBackdropFilter: 'blur(20px)',
                 borderColor: BRAND_COLORS.borders.subtle
               }}
-              onMouseEnter={(e) => e.currentTarget.style.borderColor = `${BRAND_COLORS.purple}50`}
+              onMouseEnter={(e) => e.currentTarget.style.borderColor = '#fbbf24'}
               onMouseLeave={(e) => e.currentTarget.style.borderColor = BRAND_COLORS.borders.subtle}
               data-name="btn_gravity_card"
             >
@@ -894,19 +894,21 @@ export function DashboardScreen({
                     <div 
                       className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                       style={{
-                        background: `${BRAND_COLORS.purple}20`,
-                        border: `1px solid ${BRAND_COLORS.purple}30`
+                        background: 'rgba(251, 191, 36, 0.25)',
+                        border: '1px solid rgba(251, 191, 36, 0.4)',
+                        boxShadow: '0 0 20px rgba(251, 191, 36, 0.3)'
                       }}
                     >
-                      <Target className="w-5 h-5" style={{ color: BRAND_COLORS.purple }} />
+                      <Target className="w-5 h-5" style={{ color: '#fbbf24' }} />
                     </div>
                     <div className="text-left">
                       <p 
                         className="text-xs mb-0.5" 
                         style={{ 
-                          color: BRAND_COLORS.purple,
+                          color: '#fbbf24',
                           fontFamily: 'system-ui, -apple-system, sans-serif', 
-                          fontWeight: 600 
+                          fontWeight: 600,
+                          textShadow: '0 0 10px rgba(251, 191, 36, 0.5)'
                         }}
                       >
                         GRAVITY
@@ -931,21 +933,21 @@ export function DashboardScreen({
 
                 {/* Bottom: Battery Bar & Tags */}
                 <div className="space-y-2">
-                  {/* Battery Bar - Full width on mobile - AWARD WINNING */}
+                  {/* Battery Bar - Full width on mobile - AWARD WINNING GRADIENT */}
                   <div className="h-6 bg-white/5 rounded-lg overflow-hidden border border-white/10 relative">
                     <div 
                       className="h-full rounded-lg transition-all duration-1000 relative overflow-hidden"
                       style={{ 
                         width: `${analysisData.gravityScore}%`,
-                        background: 'linear-gradient(90deg, #8b5cf6 0%, #ec4899 100%)', // Purple to pink gradient
-                        boxShadow: '0 0 15px rgba(139, 92, 246, 0.4), inset 0 1px 1px rgba(255,255,255,0.2)'
+                        background: 'linear-gradient(90deg, #fbbf24 0%, #f59e0b 50%, #ec4899 100%)',
+                        boxShadow: '0 0 20px rgba(251, 191, 36, 0.5), inset 0 1px 2px rgba(255,255,255,0.3)'
                       }}
                     >
                       {/* Shimmer overlay */}
                       <div 
-                        className="absolute inset-0 opacity-30"
+                        className="absolute inset-0 opacity-40"
                         style={{
-                          background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)',
+                          background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)',
                           backgroundSize: '200% 100%',
                           animation: 'shimmer 2s infinite'
                         }}
@@ -1818,7 +1820,7 @@ export function DashboardScreen({
                 <Target className="w-5 h-5 text-teal-400" />
               </div>
               <h2 className="text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
-                Strategic Power Analysis
+                Diagnostic Intelligence
               </h2>
             </div>
             <button
@@ -1966,51 +1968,6 @@ export function DashboardScreen({
               )}
             </div>
           </div>
-
-          <div className="space-y-3 mt-4">
-            {/* Diagnostic State */}
-            {analysisData.diagnosticState && (
-              <div className="bg-gradient-to-r from-white/10 to-white/5 rounded-2xl p-4 border border-white/10">
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-full bg-teal-500/20 border border-teal-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-teal-400 text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
-                      🎯
-                    </span>
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-teal-400 text-xs mb-1.5" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
-                      PATTERN DETECTED
-                    </p>
-                    <p className="text-white/90 text-sm leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                      {analysisData.diagnosticState}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Diagnostic So What */}
-            {analysisData.diagnosticSoWhat && (
-              <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-2xl p-4 border border-yellow-500/20">
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-yellow-400 text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
-                      💡
-                    </span>
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-yellow-400 text-xs mb-1.5" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
-                      WHY THIS MATTERS
-                    </p>
-                    <p className="text-white/90 text-sm leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                      {analysisData.diagnosticSoWhat}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-          </div>
         </div>
 
 
@@ -2100,8 +2057,34 @@ export function DashboardScreen({
                 className="overflow-hidden"
               >
                 <div className="space-y-4 mt-4">
+                  {/* Loading State */}
+                  {loadingActionItems && (
+                    <div className="text-center py-8">
+                      <div className="animate-pulse text-cyan-400 mb-2">
+                        <TrendingUp className="w-8 h-8 mx-auto" />
+                      </div>
+                      <p className="text-white/60 text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                        Loading your strategic plan...
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Empty State - No Action Items */}
+                  {!loadingActionItems && actionItems.length === 0 && (
+                    <div className="bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10 text-center">
+                      <Lightbulb className="w-12 h-12 mx-auto mb-3 text-yellow-400 opacity-50" />
+                      <p className="text-white mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                        Strategic Actions Ready
+                      </p>
+                      <p className="text-white/60 text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                        Your personalized action plan is being generated from the analysis above.
+                        Expand this section after completing a new analysis.
+                      </p>
+                    </div>
+                  )}
+
                   {/* Immediate Move Section */}
-                  {actionItems.filter(item => item.section === 'immediate_move').length > 0 && (
+                  {!loadingActionItems && actionItems.filter(item => item.section === 'immediate_move').length > 0 && (
                     <div className="bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/10">
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
@@ -2152,7 +2135,7 @@ export function DashboardScreen({
                   )}
 
                   {/* Strategic Tool Section */}
-                  {actionItems.filter(item => item.section === 'strategic_tool').length > 0 && (
+                  {!loadingActionItems && actionItems.filter(item => item.section === 'strategic_tool').length > 0 && (
                     <div className="bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/10">
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
@@ -2203,7 +2186,7 @@ export function DashboardScreen({
                   )}
 
                   {/* Analytical Check Section */}
-                  {actionItems.filter(item => item.section === 'analytical_check').length > 0 && (
+                  {!loadingActionItems && actionItems.filter(item => item.section === 'analytical_check').length > 0 && (
                     <div className="bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/10">
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
@@ -2254,7 +2237,7 @@ export function DashboardScreen({
                   )}
 
                   {/* Long-Term Strategy Section */}
-                  {actionItems.filter(item => item.section === 'long_term_fix').length > 0 && (
+                  {!loadingActionItems && actionItems.filter(item => item.section === 'long_term_fix').length > 0 && (
                     <div className="bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/10">
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
