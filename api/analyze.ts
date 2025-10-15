@@ -115,59 +115,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log(`📎 Files: ${files?.length || 0}`);
     console.log(`🔑 Assistant ID: ${OPENAI_ASSISTANT_ID}`);
 
-    // STEP 1: Create pending records in BOTH tables (if userId provided)
-    // ✅ CORRECT ORDER: submissions FIRST, then analyses with SAME id
-    if (userId && userEmail) {
-      console.log('📝 Creating Supabase records...');
-      
-      // 1A: Insert into submissions table FIRST (primary tracking record)
-      const { data: submissionData, error: submissionError } = await supabase
-        .from('submissions')
-        .insert({
-          id: jobId,  // ✅ Use jobId as PRIMARY key
-          analysis_id: jobId,  // ✅ Same as id for now
-          user_id: userId,
-          email: userEmail,
-          status: 'processing',
-          input_querytext: inputText,
-          job_id: jobId,
-          query_id: jobId,
-          created_at: now,
-          updated_at: now
-        })
-        .select();
-      
-      if (submissionError) {
-        console.error('❌ Failed to create submissions record:', submissionError);
-        throw new Error(`Database error (submissions): ${submissionError.message}`);
-      }
-      
-      console.log('✅ Created submissions record:', jobId);
-      
-      // 1B: Insert into analyses table SECOND (with SAME id)
-      const { data: analysisData, error: analysisError } = await supabase
-        .from('analyses')
-        .insert({
-          id: jobId,  // ✅ SAME id as submission
-          query_id: jobId,
-          job_id: jobId,
-          user_id: userId,
-          input_querytext: inputText,
-          status: 'processing',
-          is_ready: false,
-          created_at: now,
-          updated_at: now,
-          processing_started_at: now
-        })
-        .select();
-      
-      if (analysisError) {
-        console.error('❌ Failed to create analyses record:', analysisError);
-        throw new Error(`Database error (analyses): ${analysisError.message}`);
-      }
-      
-      console.log('✅ Created both submissions + analyses records (same id)');
+    // STEP 1: Create pending record in analyses table
+    console.log('📝 Creating Supabase analyses record...');
+    
+    const { data: analysisData, error: analysisError} = await supabase
+      .from('analyses')
+      .insert({
+        id: jobId,
+        job_id: jobId,
+        query_id: jobId,
+        user_id: authUser.id,  // ✅ Use auth user ID (UUID)
+        email: authUser.email || userEmail || '',
+        input_text: inputText,
+        input_querytext: inputText,  // Both fields for compatibility
+        status: 'processing',
+        is_ready: false,
+        created_at: now,
+        updated_at: now,
+        processing_started_at: now
+      })
+      .select()
+      .single();
+    
+    if (analysisError) {
+      console.error('❌ Failed to create analyses record:', analysisError);
+      throw new Error(`Database error: ${analysisError.message}`);
     }
+    
+    console.log('✅ Created analyses record:', jobId);
 
     // STEP 2: Verify Assistant
     console.log('🤖 Verifying OpenAI Assistant...');
@@ -466,9 +441,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       throw new Error('Failed to parse response');
     }
 
-    // STEP 8: Update Supabase (if userId provided)
-    if (userId && userEmail) {
-      console.log('💾 Saving to Supabase...');
+    // STEP 8: Update Supabase with results
+    console.log('💾 Saving to Supabase...');
 
       const updateData = {
         tl_dr: parsedResponse.tl_dr || '',
@@ -525,22 +499,89 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         throw new Error(`Failed to update analyses: ${updateAnalysesError.message}`);
       }
       
-      // Update submissions table status (for UI polling)
-      const { error: updateSubmissionsError } = await supabase
-        .from('submissions')
-        .update({
-          status: 'completed',
-          updated_at: new Date().toISOString()
-        })
-        .eq('job_id', jobId);
+      console.log('✅ Updated analyses table with analysis results');
       
-      if (updateSubmissionsError) {
-        console.error('❌ Failed to update submissions:', updateSubmissionsError);
-        throw new Error(`Failed to update submissions: ${updateSubmissionsError.message}`);
+      // STEP 4: Create action items for the strategic moves
+      console.log('📝 Creating action items...');
+      
+      const actionItemsToInsert: any[] = [];
+      
+      // Helper to parse text into action items (split by newlines or bullet points)
+      const parseSteps = (text: string | undefined): string[] => {
+        if (!text) return [];
+        return text
+          .split('\n')
+          .map(line => line.trim().replace(/^[•\-\*]\s*/, ''))
+          .filter(line => line.length > 0);
+      };
+      
+      // Parse each section
+      const immediateMoveSteps = parseSteps(parsedResponse.immediate_move);
+      const strategicToolSteps = parseSteps(parsedResponse.strategic_tool);
+      const analyticalCheckSteps = parseSteps(parsedResponse.analytical_check);
+      const longTermFixSteps = parseSteps(parsedResponse.long_term_fix);
+      
+      // Create action items for immediate_move
+      immediateMoveSteps.forEach((step, index) => {
+        actionItemsToInsert.push({
+          analysis_id: jobId,
+          user_id: authUser.id,  // ✅ UUID from auth.users
+          section: 'immediate_move',
+          step_index: index,
+          step_text: step,
+          completed: false
+        });
+      });
+      
+      // Create action items for strategic_tool
+      strategicToolSteps.forEach((step, index) => {
+        actionItemsToInsert.push({
+          analysis_id: jobId,
+          user_id: authUser.id,  // ✅ UUID from auth.users
+          section: 'strategic_tool',
+          step_index: index,
+          step_text: step,
+          completed: false
+        });
+      });
+      
+      // Create action items for analytical_check
+      analyticalCheckSteps.forEach((step, index) => {
+        actionItemsToInsert.push({
+          analysis_id: jobId,
+          user_id: authUser.id,  // ✅ UUID from auth.users
+          section: 'analytical_check',
+          step_index: index,
+          step_text: step,
+          completed: false
+        });
+      });
+      
+      // Create action items for long_term_fix
+      longTermFixSteps.forEach((step, index) => {
+        actionItemsToInsert.push({
+          analysis_id: jobId,
+          user_id: authUser.id,  // ✅ UUID from auth.users
+          section: 'long_term_fix',
+          step_index: index,
+          step_text: step,
+          completed: false
+        });
+      });
+      
+      // Insert all action items
+      if (actionItemsToInsert.length > 0) {
+        const { error: actionItemsError } = await supabase
+          .from('action_items')
+          .insert(actionItemsToInsert);
+        
+        if (actionItemsError) {
+          console.error('⚠️ Failed to create action items (non-critical):', actionItemsError);
+          // Don't throw - action items are optional
+        } else {
+          console.log(`✅ Created ${actionItemsToInsert.length} action items`);
+        }
       }
-      
-      console.log('✅ Updated both analyses + submissions tables');
-    }
 
     const elapsedTime = Date.now() - startTime;
     console.log(`✅ Complete in ${elapsedTime}ms`);
@@ -554,7 +595,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       data: {
         id: jobId,
         jobId,
-        userId,
+        userId: authUser.id,
         title: parsedResponse.tl_dr || 'Strategic Analysis',
         inputText,
         summary: parsedResponse.tl_dr || '',
@@ -610,17 +651,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const elapsedTime = Date.now() - startTime;
     console.error('❌ Error:', error);
     
-    // Mark submission as failed (if userId provided)
-    if (userId && userEmail) {
+    // Mark analysis as failed (if record was created)
+    if (jobId) {
       try {
-        await supabase
-          .from('submissions')
-          .update({
-            status: 'failed',
-            updated_at: new Date().toISOString()
-          })
-          .eq('job_id', jobId);
-        
         await supabase
           .from('analyses')
           .update({
