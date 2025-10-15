@@ -16,7 +16,7 @@ import { IconGeneratorPage } from './components/IconGeneratorPage';
 import { SandboxTestPage } from './components/SandboxTestPage';
 import { LandingPage } from './components/LandingPage';
 import { LandingPageTabbed } from './components/LandingPageTabbed';
-import MaverickLandingPremium from './components/MaverickLandingPremium';
+//import MaverickLandingPremium from './components/MaverickLandingPremium';
 import { AlertsInboxScreen } from './components/AlertsInboxScreen';
 import { SovereigntyDashboardScreen } from './components/SovereigntyDashboardScreen';
 import { WhatIfLabScreen } from './components/WhatIfLabScreen';
