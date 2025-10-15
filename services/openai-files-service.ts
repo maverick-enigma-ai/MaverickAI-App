@@ -317,9 +317,9 @@ class OpenAIFilesService {
   ): Promise<string> {
     console.log(`📤 Processing ${files.length} file(s) for OpenAI...`);
     
-    // Separate images from documents
-    const imageFiles = files.filter(f => this.isImageFile(f));
-    const documentFiles = files.filter(f => !this.isImageFile(f));
+    // Separate images from documents (use imported function, not this.isImageFile!)
+    const imageFiles = files.filter(f => isImageFile(f));
+    const documentFiles = files.filter(f => !isImageFile(f));
     
     console.log(`🖼️  Image files: ${imageFiles.length}`);
     console.log(`📄 Document files: ${documentFiles.length}`);
