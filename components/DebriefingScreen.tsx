@@ -248,18 +248,25 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
             </div>
           </div>
 
-          {/* What's Happening Behind the Scenes - PREMIUM */}
+          {/* What's Happening Behind the Scenes - AWARD-WINNING */}
           <div 
-            className="rounded-2xl p-6 border mb-6"
+            className="rounded-2xl p-6 border mb-6 relative overflow-hidden"
             style={{
-              background: BRAND_COLORS.glass.normal,
-              backdropFilter: 'blur(24px)',
-              WebkitBackdropFilter: 'blur(24px)',
-              borderColor: BRAND_COLORS.borders.normal,
-              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)'
+              background: BRAND_COLORS.glass.strong,
+              backdropFilter: 'blur(30px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+              borderColor: BRAND_COLORS.borders.cyan,
+              boxShadow: `0 15px 40px rgba(0, 0, 0, 0.25), 0 8px 20px ${BRAND_COLORS.cyan}15, 0 0 60px ${BRAND_COLORS.cyan}08`
             }}
           >
-            <div className="flex items-start gap-3 mb-4">
+            {/* Subtle glow background */}
+            <div 
+              className="absolute inset-0 opacity-10 blur-xl"
+              style={{
+                background: `radial-gradient(circle at 30% 30%, ${BRAND_COLORS.cyan}, transparent 60%)`
+              }}
+            />
+            <div className="flex items-start gap-3 mb-4 relative z-10">
               <Activity 
                 className="w-5 h-5 mt-0.5 shrink-0" 
                 style={{ color: BRAND_COLORS.cyan }}
@@ -309,28 +316,39 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
             </div>
           </div>
 
-          {/* Input Summary (Collapsed) - PREMIUM */}
+          {/* Input Summary (Collapsed) - AWARD-WINNING */}
           <div 
-            className="rounded-2xl p-4 border"
+            className="rounded-2xl p-4 border relative overflow-hidden"
             style={{
-              background: BRAND_COLORS.glass.normal,
-              backdropFilter: 'blur(24px)',
-              WebkitBackdropFilter: 'blur(24px)',
-              borderColor: BRAND_COLORS.borders.subtle
+              background: BRAND_COLORS.glass.strong,
+              backdropFilter: 'blur(30px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+              borderColor: BRAND_COLORS.borders.cyan,
+              boxShadow: `0 15px 40px rgba(0, 0, 0, 0.25), 0 8px 20px ${BRAND_COLORS.cyan}15, 0 0 60px ${BRAND_COLORS.cyan}08`
             }}
           >
-            <h4 style={{ 
-              color: BRAND_COLORS.text.white,
-              fontFamily: 'system-ui, -apple-system, sans-serif', 
-              fontWeight: 600,
-              fontSize: '0.875rem',
-              marginBottom: '0.75rem'
-            }}>
+            {/* Subtle glow background */}
+            <div 
+              className="absolute inset-0 opacity-10 blur-xl"
+              style={{
+                background: `radial-gradient(circle at 70% 30%, ${BRAND_COLORS.teal}, transparent 60%)`
+              }}
+            />
+            <h4 
+              className="relative z-10"
+              style={{ 
+                color: BRAND_COLORS.text.white,
+                fontFamily: 'system-ui, -apple-system, sans-serif', 
+                fontWeight: 600,
+                fontSize: '0.875rem',
+                marginBottom: '0.75rem'
+              }}
+            >
               Your Request:
             </h4>
             
             {inputText && (
-              <div className="mb-2">
+              <div className="mb-2 relative z-10">
                 <p 
                   className="line-clamp-2 rounded-lg p-3" 
                   style={{ 
@@ -346,7 +364,7 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
             )}
             
             {uploadedFiles.length > 0 && (
-              <div>
+              <div className="relative z-10">
                 <p style={{ 
                   fontFamily: 'system-ui, -apple-system, sans-serif',
                   fontSize: '0.75rem',

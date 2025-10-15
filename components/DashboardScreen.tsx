@@ -633,17 +633,42 @@ export function DashboardScreen({
       >
         {/* 1. SITUATION SUMMARY - Quick scannable overview */}
         <motion.div 
-          className="bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/10"
+          className="rounded-3xl p-6 border relative overflow-hidden"
+          style={{
+            background: BRAND_COLORS.glass.strong,
+            backdropFilter: 'blur(30px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+            borderColor: BRAND_COLORS.borders.cyan,
+            boxShadow: `0 15px 40px rgba(0, 0, 0, 0.25), 0 8px 20px ${BRAND_COLORS.cyan}15`
+          }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.4 }}
         >
-          <div className="flex items-center justify-between mb-4">
+          {/* Glow background */}
+          <div 
+            className="absolute inset-0 opacity-10 blur-xl"
+            style={{
+              background: `radial-gradient(circle at 50% 0%, ${BRAND_COLORS.cyan}, transparent 60%)`
+            }}
+          />
+          
+          <div className="flex items-center justify-between mb-4 relative z-10">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center">
-                <FileText className="w-5 h-5 text-cyan-400" />
+              <div 
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{
+                  background: `${BRAND_COLORS.cyan}20`,
+                  border: `1px solid ${BRAND_COLORS.cyan}30`
+                }}
+              >
+                <FileText className="w-5 h-5" style={{ color: BRAND_COLORS.cyan }} />
               </div>
-              <h2 className="text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+              <h2 style={{ 
+                color: BRAND_COLORS.text.white,
+                fontFamily: 'system-ui, -apple-system, sans-serif', 
+                fontWeight: 600 
+              }}>
                 Situation Summary
               </h2>
             </div>
@@ -652,14 +677,25 @@ export function DashboardScreen({
                 type: 'situation', 
                 data: analysisData 
               })}
-              className="w-8 h-8 flex items-center justify-center bg-cyan-500/20 hover:bg-cyan-500/30 rounded-full transition-colors min-h-[36px] min-w-[36px]"
+              className="w-8 h-8 flex items-center justify-center rounded-full transition-colors min-h-[36px] min-w-[36px] relative z-10"
+              style={{
+                background: `${BRAND_COLORS.cyan}20`,
+                }}
+              onMouseEnter={(e) => e.currentTarget.style.background = `${BRAND_COLORS.cyan}30`}
+              onMouseLeave={(e) => e.currentTarget.style.background = `${BRAND_COLORS.cyan}20`}
               data-name="btn_situation_info"
             >
-              <Info className="w-4 h-4 text-cyan-400" />
+              <Info className="w-4 h-4" style={{ color: BRAND_COLORS.cyan }} />
             </button>
           </div>
 
-          <p className="text-white/90 text-sm leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <p 
+            className="text-sm leading-relaxed relative z-10" 
+            style={{ 
+              color: BRAND_COLORS.text.whiteSubtle,
+              fontFamily: 'system-ui, -apple-system, sans-serif' 
+            }}
+          >
             {analysisData.summary || analysisData.whatsHappening}
           </p>
         </motion.div>
@@ -669,18 +705,43 @@ export function DashboardScreen({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.4 }}
-          className="bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/10"
+          className="rounded-3xl p-6 border relative overflow-hidden"
+          style={{
+            background: BRAND_COLORS.glass.strong,
+            backdropFilter: 'blur(30px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+            borderColor: BRAND_COLORS.borders.normal,
+            boxShadow: '0 15px 40px rgba(0, 0, 0, 0.25)'
+          }}
         >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-red-500/20 border border-red-500/30 flex items-center justify-center">
-              <BarChart3 className="w-5 h-5 text-red-400" />
+          {/* Glow background */}
+          <div 
+            className="absolute inset-0 opacity-10 blur-xl"
+            style={{
+              background: `radial-gradient(circle at 30% 30%, ${BRAND_COLORS.purple}, transparent 60%)`
+            }}
+          />
+          
+          <div className="flex items-center gap-3 mb-6 relative z-10">
+            <div 
+              className="w-10 h-10 rounded-xl flex items-center justify-center"
+              style={{
+                background: `${BRAND_COLORS.purple}20`,
+                border: `1px solid ${BRAND_COLORS.purple}30`
+              }}
+            >
+              <BarChart3 className="w-5 h-5" style={{ color: BRAND_COLORS.purple }} />
             </div>
-            <h2 className="text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+            <h2 style={{ 
+              color: BRAND_COLORS.text.white,
+              fontFamily: 'system-ui, -apple-system, sans-serif', 
+              fontWeight: 600 
+            }}>
               Severity Assessment
             </h2>
           </div>
           
-          <div className="space-y-4">
+          <div className="space-y-4 relative z-10">
             {/* Power Score Card */}
             <motion.button
               onClick={() => setModalContent({
@@ -693,7 +754,15 @@ export function DashboardScreen({
               transition={{ delay: 0.1 }}
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
-              className="w-full bg-gradient-to-r from-white/10 to-white/5 rounded-2xl p-4 border border-white/10 hover:border-cyan-500/30 transition-all min-h-[48px]"
+              className="w-full rounded-2xl p-4 border transition-all min-h-[48px]"
+              style={{
+                background: BRAND_COLORS.glass.normal,
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                borderColor: BRAND_COLORS.borders.subtle
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.borderColor = `${BRAND_COLORS.cyan}50`}
+              onMouseLeave={(e) => e.currentTarget.style.borderColor = BRAND_COLORS.borders.subtle}
               data-name="btn_power_card"
             >
               {/* Mobile-optimized layout */}
@@ -701,19 +770,42 @@ export function DashboardScreen({
                 {/* Top: Label, Score & Info Icon */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center flex-shrink-0">
-                      <Shield className="w-5 h-5 text-cyan-400" />
+                    <div 
+                      className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{
+                        background: `${BRAND_COLORS.cyan}20`,
+                        border: `1px solid ${BRAND_COLORS.cyan}30`
+                      }}
+                    >
+                      <Shield className="w-5 h-5" style={{ color: BRAND_COLORS.cyan }} />
                     </div>
                     <div className="text-left">
-                      <p className="text-cyan-400 text-xs mb-0.5" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                      <p 
+                        className="text-xs mb-0.5" 
+                        style={{ 
+                          color: BRAND_COLORS.cyan,
+                          fontFamily: 'system-ui, -apple-system, sans-serif', 
+                          fontWeight: 600 
+                        }}
+                      >
                         POWER
                       </p>
-                      <div className="text-4xl text-white leading-none" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 700 }}>
+                      <div 
+                        className="text-4xl leading-none" 
+                        style={{ 
+                          color: BRAND_COLORS.text.white,
+                          fontFamily: 'system-ui, -apple-system, sans-serif', 
+                          fontWeight: 700 
+                        }}
+                      >
                         {analysisData.powerScore}
                       </div>
                     </div>
                   </div>
-                  <Info className="w-5 h-5 text-white/40 flex-shrink-0" />
+                  <Info 
+                    className="w-5 h-5 flex-shrink-0" 
+                    style={{ color: BRAND_COLORS.text.whiteFaded }}
+                  />
                 </div>
 
                 {/* Bottom: Battery Bar & Tags */}
@@ -765,7 +857,15 @@ export function DashboardScreen({
               transition={{ delay: 0.2 }}
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
-              className="w-full bg-gradient-to-r from-white/10 to-white/5 rounded-2xl p-4 border border-white/10 hover:border-purple-500/30 transition-all min-h-[48px]"
+              className="w-full rounded-2xl p-4 border transition-all min-h-[48px]"
+              style={{
+                background: BRAND_COLORS.glass.normal,
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                borderColor: BRAND_COLORS.borders.subtle
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.borderColor = `${BRAND_COLORS.purple}50`}
+              onMouseLeave={(e) => e.currentTarget.style.borderColor = BRAND_COLORS.borders.subtle}
               data-name="btn_gravity_card"
             >
               {/* Mobile-optimized layout */}
@@ -773,19 +873,42 @@ export function DashboardScreen({
                 {/* Top: Label, Score & Info Icon */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0">
-                      <Target className="w-5 h-5 text-purple-400" />
+                    <div 
+                      className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{
+                        background: `${BRAND_COLORS.purple}20`,
+                        border: `1px solid ${BRAND_COLORS.purple}30`
+                      }}
+                    >
+                      <Target className="w-5 h-5" style={{ color: BRAND_COLORS.purple }} />
                     </div>
                     <div className="text-left">
-                      <p className="text-purple-400 text-xs mb-0.5" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                      <p 
+                        className="text-xs mb-0.5" 
+                        style={{ 
+                          color: BRAND_COLORS.purple,
+                          fontFamily: 'system-ui, -apple-system, sans-serif', 
+                          fontWeight: 600 
+                        }}
+                      >
                         GRAVITY
                       </p>
-                      <div className="text-4xl text-white leading-none" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 700 }}>
+                      <div 
+                        className="text-4xl leading-none" 
+                        style={{ 
+                          color: BRAND_COLORS.text.white,
+                          fontFamily: 'system-ui, -apple-system, sans-serif', 
+                          fontWeight: 700 
+                        }}
+                      >
                         {analysisData.gravityScore}
                       </div>
                     </div>
                   </div>
-                  <Info className="w-5 h-5 text-white/40 flex-shrink-0" />
+                  <Info 
+                    className="w-5 h-5 flex-shrink-0" 
+                    style={{ color: BRAND_COLORS.text.whiteFaded }}
+                  />
                 </div>
 
                 {/* Bottom: Battery Bar & Tags */}
@@ -822,7 +945,15 @@ export function DashboardScreen({
               transition={{ delay: 0.3 }}
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
-              className="w-full bg-gradient-to-r from-white/10 to-white/5 rounded-2xl p-4 border border-white/10 hover:border-red-500/30 transition-all min-h-[48px]"
+              className="w-full rounded-2xl p-4 border transition-all min-h-[48px]"
+              style={{
+                background: BRAND_COLORS.glass.normal,
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                borderColor: BRAND_COLORS.borders.subtle
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.borderColor = `${BRAND_COLORS.pink}50`}
+              onMouseLeave={(e) => e.currentTarget.style.borderColor = BRAND_COLORS.borders.subtle}
               data-name="btn_risk_card"
             >
               {/* Mobile-optimized layout */}
@@ -830,19 +961,42 @@ export function DashboardScreen({
                 {/* Top: Label, Score & Info Icon */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-red-500/20 border border-red-500/30 flex items-center justify-center flex-shrink-0">
-                      <AlertTriangle className="w-5 h-5 text-red-400" />
+                    <div 
+                      className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{
+                        background: `${BRAND_COLORS.pink}20`,
+                        border: `1px solid ${BRAND_COLORS.pink}30`
+                      }}
+                    >
+                      <AlertTriangle className="w-5 h-5" style={{ color: BRAND_COLORS.pink }} />
                     </div>
                     <div className="text-left">
-                      <p className="text-red-400 text-xs mb-0.5" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                      <p 
+                        className="text-xs mb-0.5" 
+                        style={{ 
+                          color: BRAND_COLORS.pink,
+                          fontFamily: 'system-ui, -apple-system, sans-serif', 
+                          fontWeight: 600 
+                        }}
+                      >
                         RISK
                       </p>
-                      <div className="text-4xl text-white leading-none" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 700 }}>
+                      <div 
+                        className="text-4xl leading-none" 
+                        style={{ 
+                          color: BRAND_COLORS.text.white,
+                          fontFamily: 'system-ui, -apple-system, sans-serif', 
+                          fontWeight: 700 
+                        }}
+                      >
                         {analysisData.riskScore}
                       </div>
                     </div>
                   </div>
-                  <Info className="w-5 h-5 text-white/40 flex-shrink-0" />
+                  <Info 
+                    className="w-5 h-5 flex-shrink-0" 
+                    style={{ color: BRAND_COLORS.text.whiteFaded }}
+                  />
                 </div>
 
                 {/* Bottom: Battery Bar & Tags */}
