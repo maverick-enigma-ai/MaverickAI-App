@@ -13,8 +13,22 @@ const OPENAI_ASSISTANT_ID = process.env.VITE_OPENAI_ASSISTANT_ID || process.env.
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.VITE_SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
+// Validate required environment variables
+if (!SUPABASE_URL) {
+  throw new Error('Missing SUPABASE_URL environment variable');
+}
+if (!SUPABASE_SERVICE_ROLE_KEY) {
+  throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY environment variable');
+}
+if (!OPENAI_API_KEY) {
+  throw new Error('Missing OPENAI_API_KEY environment variable');
+}
+if (!OPENAI_ASSISTANT_ID) {
+  throw new Error('Missing OPENAI_ASSISTANT_ID environment variable');
+}
+
 // 🔐 Use SERVICE_ROLE_KEY for server-side operations (bypasses RLS, full database access)
-const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
+const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
 // Helper function to join array of strings with bullet points
 function joinWithBullets(arr: string[] | undefined): string {
@@ -211,8 +225,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           }
           
           const visionResult = await visionResponse.json();
-          visionAnalysis = visionResult.choices[0].message.content;
-          console.log(`✅ Vision analysis complete (${visionAnalysis.length} chars)`);
+          visionAnalysis = visionResult.choices[0]?.message?.content || '';
+          console.log(`✅ Vision analysis complete (${visionAnalysis?.length || 0} chars)`);
         }
         
         // PART B: Process documents with Vector Store (if any)
