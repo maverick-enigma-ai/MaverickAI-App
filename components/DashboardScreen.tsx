@@ -1504,6 +1504,196 @@ export function DashboardScreen({
           </motion.div>
         )}
 
+        {/* 🩺 DIAGNOSIS - Clinical Assessment */}
+        {(analysisData.diagnosisPrimary || analysisData.diagnosisSecondary || analysisData.diagnosisTertiary) && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.36, duration: 0.4 }}
+            className="rounded-3xl p-6 border relative overflow-hidden"
+            style={{
+              background: BRAND_COLORS.glass.strong,
+              backdropFilter: 'blur(30px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+              borderColor: `${BRAND_COLORS.pink}40`,
+              boxShadow: `0 15px 40px rgba(0, 0, 0, 0.25), 0 8px 20px ${BRAND_COLORS.pink}15`
+            }}
+          >
+            {/* Glow background */}
+            <div 
+              className="absolute inset-0 opacity-10 blur-xl"
+              style={{
+                background: `radial-gradient(circle at 50% 0%, ${BRAND_COLORS.pink}, transparent 60%)`
+              }}
+            />
+            
+            <div className="flex items-center gap-3 mb-6 relative z-10">
+              <div 
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{
+                  background: `${BRAND_COLORS.pink}20`,
+                  border: `1px solid ${BRAND_COLORS.pink}30`
+                }}
+              >
+                <span className="text-xl">🩺</span>
+              </div>
+              <div>
+                <h2 style={{ 
+                  color: BRAND_COLORS.text.white,
+                  fontFamily: 'system-ui, -apple-system, sans-serif', 
+                  fontWeight: 600 
+                }}>
+                  Strategic Diagnosis
+                </h2>
+                <p style={{ 
+                  color: `${BRAND_COLORS.pink}CC`,
+                  fontSize: '0.75rem',
+                  fontFamily: 'system-ui, -apple-system, sans-serif'
+                }}>
+                  Multi-layered assessment
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4 relative z-10">
+              {/* Primary Diagnosis */}
+              {analysisData.diagnosisPrimary && (
+                <div 
+                  className="rounded-xl p-4 border"
+                  style={{
+                    background: `${BRAND_COLORS.pink}10`,
+                    borderColor: `${BRAND_COLORS.pink}30`
+                  }}
+                >
+                  <div className="flex items-start gap-3">
+                    <div 
+                      className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+                      style={{
+                        background: `${BRAND_COLORS.pink}20`,
+                        border: `1px solid ${BRAND_COLORS.pink}40`
+                      }}
+                    >
+                      <span className="text-sm">1️⃣</span>
+                    </div>
+                    <div className="flex-1">
+                      <p 
+                        className="text-xs mb-2 uppercase tracking-wide" 
+                        style={{ 
+                          color: BRAND_COLORS.pink,
+                          fontFamily: 'system-ui, -apple-system, sans-serif', 
+                          fontWeight: 600 
+                        }}
+                      >
+                        PRIMARY DIAGNOSIS
+                      </p>
+                      <p 
+                        className="text-sm leading-relaxed"
+                        style={{ 
+                          color: BRAND_COLORS.text.white,
+                          fontFamily: 'system-ui, -apple-system, sans-serif',
+                          fontWeight: 500
+                        }}
+                      >
+                        {analysisData.diagnosisPrimary}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Secondary Diagnosis */}
+              {analysisData.diagnosisSecondary && (
+                <div 
+                  className="rounded-xl p-4 border"
+                  style={{
+                    background: `${BRAND_COLORS.purple}10`,
+                    borderColor: `${BRAND_COLORS.purple}30`
+                  }}
+                >
+                  <div className="flex items-start gap-3">
+                    <div 
+                      className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+                      style={{
+                        background: `${BRAND_COLORS.purple}20`,
+                        border: `1px solid ${BRAND_COLORS.purple}40`
+                      }}
+                    >
+                      <span className="text-sm">2️⃣</span>
+                    </div>
+                    <div className="flex-1">
+                      <p 
+                        className="text-xs mb-2 uppercase tracking-wide" 
+                        style={{ 
+                          color: BRAND_COLORS.purple,
+                          fontFamily: 'system-ui, -apple-system, sans-serif', 
+                          fontWeight: 600 
+                        }}
+                      >
+                        SECONDARY DIAGNOSIS
+                      </p>
+                      <p 
+                        className="text-sm leading-relaxed"
+                        style={{ 
+                          color: BRAND_COLORS.text.white,
+                          fontFamily: 'system-ui, -apple-system, sans-serif',
+                          fontWeight: 500
+                        }}
+                      >
+                        {analysisData.diagnosisSecondary}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Tertiary Diagnosis */}
+              {analysisData.diagnosisTertiary && (
+                <div 
+                  className="rounded-xl p-4 border"
+                  style={{
+                    background: `${BRAND_COLORS.cyan}10`,
+                    borderColor: `${BRAND_COLORS.cyan}30`
+                  }}
+                >
+                  <div className="flex items-start gap-3">
+                    <div 
+                      className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+                      style={{
+                        background: `${BRAND_COLORS.cyan}20`,
+                        border: `1px solid ${BRAND_COLORS.cyan}40`
+                      }}
+                    >
+                      <span className="text-sm">3️⃣</span>
+                    </div>
+                    <div className="flex-1">
+                      <p 
+                        className="text-xs mb-2 uppercase tracking-wide" 
+                        style={{ 
+                          color: BRAND_COLORS.cyan,
+                          fontFamily: 'system-ui, -apple-system, sans-serif', 
+                          fontWeight: 600 
+                        }}
+                      >
+                        TERTIARY DIAGNOSIS
+                      </p>
+                      <p 
+                        className="text-sm leading-relaxed"
+                        style={{ 
+                          color: BRAND_COLORS.text.white,
+                          fontFamily: 'system-ui, -apple-system, sans-serif',
+                          fontWeight: 500
+                        }}
+                      >
+                        {analysisData.diagnosisTertiary}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+
         {/* 🧠 NEW: PSYCHOLOGICAL PROFILE - Deep Intelligence Layer */}
         {analysisData.psychologicalProfile && (
           <motion.div
@@ -1657,7 +1847,7 @@ export function DashboardScreen({
                       <p className="text-teal-400 text-xs mb-1.5" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
                         WHY THIS MATTERS
                       </p>
-                      <p className="text-white/90 text-sm leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                      <p style={{ color: BRAND_COLORS.text.white, fontSize: '0.875rem', lineHeight: '1.6', fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 500 }}>
                         {analysisData.diagnosticState}
                       </p>
                     </div>
@@ -1675,7 +1865,7 @@ export function DashboardScreen({
                       <p className="text-yellow-400 text-xs mb-1.5" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
                         STRATEGIC CONTEXT
                       </p>
-                      <p className="text-white/90 text-sm leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                      <p style={{ color: BRAND_COLORS.text.white, fontSize: '0.875rem', lineHeight: '1.6', fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 500 }}>
                         {analysisData.diagnosticSoWhat}
                       </p>
                     </div>
@@ -1823,137 +2013,7 @@ export function DashboardScreen({
           </div>
         </div>
 
-        {/* 🧠 4.5. PSYCHOLOGICAL PROFILE (Gold Nugget #1) - Deep Intelligence */}
-        {analysisData.psychologicalProfile && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.4 }}
-            className="bg-gradient-to-br from-purple-500/10 via-pink-500/10 to-purple-500/10 backdrop-blur-md rounded-3xl p-6 border border-purple-500/30 shadow-xl shadow-purple-500/10"
-          >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/30 to-pink-500/30 border border-purple-400/40 flex items-center justify-center">
-                <span className="text-2xl">🧠</span>
-              </div>
-              <div className="flex-1">
-                <h2 className="text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
-                  Deep Psychological Profile
-                </h2>
-                <p className="text-purple-300 text-xs mt-0.5" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                  Advanced behavioral intelligence analysis
-                </p>
-              </div>
-              <span className="text-xs bg-gradient-to-r from-yellow-400 to-orange-400 text-purple-900 px-3 py-1 rounded-full" style={{ fontWeight: 700 }}>
-                GOLD NUGGET #1
-              </span>
-            </div>
 
-            <div className="space-y-4">
-              {/* Primary Motivation */}
-              {analysisData.psychologicalProfile.primaryMotivation && (
-                <div className="bg-white/5 rounded-2xl p-4 border border-purple-400/20">
-                  <div className="flex items-start gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center flex-shrink-0">
-                      <Target className="w-4 h-4 text-cyan-400" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-cyan-400 text-xs mb-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
-                        PRIMARY MOTIVATION
-                      </p>
-                      <p className="text-white/90 text-sm leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                        {analysisData.psychologicalProfile.primaryMotivation}
-                      </p>
-                      {analysisData.psychologicalProfile.motivationEvidence && (
-                        <p className="text-white/60 text-xs mt-2 italic" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                          Evidence: {analysisData.psychologicalProfile.motivationEvidence}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Hidden Driver */}
-              {analysisData.psychologicalProfile.hiddenDriver && (
-                <div className="bg-white/5 rounded-2xl p-4 border border-purple-400/20">
-                  <div className="flex items-start gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0">
-                      <Zap className="w-4 h-4 text-purple-400" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-purple-400 text-xs mb-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
-                        HIDDEN DRIVER
-                      </p>
-                      <p className="text-white/90 text-sm leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                        {analysisData.psychologicalProfile.hiddenDriver}
-                      </p>
-                      {analysisData.psychologicalProfile.hiddenDriverSignal && (
-                        <p className="text-white/60 text-xs mt-2 italic" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                          Signal: {analysisData.psychologicalProfile.hiddenDriverSignal}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Emotional State */}
-              {analysisData.psychologicalProfile.emotionalState && (
-                <div className="bg-white/5 rounded-2xl p-4 border border-purple-400/20">
-                  <div className="flex items-start gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-pink-500/20 border border-pink-500/30 flex items-center justify-center flex-shrink-0">
-                      <span className="text-lg">💭</span>
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-pink-400 text-xs mb-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
-                        EMOTIONAL STATE
-                      </p>
-                      <p className="text-white/90 text-sm leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                        {analysisData.psychologicalProfile.emotionalState}
-                      </p>
-                      {analysisData.psychologicalProfile.emotionalEvidence && (
-                        <p className="text-white/60 text-xs mt-2 italic" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                          Evidence: {analysisData.psychologicalProfile.emotionalEvidence}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Power Dynamic */}
-              {analysisData.psychologicalProfile.powerDynamic && (
-                <div className="bg-white/5 rounded-2xl p-4 border border-purple-400/20">
-                  <div className="flex items-start gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center flex-shrink-0">
-                      <Shield className="w-4 h-4 text-yellow-400" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-yellow-400 text-xs mb-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
-                        POWER DYNAMIC
-                      </p>
-                      <p className="text-white/90 text-sm leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                        {analysisData.psychologicalProfile.powerDynamic}
-                      </p>
-                      {analysisData.psychologicalProfile.powerDynamicEvidence && (
-                        <p className="text-white/60 text-xs mt-2 italic" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                          Evidence: {analysisData.psychologicalProfile.powerDynamicEvidence}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Premium Badge */}
-            <div className="mt-4 pt-4 border-t border-purple-400/20">
-              <p className="text-purple-300/60 text-xs text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                🔮 Advanced psychological intelligence • Powered by MaverickAI Deep Learning
-              </p>
-            </div>
-          </motion.div>
-        )}
 
         {/* 5. STRATEGIC PLAN - Collapsible with completion tracking */}
         <div>

@@ -207,6 +207,29 @@ export interface ProcessedAnalysis {
   diagnosticState?: string;          // diagnostic_state
   diagnosticSoWhat?: string;         // diagnostic_so_what
   
+  // 🧠 NEW: Psychological Profile (Gold Nugget #1)
+  psychologicalProfile?: {
+    primaryMotivation: string;
+    motivationEvidence: string;
+    hiddenDriver: string;
+    hiddenDriverSignal: string;
+    emotionalState: string;
+    emotionalEvidence: string;
+    powerDynamic: string;
+    powerDynamicEvidence: string;
+  } | null;
+  
+  // 🩺 NEW: Diagnosis Fields (Primary, Secondary, Tertiary)
+  diagnosisPrimary?: string;           // Primary diagnosis
+  diagnosisSecondary?: string;         // Secondary diagnosis
+  diagnosisTertiary?: string;          // Tertiary diagnosis
+  
+  // 🚩 Radar Red Flags
+  radarRed1?: string;                  // First red flag
+  radarRed2?: string;                  // Second red flag
+  radarRed3?: string;                  // Third red flag
+  tacticalMoves?: string;              // Tactical moves
+  
   // Visualizations
   radarUrl?: string;                 // radar_url
   chartHtml?: string;                // chart_html
