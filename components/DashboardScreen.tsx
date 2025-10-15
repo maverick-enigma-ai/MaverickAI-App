@@ -810,16 +810,34 @@ export function DashboardScreen({
 
                 {/* Bottom: Battery Bar & Tags */}
                 <div className="space-y-2">
-                  {/* Battery Bar - Full width on mobile */}
-                  <div className="h-6 bg-white/5 rounded-lg overflow-hidden border border-white/10">
+                  {/* Battery Bar - Full width on mobile - AWARD WINNING */}
+                  <div className="h-6 bg-white/5 rounded-lg overflow-hidden border border-white/10 relative">
                     <div 
-                      className={`h-full rounded-lg transition-all duration-1000 ${
-                        analysisData.powerScore > 60 ? 'bg-gradient-to-r from-orange-400 to-orange-500' :
-                        analysisData.powerScore < 40 ? 'bg-gradient-to-r from-green-400 to-green-500' :
-                        'bg-gradient-to-r from-yellow-400 to-yellow-500'
-                      }`}
-                      style={{ width: `${analysisData.powerScore}%` }}
-                    />
+                      className="h-full rounded-lg transition-all duration-1000 relative overflow-hidden"
+                      style={{ 
+                        width: `${analysisData.powerScore}%`,
+                        background: analysisData.powerScore > 60 
+                          ? 'linear-gradient(90deg, #fb923c 0%, #f97316 100%)' // Orange gradient (opponent advantage)
+                          : analysisData.powerScore < 40
+                          ? 'linear-gradient(90deg, #34d399 0%, #10b981 100%)' // Green gradient (your advantage)
+                          : 'linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%)', // Gold gradient (balanced)
+                        boxShadow: analysisData.powerScore > 60
+                          ? '0 0 15px rgba(249, 115, 22, 0.4), inset 0 1px 1px rgba(255,255,255,0.2)'
+                          : analysisData.powerScore < 40
+                          ? '0 0 15px rgba(16, 185, 129, 0.4), inset 0 1px 1px rgba(255,255,255,0.2)'
+                          : '0 0 15px rgba(251, 191, 36, 0.4), inset 0 1px 1px rgba(255,255,255,0.2)'
+                      }}
+                    >
+                      {/* Shimmer overlay */}
+                      <div 
+                        className="absolute inset-0 opacity-30"
+                        style={{
+                          background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)',
+                          backgroundSize: '200% 100%',
+                          animation: 'shimmer 2s infinite'
+                        }}
+                      />
+                    </div>
                   </div>
                   
                   {/* Tags Row */}
@@ -913,12 +931,26 @@ export function DashboardScreen({
 
                 {/* Bottom: Battery Bar & Tags */}
                 <div className="space-y-2">
-                  {/* Battery Bar - Full width on mobile */}
-                  <div className="h-6 bg-white/5 rounded-lg overflow-hidden border border-white/10">
+                  {/* Battery Bar - Full width on mobile - AWARD WINNING */}
+                  <div className="h-6 bg-white/5 rounded-lg overflow-hidden border border-white/10 relative">
                     <div 
-                      className="h-full rounded-lg bg-gradient-to-r from-purple-400 to-purple-500 transition-all duration-1000"
-                      style={{ width: `${analysisData.gravityScore}%` }}
-                    />
+                      className="h-full rounded-lg transition-all duration-1000 relative overflow-hidden"
+                      style={{ 
+                        width: `${analysisData.gravityScore}%`,
+                        background: 'linear-gradient(90deg, #8b5cf6 0%, #ec4899 100%)', // Purple to pink gradient
+                        boxShadow: '0 0 15px rgba(139, 92, 246, 0.4), inset 0 1px 1px rgba(255,255,255,0.2)'
+                      }}
+                    >
+                      {/* Shimmer overlay */}
+                      <div 
+                        className="absolute inset-0 opacity-30"
+                        style={{
+                          background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)',
+                          backgroundSize: '200% 100%',
+                          animation: 'shimmer 2s infinite'
+                        }}
+                      />
+                    </div>
                   </div>
                   
                   {/* Tags Row */}
@@ -1001,15 +1033,30 @@ export function DashboardScreen({
 
                 {/* Bottom: Battery Bar & Tags */}
                 <div className="space-y-2">
-                  {/* Battery Bar - Full width on mobile */}
-                  <div className="h-6 bg-white/5 rounded-lg overflow-hidden border border-white/10">
+                  {/* Battery Bar - Full width on mobile - AWARD WINNING */}
+                  <div className="h-6 bg-white/5 rounded-lg overflow-hidden border border-white/10 relative">
                     <div 
-                      className={`h-full rounded-lg transition-all duration-1000 ${
-                        analysisData.riskScore > 60 ? 'bg-gradient-to-r from-red-400 to-red-500' :
-                        'bg-gradient-to-r from-green-400 to-green-500'
-                      }`}
-                      style={{ width: `${analysisData.riskScore}%` }}
-                    />
+                      className="h-full rounded-lg transition-all duration-1000 relative overflow-hidden"
+                      style={{ 
+                        width: `${analysisData.riskScore}%`,
+                        background: analysisData.riskScore > 60
+                          ? 'linear-gradient(90deg, #ef4444 0%, #f97316 100%)' // Red to orange gradient (high risk)
+                          : 'linear-gradient(90deg, #34d399 0%, #10b981 100%)', // Green gradient (low risk)
+                        boxShadow: analysisData.riskScore > 60
+                          ? '0 0 15px rgba(239, 68, 68, 0.4), inset 0 1px 1px rgba(255,255,255,0.2)'
+                          : '0 0 15px rgba(16, 185, 129, 0.4), inset 0 1px 1px rgba(255,255,255,0.2)'
+                      }}
+                    >
+                      {/* Shimmer overlay */}
+                      <div 
+                        className="absolute inset-0 opacity-30"
+                        style={{
+                          background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)',
+                          backgroundSize: '200% 100%',
+                          animation: 'shimmer 2s infinite'
+                        }}
+                      />
+                    </div>
                   </div>
                   
                   {/* Tags Row */}
@@ -1034,15 +1081,283 @@ export function DashboardScreen({
           </div>
         </motion.div>
 
-        {/* 3. ISSUE CLASSIFICATION - What kind of problem this is */}
-        {(analysisData.issueCategory || analysisData.issueType || analysisData.issueLayer) && (
-          <div className="bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/10">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center">
-                  <Target className="w-5 h-5 text-purple-400" />
+        {/* 3. STRATEGIC POWER ANALYSIS - Strategic Shifts Needed */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.4 }}
+          className="rounded-3xl p-6 border relative overflow-hidden"
+          style={{
+            background: BRAND_COLORS.glass.strong,
+            backdropFilter: 'blur(30px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+            borderColor: BRAND_COLORS.borders.normal,
+            boxShadow: '0 15px 40px rgba(0, 0, 0, 0.25)'
+          }}
+        >
+          {/* Glow background */}
+          <div 
+            className="absolute inset-0 opacity-10 blur-xl"
+            style={{
+              background: `radial-gradient(circle at 50% 0%, ${BRAND_COLORS.gold}, transparent 60%)`
+            }}
+          />
+          
+          <div className="flex items-center gap-3 mb-6 relative z-10">
+            <div 
+              className="w-10 h-10 rounded-xl flex items-center justify-center"
+              style={{
+                background: `${BRAND_COLORS.cyan}20`,
+                border: `1px solid ${BRAND_COLORS.cyan}30`
+              }}
+            >
+              <RadarIcon className="w-5 h-5" style={{ color: BRAND_COLORS.cyan }} />
+            </div>
+            <h2 style={{ 
+              color: BRAND_COLORS.text.white,
+              fontFamily: 'system-ui, -apple-system, sans-serif', 
+              fontWeight: 600 
+            }}>
+              Strategic Power Analysis
+            </h2>
+          </div>
+
+          {/* Strategic Shifts Needed */}
+          <div className="relative z-10 space-y-4">
+            <div className="flex items-center gap-2 mb-4">
+              <Zap className="w-5 h-5" style={{ color: BRAND_COLORS.gold }} />
+              <h3 
+                className="text-sm uppercase tracking-wide"
+                style={{ 
+                  color: BRAND_COLORS.gold,
+                  fontFamily: 'system-ui, -apple-system, sans-serif', 
+                  fontWeight: 600 
+                }}
+              >
+                STRATEGIC SHIFTS NEEDED
+              </h3>
+            </div>
+
+            {/* Power Shift */}
+            <div 
+              className="p-4 rounded-2xl border"
+              style={{
+                background: 'rgba(0, 212, 255, 0.05)',
+                borderColor: 'rgba(0, 212, 255, 0.2)'
+              }}
+            >
+              <div className="flex items-start gap-3">
+                {analysisData.powerScore > 60 ? (
+                  <ArrowDown className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#10b981' }} />
+                ) : analysisData.powerScore < 40 ? (
+                  <ArrowUp className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#ef4444' }} />
+                ) : (
+                  <Minus className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: BRAND_COLORS.text.whiteFaded }} />
+                )}
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span 
+                      className="text-sm"
+                      style={{ 
+                        color: BRAND_COLORS.cyan,
+                        fontFamily: 'system-ui, -apple-system, sans-serif', 
+                        fontWeight: 600 
+                      }}
+                    >
+                      Power: {analysisData.powerScore}
+                      {analysisData.powerScore > 60 && (
+                        <>
+                          {' → '}
+                          <span style={{ color: '#10b981' }}>
+                            {Math.round(analysisData.powerScore * 0.4)}
+                          </span>
+                        </>
+                      )}
+                    </span>
+                    {analysisData.powerScore > 60 && (
+                      <span 
+                        className="text-xs px-2 py-0.5 rounded-full"
+                        style={{
+                          background: 'rgba(16, 185, 129, 0.2)',
+                          color: '#10b981',
+                          fontFamily: 'system-ui, -apple-system, sans-serif',
+                          fontWeight: 600
+                        }}
+                      >
+                        -{Math.round(analysisData.powerScore * 0.6)}
+                      </span>
+                    )}
+                  </div>
+                  <p 
+                    className="text-xs"
+                    style={{ 
+                      color: BRAND_COLORS.text.whiteSubtle,
+                      fontFamily: 'system-ui, -apple-system, sans-serif'
+                    }}
+                  >
+                    {analysisData.powerScore > 60 
+                      ? "Reduce opponent's influence through Quick Wins"
+                      : analysisData.powerScore < 40
+                      ? "Maintain your advantage through Consistent Actions"
+                      : "Balance power dynamics via Strategic Positioning"
+                    }
+                  </p>
                 </div>
-                <h2 className="text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+              </div>
+            </div>
+
+            {/* Gravity Shift */}
+            <div 
+              className="p-4 rounded-2xl border"
+              style={{
+                background: 'rgba(139, 92, 246, 0.05)',
+                borderColor: 'rgba(139, 92, 246, 0.2)'
+              }}
+            >
+              <div className="flex items-start gap-3">
+                <Minus className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: BRAND_COLORS.text.whiteFaded }} />
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span 
+                      className="text-sm"
+                      style={{ 
+                        color: BRAND_COLORS.purple,
+                        fontFamily: 'system-ui, -apple-system, sans-serif', 
+                        fontWeight: 600 
+                      }}
+                    >
+                      Gravity: {analysisData.gravityScore}
+                    </span>
+                    <span 
+                      className="text-xs px-2 py-0.5 rounded-full"
+                      style={{
+                        background: 'rgba(139, 92, 246, 0.2)',
+                        color: BRAND_COLORS.purple,
+                        fontFamily: 'system-ui, -apple-system, sans-serif',
+                        fontWeight: 600
+                      }}
+                    >
+                      Monitor
+                    </span>
+                  </div>
+                  <p 
+                    className="text-xs"
+                    style={{ 
+                      color: BRAND_COLORS.text.whiteSubtle,
+                      fontFamily: 'system-ui, -apple-system, sans-serif'
+                    }}
+                  >
+                    Maintain awareness via Positioning Moves
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Risk Shift */}
+            <div 
+              className="p-4 rounded-2xl border"
+              style={{
+                background: 'rgba(236, 72, 153, 0.05)',
+                borderColor: 'rgba(236, 72, 153, 0.2)'
+              }}
+            >
+              <div className="flex items-start gap-3">
+                {analysisData.riskScore > 60 ? (
+                  <ArrowDown className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#10b981' }} />
+                ) : (
+                  <Minus className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: BRAND_COLORS.text.whiteFaded }} />
+                )}
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span 
+                      className="text-sm"
+                      style={{ 
+                        color: BRAND_COLORS.pink,
+                        fontFamily: 'system-ui, -apple-system, sans-serif', 
+                        fontWeight: 600 
+                      }}
+                    >
+                      Risk: {analysisData.riskScore}
+                      {analysisData.riskScore > 60 && (
+                        <>
+                          {' → '}
+                          <span style={{ color: '#10b981' }}>
+                            {Math.round(analysisData.riskScore * 0.3)}
+                          </span>
+                        </>
+                      )}
+                    </span>
+                    {analysisData.riskScore > 60 && (
+                      <span 
+                        className="text-xs px-2 py-0.5 rounded-full"
+                        style={{
+                          background: 'rgba(16, 185, 129, 0.2)',
+                          color: '#10b981',
+                          fontFamily: 'system-ui, -apple-system, sans-serif',
+                          fontWeight: 600
+                        }}
+                      >
+                        -{Math.round(analysisData.riskScore * 0.7)}
+                      </span>
+                    )}
+                  </div>
+                  <p 
+                    className="text-xs"
+                    style={{ 
+                      color: BRAND_COLORS.text.whiteSubtle,
+                      fontFamily: 'system-ui, -apple-system, sans-serif'
+                    }}
+                  >
+                    {analysisData.riskScore > 60
+                      ? "Mitigate threats through Immediate Actions"
+                      : "Maintain low risk through Preventive Measures"
+                    }
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* 4. ISSUE CLASSIFICATION - What kind of problem this is */}
+        {(analysisData.issueCategory || analysisData.issueType || analysisData.issueLayer) && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35, duration: 0.4 }}
+            className="rounded-3xl p-6 border relative overflow-hidden"
+            style={{
+              background: BRAND_COLORS.glass.strong,
+              backdropFilter: 'blur(30px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+              borderColor: BRAND_COLORS.borders.purple,
+              boxShadow: `0 15px 40px rgba(0, 0, 0, 0.25), 0 8px 20px ${BRAND_COLORS.purple}15`
+            }}
+          >
+            {/* Glow background */}
+            <div 
+              className="absolute inset-0 opacity-10 blur-xl"
+              style={{
+                background: `radial-gradient(circle at 50% 0%, ${BRAND_COLORS.purple}, transparent 60%)`
+              }}
+            />
+            
+            <div className="flex items-center justify-between mb-4 relative z-10">
+              <div className="flex items-center gap-3">
+                <div 
+                  className="w-10 h-10 rounded-xl flex items-center justify-center"
+                  style={{
+                    background: `${BRAND_COLORS.purple}20`,
+                    border: `1px solid ${BRAND_COLORS.purple}30`
+                  }}
+                >
+                  <Target className="w-5 h-5" style={{ color: BRAND_COLORS.purple }} />
+                </div>
+                <h2 style={{ 
+                  color: BRAND_COLORS.text.white,
+                  fontFamily: 'system-ui, -apple-system, sans-serif', 
+                  fontWeight: 600 
+                }}>
                   Issue Classification
                 </h2>
               </div>
@@ -1053,22 +1368,53 @@ export function DashboardScreen({
                   issueType: analysisData.issueType,
                   layer: analysisData.issueLayer
                 })}
-                className="w-8 h-8 flex items-center justify-center bg-purple-500/20 hover:bg-purple-500/30 rounded-full transition-colors min-h-[36px] min-w-[36px]"
+                className="w-8 h-8 flex items-center justify-center rounded-full transition-colors min-h-[36px] min-w-[36px] relative z-10"
+                style={{
+                  background: `${BRAND_COLORS.purple}20`
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = `${BRAND_COLORS.purple}30`}
+                onMouseLeave={(e) => e.currentTarget.style.background = `${BRAND_COLORS.purple}20`}
                 data-name="btn_classification_info"
               >
-                <Info className="w-4 h-4 text-purple-400" />
+                <Info className="w-4 h-4" style={{ color: BRAND_COLORS.purple }} />
               </button>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 relative z-10">
               {/* Category - Full width bar */}
               {analysisData.issueCategory && (
-                <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                  <p className="text-cyan-400 text-xs mb-3" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                <div 
+                  className="rounded-xl p-4 border"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    borderColor: 'rgba(255, 255, 255, 0.1)'
+                  }}
+                >
+                  <p 
+                    className="text-xs mb-3 uppercase tracking-wide" 
+                    style={{ 
+                      color: BRAND_COLORS.cyan,
+                      fontFamily: 'system-ui, -apple-system, sans-serif', 
+                      fontWeight: 600 
+                    }}
+                  >
                     CATEGORY
                   </p>
-                  <div className="w-full px-4 py-2.5 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 rounded-xl">
-                    <span className="text-white text-xs" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                  <div 
+                    className="w-full px-4 py-2.5 rounded-xl"
+                    style={{
+                      background: `linear-gradient(90deg, ${BRAND_COLORS.cyan}20 0%, ${BRAND_COLORS.teal}20 100%)`,
+                      border: `1px solid ${BRAND_COLORS.cyan}30`
+                    }}
+                  >
+                    <span 
+                      className="text-xs"
+                      style={{ 
+                        color: BRAND_COLORS.text.white,
+                        fontFamily: 'system-ui, -apple-system, sans-serif', 
+                        fontWeight: 600 
+                      }}
+                    >
                       {analysisData.issueCategory}
                     </span>
                   </div>
@@ -1077,12 +1423,38 @@ export function DashboardScreen({
 
               {/* Type - Full width bar */}
               {analysisData.issueType && (
-                <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                  <p className="text-purple-400 text-xs mb-3" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                <div 
+                  className="rounded-xl p-4 border"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    borderColor: 'rgba(255, 255, 255, 0.1)'
+                  }}
+                >
+                  <p 
+                    className="text-xs mb-3 uppercase tracking-wide" 
+                    style={{ 
+                      color: BRAND_COLORS.purple,
+                      fontFamily: 'system-ui, -apple-system, sans-serif', 
+                      fontWeight: 600 
+                    }}
+                  >
                     TYPE
                   </p>
-                  <div className="w-full px-4 py-2.5 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-xl">
-                    <span className="text-white text-xs" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                  <div 
+                    className="w-full px-4 py-2.5 rounded-xl"
+                    style={{
+                      background: `linear-gradient(90deg, ${BRAND_COLORS.purple}20 0%, ${BRAND_COLORS.pink}20 100%)`,
+                      border: `1px solid ${BRAND_COLORS.purple}30`
+                    }}
+                  >
+                    <span 
+                      className="text-xs"
+                      style={{ 
+                        color: BRAND_COLORS.text.white,
+                        fontFamily: 'system-ui, -apple-system, sans-serif', 
+                        fontWeight: 600 
+                      }}
+                    >
                       {analysisData.issueType}
                     </span>
                   </div>
@@ -1091,19 +1463,45 @@ export function DashboardScreen({
 
               {/* Layer - Full width bar */}
               {analysisData.issueLayer && (
-                <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                  <p className="text-pink-400 text-xs mb-3" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                <div 
+                  className="rounded-xl p-4 border"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    borderColor: 'rgba(255, 255, 255, 0.1)'
+                  }}
+                >
+                  <p 
+                    className="text-xs mb-3 uppercase tracking-wide" 
+                    style={{ 
+                      color: BRAND_COLORS.pink,
+                      fontFamily: 'system-ui, -apple-system, sans-serif', 
+                      fontWeight: 600 
+                    }}
+                  >
                     LAYER
                   </p>
-                  <div className="w-full px-4 py-2.5 bg-gradient-to-r from-pink-500/20 to-red-500/20 border border-pink-500/30 rounded-xl">
-                    <span className="text-white text-xs" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
+                  <div 
+                    className="w-full px-4 py-2.5 rounded-xl"
+                    style={{
+                      background: `linear-gradient(90deg, ${BRAND_COLORS.pink}20 0%, ${BRAND_COLORS.gold}20 100%)`,
+                      border: `1px solid ${BRAND_COLORS.pink}30`
+                    }}
+                  >
+                    <span 
+                      className="text-xs"
+                      style={{ 
+                        color: BRAND_COLORS.text.white,
+                        fontFamily: 'system-ui, -apple-system, sans-serif', 
+                        fontWeight: 600 
+                      }}
+                    >
                       {analysisData.issueLayer.replace(/[()]/g, '').trim()}
                     </span>
                   </div>
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* 🧠 NEW: PSYCHOLOGICAL PROFILE - Deep Intelligence Layer */}
