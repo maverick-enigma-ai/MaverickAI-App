@@ -50,16 +50,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const startTime = Date.now();
   console.log('🚀 /api/analyze started');
 
+  // Declare variables outside try-catch so they're available in catch block
+  let inputText: string = '';
+  let userId: string | undefined;
+  let userEmail: string | undefined;
+  let files: any[] | undefined;
+  let jobId: string = '';
+
   try {
     // ACCEPT BOTH PARAMETER FORMATS
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
     
     // Old format: { prompt, attachments }
     // New format: { inputText, userId, userEmail, files }
-    const inputText = body.inputText || body.prompt;
-    const userId = body.userId;
-    const userEmail = body.userEmail;
-    const files = body.files; // Array of { name, type, size, data }
+    inputText = body.inputText || body.prompt;
+    userId = body.userId;
+    userEmail = body.userEmail;
+    files = body.files; // Array of { name, type, size, data }
 
     // Validation
     if (!inputText || inputText.trim().length < 10) {
@@ -69,7 +76,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    const jobId = generateUUID();
+    jobId = generateUUID();
     const now = new Date().toISOString();
 
     console.log(`📋 Job ID: ${jobId}`);
