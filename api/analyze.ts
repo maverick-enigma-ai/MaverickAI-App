@@ -11,14 +11,14 @@ import { createClient } from '@supabase/supabase-js';
 const OPENAI_API_KEY = process.env.VITE_OPENAI_API_KEY || process.env.OPENAI_API_KEY;
 const OPENAI_ASSISTANT_ID = process.env.VITE_OPENAI_ASSISTANT_ID || process.env.OPENAI_ASSISTANT_ID;
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.VITE_SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
 
 // Validate required environment variables
 if (!SUPABASE_URL) {
   throw new Error('Missing SUPABASE_URL environment variable');
 }
-if (!SUPABASE_SERVICE_ROLE_KEY) {
-  throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY environment variable');
+if (!SUPABASE_ANON_KEY) {
+  throw new Error('Missing SUPABASE_ANON_KEY environment variable');
 }
 if (!OPENAI_API_KEY) {
   throw new Error('Missing OPENAI_API_KEY environment variable');
@@ -26,9 +26,6 @@ if (!OPENAI_API_KEY) {
 if (!OPENAI_ASSISTANT_ID) {
   throw new Error('Missing OPENAI_ASSISTANT_ID environment variable');
 }
-
-// 🔐 Use SERVICE_ROLE_KEY for server-side operations (bypasses RLS, full database access)
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
 // Helper function to join array of strings with bullet points
 function joinWithBullets(arr: string[] | undefined): string {
@@ -59,6 +56,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // ✅ Create Supabase client with user's JWT (forwarded from frontend)
+  // This enforces RLS policies - user can only access their own data
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    global: {
+      headers: {
+        Authorization: req.headers.authorization ?? ''
+      }
+    }
+  });
+
+  // ✅ Verify user is authenticated
+  const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
+  if (authError || !authUser) {
+    return res.status(401).json({ 
+      error: 'Not authenticated',
+      success: false 
+    });
   }
 
   const startTime = Date.now();

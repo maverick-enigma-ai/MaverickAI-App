@@ -975,12 +975,22 @@ export default function App() {
         addDebugLog('🔐 API keys stay on server (NEVER exposed to browser)');
         addDebugLog('⚡ Direct OpenAI processing (no polling delays)');
         
-        // Call secure API endpoint
+        // Call secure API endpoint with user's JWT token
         const apiStartTime = Date.now();
+        
+        // Get user's access token for RLS authentication
+        const { data: { session } } = await supabase.auth.getSession();
+        const accessToken = session?.access_token;
+        
+        if (!accessToken) {
+          throw new Error('No active session - please log in again');
+        }
+        
         const response = await fetch('/api/analyze', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`  // ✅ Forward user's JWT
           },
           body: JSON.stringify({
             inputText: text,
@@ -1038,12 +1048,22 @@ export default function App() {
         addDebugLog(`   text: ${text.substring(0, 50)}...`);
         addDebugLog(`   files: ${filesData.length} file(s)`);
         
-        // Call secure API endpoint with files
+        // Call secure API endpoint with files and user's JWT token
         const apiStartTime = Date.now();
+        
+        // Get user's access token for RLS authentication
+        const { data: { session } } = await supabase.auth.getSession();
+        const accessToken = session?.access_token;
+        
+        if (!accessToken) {
+          throw new Error('No active session - please log in again');
+        }
+        
         const response = await fetch('/api/analyze', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`  // ✅ Forward user's JWT
           },
           body: JSON.stringify({
             inputText: text,
