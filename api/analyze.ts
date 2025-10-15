@@ -121,72 +121,138 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // STEP 3: Handle File Uploads (if present)
     let vectorStoreId: string | undefined;
+    let visionAnalysis: string | undefined;
     
     if (files && files.length > 0) {
-      console.log(`📎 Uploading ${files.length} file(s)...`);
+      console.log(`📎 Processing ${files.length} file(s)...`);
       
       try {
-        // Upload files to OpenAI
-        const uploadedFileIds: string[] = [];
+        // Helper function to check if file is an image
+        const isImage = (fileType: string, fileName: string): boolean => {
+          const imageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+          const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+          const lowerName = fileName.toLowerCase();
+          
+          return imageTypes.includes(fileType) || 
+                 imageExtensions.some(ext => lowerName.endsWith(ext));
+        };
         
-        for (const file of files) {
-          console.log(`  📤 Uploading: ${file.name} (${file.type})`);
+        // Separate images from documents
+        const imageFiles = files.filter(f => isImage(f.type, f.name));
+        const documentFiles = files.filter(f => !isImage(f.type, f.name));
+        
+        console.log(`🖼️  Images: ${imageFiles.length}`);
+        console.log(`📄 Documents: ${documentFiles.length}`);
+        
+        // PART A: Process images with Vision API
+        if (imageFiles.length > 0) {
+          console.log('🖼️  Processing images with Vision API...');
           
-          // Convert base64 to buffer
-          const base64Data = file.data.split(',')[1] || file.data;
-          const buffer = Buffer.from(base64Data, 'base64');
+          const imageContents = imageFiles.map(file => ({
+            type: 'image_url' as const,
+            image_url: {
+              url: file.data.startsWith('data:') ? file.data : `data:${file.type};base64,${file.data}`
+            }
+          }));
           
-          // Create form data
-          const formData = new FormData();
-          const blob = new Blob([buffer], { type: file.type });
-          formData.append('file', blob, file.name);
-          formData.append('purpose', 'assistants');
-          
-          // Upload to OpenAI
-          const uploadResponse = await fetch('https://api.openai.com/v1/files', {
+          const visionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${OPENAI_API_KEY}`
+              'Authorization': `Bearer ${OPENAI_API_KEY}`,
+              'Content-Type': 'application/json'
             },
-            body: formData
+            body: JSON.stringify({
+              model: 'gpt-4o',
+              messages: [{
+                role: 'user',
+                content: [
+                  {
+                    type: 'text',
+                    text: 'Analyze these images in detail. Describe what you see, any text visible, the context, emotional tone, and anything relevant for psychological power dynamic analysis.'
+                  },
+                  ...imageContents
+                ]
+              }],
+              max_tokens: 1000
+            })
           });
           
-          if (!uploadResponse.ok) {
-            const errorText = await uploadResponse.text();
-            console.error(`  ❌ Upload failed for ${file.name}:`, errorText);
-            throw new Error(`File upload failed: ${errorText}`);
+          if (!visionResponse.ok) {
+            const errorText = await visionResponse.text();
+            console.error('❌ Vision API failed:', errorText);
+            throw new Error(`Vision analysis failed: ${errorText}`);
           }
           
-          const uploadResult = await uploadResponse.json();
-          uploadedFileIds.push(uploadResult.id);
-          console.log(`  ✅ Uploaded: ${file.name} (ID: ${uploadResult.id})`);
+          const visionResult = await visionResponse.json();
+          visionAnalysis = visionResult.choices[0].message.content;
+          console.log(`✅ Vision analysis complete (${visionAnalysis.length} chars)`);
         }
         
-        // Create vector store with uploaded files
-        console.log('🗂️ Creating vector store...');
-        
-        const vectorStoreResponse = await fetch('https://api.openai.com/v1/vector_stores', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${OPENAI_API_KEY}`,
-            'Content-Type': 'application/json',
-            'OpenAI-Beta': 'assistants=v2'
-          },
-          body: JSON.stringify({
-            name: `Analysis ${jobId}`,
-            file_ids: uploadedFileIds
-          })
-        });
-        
-        if (!vectorStoreResponse.ok) {
-          const errorText = await vectorStoreResponse.text();
-          console.error('❌ Vector store creation failed:', errorText);
-          throw new Error(`Vector store creation failed: ${errorText}`);
+        // PART B: Process documents with Vector Store (if any)
+        if (documentFiles.length > 0) {
+          console.log(`📄 Uploading ${documentFiles.length} document(s) to Vector Store...`);
+          
+          const uploadedFileIds: string[] = [];
+          
+          for (const file of documentFiles) {
+            console.log(`  📤 Uploading: ${file.name} (${file.type})`);
+            
+            // Convert base64 to buffer
+            const base64Data = file.data.split(',')[1] || file.data;
+            const buffer = Buffer.from(base64Data, 'base64');
+            
+            // Create form data
+            const formData = new FormData();
+            const blob = new Blob([buffer], { type: file.type });
+            formData.append('file', blob, file.name);
+            formData.append('purpose', 'assistants');
+            
+            // Upload to OpenAI
+            const uploadResponse = await fetch('https://api.openai.com/v1/files', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${OPENAI_API_KEY}`
+              },
+              body: formData
+            });
+            
+            if (!uploadResponse.ok) {
+              const errorText = await uploadResponse.text();
+              console.error(`  ❌ Upload failed for ${file.name}:`, errorText);
+              throw new Error(`File upload failed: ${errorText}`);
+            }
+            
+            const uploadResult = await uploadResponse.json();
+            uploadedFileIds.push(uploadResult.id);
+            console.log(`  ✅ Uploaded: ${file.name} (ID: ${uploadResult.id})`);
+          }
+          
+          // Create vector store with uploaded document files
+          console.log('🗂️ Creating vector store...');
+          
+          const vectorStoreResponse = await fetch('https://api.openai.com/v1/vector_stores', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${OPENAI_API_KEY}`,
+              'Content-Type': 'application/json',
+              'OpenAI-Beta': 'assistants=v2'
+            },
+            body: JSON.stringify({
+              name: `Analysis ${jobId}`,
+              file_ids: uploadedFileIds
+            })
+          });
+          
+          if (!vectorStoreResponse.ok) {
+            const errorText = await vectorStoreResponse.text();
+            console.error('❌ Vector store creation failed:', errorText);
+            throw new Error(`Vector store creation failed: ${errorText}`);
+          }
+          
+          const vectorStore = await vectorStoreResponse.json();
+          vectorStoreId = vectorStore.id;
+          console.log(`✅ Vector store created: ${vectorStoreId}`);
         }
-        
-        const vectorStore = await vectorStoreResponse.json();
-        vectorStoreId = vectorStore.id;
-        console.log(`✅ Vector store created: ${vectorStoreId}`);
         
       } catch (fileError) {
         console.error('❌ File processing error:', fileError);
@@ -197,10 +263,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // STEP 4: Create Thread (with vector store if files present)
     console.log('📤 Creating thread...');
     
+    // Combine input text with vision analysis (if present)
+    let combinedMessage = inputText;
+    if (visionAnalysis) {
+      combinedMessage = `${inputText}\n\n[VISUAL CONTEXT FROM UPLOADED IMAGES]:\n${visionAnalysis}`;
+      console.log('📸 Including vision analysis in message');
+    }
+    
     const threadPayload: any = {
       messages: [{
         role: 'user',
-        content: inputText
+        content: combinedMessage
       }]
     };
     
