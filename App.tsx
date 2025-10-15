@@ -14,9 +14,10 @@ import { NavigationBar } from './components/NavigationBar';
 import { DebugPanel } from './components/DebugPanel';
 import { IconGeneratorPage } from './components/IconGeneratorPage';
 import { SandboxTestPage } from './components/SandboxTestPage';
+// Landing page imports - conditional to prevent build errors
+import { ACTIVE_LANDING_PAGE } from './utils/landing-config';
 import { LandingPage } from './components/LandingPage';
 import { LandingPageTabbed } from './components/LandingPageTabbed';
-//import MaverickLandingPremium from './components/MaverickLandingPremium';
 import { AlertsInboxScreen } from './components/AlertsInboxScreen';
 import { SovereigntyDashboardScreen } from './components/SovereigntyDashboardScreen';
 import { WhatIfLabScreen } from './components/WhatIfLabScreen';
@@ -1382,11 +1383,34 @@ export default function App() {
 
   // Show landing page if not signed in and not on special routes
   if (!user && appState === 'landing') {
-    // 🎨 PREVIEW MODE: Switch between landing pages
-    // Change to <LandingPageTabbed> or <LandingPage> to compare
+    // 🎨 MODULAR LANDING PAGE: Configure in /utils/landing-config.ts
+    // No need to edit App.tsx - just change ACTIVE_LANDING_PAGE in config
+    
+    let LandingComponent;
+    switch (ACTIVE_LANDING_PAGE) {
+      case 'tabbed':
+        LandingComponent = LandingPageTabbed;
+        break;
+      case 'basic':
+        LandingComponent = LandingPage;
+        break;
+      case 'premium':
+        // Lazy load premium landing to prevent build errors if file is missing
+        try {
+          const MaverickLandingPremium = require('./components/MaverickLandingPremium').default;
+          LandingComponent = MaverickLandingPremium;
+        } catch (error) {
+          console.warn('⚠️ MaverickLandingPremium not found, falling back to LandingPageTabbed');
+          LandingComponent = LandingPageTabbed;
+        }
+        break;
+      default:
+        LandingComponent = LandingPageTabbed;
+    }
+    
     return (
       <div className="size-full">
-        <MaverickLandingPremium />
+        <LandingComponent />
       </div>
     );
   }
