@@ -1,23 +1,30 @@
-import { createClient } from '@supabase/supabase-js';
+// supabase/client.ts
+import { createClient } from '@supabase/supabase-js'
+import type { Database } from '../types/database.types'
 
-const SUPABASE_URL = 'https://aoedthlhvpxvxahpvnwy.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFvZWR0aGxodnB4dnhhaHB2bnd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxNzQzMDMsImV4cCI6MjA3NDc1MDMwM30.pmve6T0gX92SBmQQMfOCq5Zr4UCBYPGObGdh7zC1iZU';
+const SUPABASE_URL =
+  import.meta.env.VITE_SUPABASE_URL ||
+  process.env.SUPABASE_URL ||
+  'https://aoedthlhvpxvxahpvnwy.supabase.co'
 
-// Singleton Supabase client - prevents "Multiple GoTrueClient instances" warning
-let supabaseInstance: ReturnType<typeof createClient> | null = null;
+const SUPABASE_ANON_KEY =
+  import.meta.env.VITE_SUPABASE_ANON_KEY ||
+  process.env.SUPABASE_ANON_KEY ||
+  ''
+
+let supabaseInstance: ReturnType<typeof createClient<Database>> | null = null
 
 export function getSupabaseClient() {
   if (!supabaseInstance) {
-    supabaseInstance = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    supabaseInstance = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
       auth: {
         autoRefreshToken: true,
         persistSession: true,
-        detectSessionInUrl: true
-      }
-    });
+        detectSessionInUrl: true,
+      },
+    })
   }
-  return supabaseInstance;
+  return supabaseInstance
 }
 
-// Export the singleton instance
-export const supabase = getSupabaseClient();
+export const supabase = getSupabaseClient()

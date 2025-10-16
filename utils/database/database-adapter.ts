@@ -245,27 +245,34 @@ class DatabaseAdapter {
   }
   
   /**
-   * Get all analyses for a user
-   */
-  async getAnalysesByUserId(userId: string): Promise<DatabaseResult<AnalysisRecord[]>> {
-    try {
-      const { data, error } = await supabase
-        .from('analyses')
-        .select('*')
-        .eq('user_id', userId)
-        .order('created_at', { ascending: false });
-      
-      if (error) {
-        console.error('❌ Database error fetching analyses:', error);
-        return { success: false, error: error.message };
-      }
-      
-      return { success: true, data: data || [] };
-    } catch (err) {
-      console.error('❌ Exception fetching analyses:', err);
-      return { success: false, error: String(err) };
+ * Get all analyses for a user
+ */
+async getAnalysesByUserId(userId: string): Promise<DatabaseResult<AnalysisRecord[]>> {
+  try {
+    const { data, error } = await supabase
+      .from('analyses')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+    
+    if (error) {
+      console.error('❌ Database error fetching analyses:', error);
+      return { success: false, error: error.message };
     }
+
+    // ✅ Normalize psychological_profile → psychologicalProfile for all records
+    const normalizedData: AnalysisRecord[] = (data || []).map((record: any) => ({
+      ...record,
+      psychologicalProfile: record.psychological_profile || null,
+    }));
+
+    return { success: true, data: normalizedData };
+  } catch (err) {
+    console.error('❌ Exception fetching analyses:', err);
+    return { success: false, error: String(err) };
   }
+}
+
   
   // ──────────────────────────────────────────────────────────────
   // SUBMISSIONS TABLE OPERATIONS
