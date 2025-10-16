@@ -1,4 +1,9 @@
 @tailwind base;
+html,
+body,
+#root {
+  min-height: 100dvh; /* dynamic viewport unit for iOS Safari 15+ */
+}
 @tailwind components;
 @tailwind utilities;
 
@@ -620,4 +625,16 @@ body {
     opacity: 1;
     transform: scale(1.05);
   }
+
+/* iOS Safe Area Padding */
+.app-safe {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
+
+}
+
+
+
