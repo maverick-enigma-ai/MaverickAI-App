@@ -9,6 +9,12 @@
 /**
  * Detects the current runtime environment
  */
+// --- Safe global declarations for hybrid builds ---
+declare const Deno:
+  | { env: { get: (key: string) => string | undefined } }
+  | undefined;
+declare const window: any;
+
 export type RuntimeEnvironment = 'deno' | 'vite' | 'vercel' | 'unknown';
 
 export function detectEnvironment(): RuntimeEnvironment {

@@ -88,9 +88,88 @@ export type RadarResult = {
 };
 
 // -----------------------------------------------------------------------------
+// 🧩 ProcessedAnalysis
+// Normalized format stored in Supabase + used by Dashboard UI
+// -----------------------------------------------------------------------------
+export type ProcessedAnalysis = {
+  id: string;
+  jobId?: string;
+  userId?: string;
+  title?: string;
+  inputText?: string;
+  summary?: string;
+
+  // Metrics
+  powerScore?: number;
+  gravityScore?: number;
+  riskScore?: number;
+  confidenceLevel?: number;
+
+  // Narrative / content
+  whatsHappening?: string;
+  whyItMatters?: string;
+  narrativeSummary?: string;
+
+  // Moves
+  immediateMove?: string;
+  strategicTool?: string;
+  analyticalCheck?: string;
+  longTermFix?: string;
+
+  // Explanations
+  powerExplanation?: string;
+  gravityExplanation?: string;
+  riskExplanation?: string;
+
+  // Classifications
+  issueType?: string;
+  issueCategory?: string;
+  issueLayer?: string;
+
+  // Diagnostics
+  diagnosticState?: string;
+  diagnosticSoWhat?: string;
+
+  // 🧠 Psychological Profile (camelCase for UI)
+  psychologicalProfile?: {
+    primaryMotivation?: string;
+    motivationEvidence?: string;
+    hiddenDriver?: string;
+    hiddenDriverSignal?: string;
+    emotionalState?: string;
+    emotionalEvidence?: string;
+    powerDynamic?: string;
+    powerDynamicEvidence?: string;
+  } | null;
+
+  // Diagnoses
+  diagnosisPrimary?: string;
+  diagnosisSecondary?: string;
+  diagnosisTertiary?: string;
+
+  // Radar visuals
+  radarRed1?: string | null;
+  radarRed2?: string | null;
+  radarRed3?: string | null;
+  radarUrl?: string;
+  chartHtml?: string;
+  tugOfWarHtml?: string;
+  radarHtml?: string;
+  riskHtml?: string;
+
+  // Status
+  status?: "processing" | "completed" | "failed";
+  isReady?: boolean;
+
+  // Timestamps
+  createdAt?: string;
+  updatedAt?: string;
+  processedAt?: string;
+};
+
+// -----------------------------------------------------------------------------
 // Core handler (mock implementation — replace with OpenAI or Make.com call)
 // -----------------------------------------------------------------------------
-
 export async function runRadar(args: {
   input_querytext: string;
   query_id?: string;

@@ -2,7 +2,7 @@
 // Server route that implements the "submission-first → analysis → completed" flow.
 
 import { createClient } from '@supabase/supabase-js';
-import { runRadar } from 'types/runradar-api'; // adjust path if this file lives elsewhere
+import { runRadar } from '../types/runradar-api'; // adjust path if this file lives elsewhere
 
 type Body = {
   inputText: string;
