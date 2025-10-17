@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { ChatInterface } from './components/ChatInterface';
 import { DebriefingScreen } from './components/DebriefingScreen';
-import { DashboardScreen } from './components/DashboardScreen';
+//import { DashboardScreen } from './components/DashboardScreen';
+import DashboardScreen from './components/DashboardScreen';
 import { HomeScreen } from './components/HomeScreen';
 import { ProfileScreen } from './components/ProfileScreen';
 import { HistoryScreen } from './components/HistoryScreen';
