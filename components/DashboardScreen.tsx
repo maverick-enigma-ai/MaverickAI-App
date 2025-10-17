@@ -3,7 +3,7 @@ import { Info, Home, AlertTriangle, CheckCircle, XCircle, Download, FileText, Ba
 import { BrandHeader } from './BrandHeader';
 import { NavigationBar } from './NavigationBar';
 import { RadarIcon } from './RadarIcon';
-import { ProcessedAnalysis } from '../types/runradar-api';
+import { ProcessedAnalysis } from '../services/runradar-service';
 import { exportAnalysisToPDF, canExportToPDF } from '../utils/pdf-export';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
