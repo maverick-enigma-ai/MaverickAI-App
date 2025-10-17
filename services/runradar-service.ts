@@ -70,7 +70,9 @@ export type RadarResult = {
   riskHtml?: string;
 
   // profile (DB uses JSONB)
-  psychologicalProfile?: any;
+  // 🧠 psychological profile (shape can vary)
+psychologicalProfile?: PsychologicalProfile | null;
+
 
   // action items (array of {section, text})
   actionItems?: Array<{ section: "immediate_move" | "strategic_tool" | "analytical_check" | "long_term_fix"; text: string }>;
@@ -81,6 +83,89 @@ export type RadarResult = {
   latency_ms?: number;
 };
 
+export type PsychologicalProfile = {
+  primaryMotivation?: string;
+  motivationEvidence?: string;
+  hiddenDriver?: string;
+  hiddenDriverSignal?: string;
+  emotionalState?: string;
+  emotionalEvidence?: string;
+  powerDynamic?: string;
+  powerDynamicEvidence?: string;
+};
+
+// ---- Add this to services/runradar-service.ts ----
+export type ProcessedAnalysis = {
+  // identifiers
+  id: string;
+  jobId: string;
+  userId: string;
+
+  // display / content
+  title: string;
+  inputText: string;
+  summary: string;
+
+  // metrics
+  powerScore: number;
+  gravityScore: number;
+  riskScore: number;
+  confidenceLevel: number;
+
+  // main narrative
+  whatsHappening: string;
+  whyItMatters: string;
+  narrativeSummary: string;
+
+  // strategic moves
+  immediateMove: string;
+  strategicTool: string;
+  analyticalCheck: string;
+  longTermFix: string;
+
+  // explanations
+  powerExplanation: string;
+  gravityExplanation: string;
+  riskExplanation: string;
+
+  // classification
+  issueType?: string;
+  issueCategory?: string;
+  issueLayer?: string;
+
+  // diagnostics
+  diagnosticState?: string;
+  diagnosticSoWhat?: string;
+
+  // diagnoses
+  diagnosisPrimary?: string;
+  diagnosisSecondary?: string;
+  diagnosisTertiary?: string;
+
+  // visuals / html (optional)
+  radarUrl?: string;
+  chartHtml?: string;
+  tugOfWarHtml?: string;
+  radarHtml?: string;
+  riskHtml?: string;
+
+  // 🧠 psychological profile (shape can vary)
+psychologicalProfile?: PsychologicalProfile | null;
+
+  // radar red flags (optional)
+  radarRed1?: string | null;
+  radarRed2?: string | null;
+  radarRed3?: string | null;
+
+  // status
+  status?: 'processing' | 'completed' | 'failed';
+  isReady?: boolean;
+
+  // timestamps
+  createdAt?: string;
+  updatedAt?: string;
+  processedAt?: string;
+};
 // -----------------------------------------------------------------------------
 // Utilities
 // -----------------------------------------------------------------------------
