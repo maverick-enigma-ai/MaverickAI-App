@@ -23,7 +23,7 @@
     /* Path aliases */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["../*"]
     },
 
     /* IMPORTANT: include Node types so `process` is known */
@@ -32,12 +32,16 @@
 
   /* IMPORTANT: include your real folders (not just `src`) */
   "include": [
+    ".",
     "api",
     "components",
+    "imports",
+    "public",
     "services",
+    "styles",
+    "supabase",
     "utils",
     "types",
-    //"legacy",
     "index.html",
     "vite-env.d.ts",
     "**/*.ts",
@@ -50,6 +54,6 @@
     "public/**",
     "supabase/**",
     "scripts/**",
-    "legacy"
+    "legacy/**"
   ]
 }

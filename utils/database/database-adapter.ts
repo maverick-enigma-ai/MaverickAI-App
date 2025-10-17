@@ -5,7 +5,7 @@
  */
 
 import { supabase } from '../supabase/client';
-import type { ProcessedAnalysis } from '../types/runradar-api.ts';
+import type { ProcessedAnalysis } from '../services/runradar-services.ts';
 
 export interface DatabaseResult<T> {
   success: boolean;

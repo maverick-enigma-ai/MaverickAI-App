@@ -12,11 +12,11 @@
  */
 
 import { useState } from 'react';
-import { useRunRadarSandbox } from '../services/runradar-service-sandbox';
-import { FileUpload } from './FileUpload';
-import { Button } from './ui/button';
-import { Card } from './ui/card';
-import { BrandHeader } from './BrandHeader';
+import { useRunRadarSandbox } from './runradar-service-sandbox.legacy';
+import { FileUpload } from '../components/FileUpload';
+import { Button } from '../components/ui/button';
+import { Card } from '../components/ui/card';
+import { BrandHeader } from '../components/BrandHeader';
 import { ChevronLeft, TestTube, Upload, Database, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
 
 interface SandboxTestPageProps {

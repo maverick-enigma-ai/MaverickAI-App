@@ -20,7 +20,7 @@
  * @version 1.0.0-beta (Option B - File Uploads)
  */
 
-import { ProcessedAnalysis } from '../types/runradar-api';
+import { ProcessedAnalysis } from '../services/runradar-service';
 import { db } from '../utils/database/database-adapter';
 import { callOpenAIAssistant } from './shared/openai-assistant-api';
 import { parseOpenAIResponse } from './shared/openai-response-parser';
