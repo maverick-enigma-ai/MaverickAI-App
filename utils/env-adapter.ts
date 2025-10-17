@@ -15,6 +15,10 @@ declare const Deno:
   | undefined;
 declare const window: any;
 
+declare const process:
+  | { env?: Record<string, string | undefined> }
+  | undefined;
+
 export type RuntimeEnvironment = 'deno' | 'vite' | 'vercel' | 'unknown';
 
 export function detectEnvironment(): RuntimeEnvironment {
