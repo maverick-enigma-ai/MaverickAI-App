@@ -25,14 +25,31 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "types": ["vite/client"]
+
+    /* IMPORTANT: include Node types so `process` is known */
+    "types": ["node", "vite/client"]
   },
-  "include": ["src", "vite-env.d.ts"],
+
+  /* IMPORTANT: include your real folders (not just `src`) */
+  "include": [
+    "api",
+    "components",
+    "services",
+    "utils",
+    "types",
+    //"legacy",
+    "index.html",
+    "vite-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+
   "exclude": [
     "node_modules",
     "dist",
     "public/**",
     "supabase/**",
-    "scripts/**"
+    "scripts/**",
+    "legacy"
   ]
 }
