@@ -102,9 +102,9 @@ export function WhatIfLabScreen({ onBack }: WhatIfLabScreenProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-navy via-deep-blue to-navy pb-8">
+    <div className="min-h-[100dvh] bg-gradient-to-b from-navy via-deep-blue to-navy pb-8">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-glass backdrop-blur-md border-b border-border">
+      <div className="sticky top-0 z-10 bg-glass backdrop-blur-sm md:backdrop-blur-md border-b border-border" style={ top: "env(safe-area-inset-top)" }>
         <div className="flex items-center gap-4 px-6 py-4">
           <button
             onClick={onBack}
@@ -119,7 +119,7 @@ export function WhatIfLabScreen({ onBack }: WhatIfLabScreenProps) {
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan text-navy hover:bg-cyan/90 transition-all btn-press"
+            className="flex items-center gap-2 px-4 py-3 rounded-xl bg-cyan text-navy hover:bg-cyan/90 transition-all btn-press"
             data-name="btn_create_scenario"
           >
             <Plus className="w-4 h-4" />
@@ -137,7 +137,7 @@ export function WhatIfLabScreen({ onBack }: WhatIfLabScreenProps) {
               <button
                 key={scenario.id}
                 onClick={() => setActiveScenario(scenario)}
-                className={`w-full text-left p-4 rounded-2xl border backdrop-blur-md transition-all btn-press ${
+                className={`w-full text-left p-4 rounded-2xl border backdrop-blur-sm md:backdrop-blur-md transition-all btn-press ${
                   activeScenario?.id === scenario.id
                     ? 'bg-glass-strong border-border-cyan'
                     : 'bg-glass border-border hover:bg-glass-strong'
@@ -152,7 +152,7 @@ export function WhatIfLabScreen({ onBack }: WhatIfLabScreenProps) {
                     </div>
                     <p className="text-white/60 text-xs line-clamp-1">{scenario.change}</p>
                   </div>
-                  <div className={`px-2 py-1 rounded-lg text-xs border ${getLikelihoodColor(scenario.prediction.likelihood)}`}>
+                  <div className={`px-2 py-2 rounded-lg text-xs border ${getLikelihoodColor(scenario.prediction.likelihood)}`}>
                     {scenario.prediction.likelihood}
                   </div>
                 </div>
@@ -165,7 +165,7 @@ export function WhatIfLabScreen({ onBack }: WhatIfLabScreenProps) {
         {activeScenario && (
           <div className="space-y-4">
             {/* Scenario Header */}
-            <div className="rounded-2xl bg-glass border border-border-purple p-4 backdrop-blur-md">
+            <div className="rounded-2xl bg-glass border border-border-purple p-4 backdrop-blur-sm md:backdrop-blur-md">
               <div className="flex items-center gap-3 mb-3">
                 <div className="p-2 rounded-xl bg-purple/20 border border-border-purple">
                   <FlaskConical className="w-5 h-5 text-purple" />
@@ -184,9 +184,9 @@ export function WhatIfLabScreen({ onBack }: WhatIfLabScreenProps) {
             {/* Predicted Scores */}
             <div>
               <h3 className="text-white mb-3">Predicted Impact</h3>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3">
                 {/* Power */}
-                <div className="rounded-2xl bg-glass border border-border-cyan p-4 backdrop-blur-md">
+                <div className="rounded-2xl bg-glass border border-border-cyan p-4 backdrop-blur-sm md:backdrop-blur-md">
                   <p className="text-white/60 text-xs mb-1">Power</p>
                   <p className="text-white text-2xl mb-1">{activeScenario.prediction.powerScore}</p>
                   <div className="flex items-center gap-1">
@@ -198,7 +198,7 @@ export function WhatIfLabScreen({ onBack }: WhatIfLabScreenProps) {
                 </div>
 
                 {/* Gravity */}
-                <div className="rounded-2xl bg-glass border border-border-purple p-4 backdrop-blur-md">
+                <div className="rounded-2xl bg-glass border border-border-purple p-4 backdrop-blur-sm md:backdrop-blur-md">
                   <p className="text-white/60 text-xs mb-1">Gravity</p>
                   <p className="text-white text-2xl mb-1">{activeScenario.prediction.gravityScore}</p>
                   <div className="flex items-center gap-1">
@@ -210,7 +210,7 @@ export function WhatIfLabScreen({ onBack }: WhatIfLabScreenProps) {
                 </div>
 
                 {/* Risk */}
-                <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-md">
+                <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-sm md:backdrop-blur-md">
                   <p className="text-white/60 text-xs mb-1">Risk</p>
                   <p className="text-white text-2xl mb-1">{activeScenario.prediction.riskScore}</p>
                   <div className="flex items-center gap-1">
@@ -224,14 +224,14 @@ export function WhatIfLabScreen({ onBack }: WhatIfLabScreenProps) {
             </div>
 
             {/* Likelihood Badge */}
-            <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-md">
+            <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-sm md:backdrop-blur-md">
               <div className="flex items-center gap-3">
                 <TrendingUp className="w-5 h-5 text-cyan" />
                 <div className="flex-1">
                   <p className="text-white/60 text-xs mb-1">Outcome Likelihood</p>
                   <div className="flex items-center gap-2">
                     <span className="text-white capitalize">{activeScenario.prediction.likelihood}</span>
-                    <div className={`px-2 py-1 rounded-lg text-xs border ${getLikelihoodColor(activeScenario.prediction.likelihood)}`}>
+                    <div className={`px-2 py-2 rounded-lg text-xs border ${getLikelihoodColor(activeScenario.prediction.likelihood)}`}>
                       {activeScenario.prediction.likelihood === 'high' ? '85-95%' : 
                        activeScenario.prediction.likelihood === 'medium' ? '60-80%' : '30-55%'}
                     </div>
@@ -241,7 +241,7 @@ export function WhatIfLabScreen({ onBack }: WhatIfLabScreenProps) {
             </div>
 
             {/* Predicted Outcome */}
-            <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-md">
+            <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-sm md:backdrop-blur-md">
               <div className="flex items-start gap-3">
                 <div className="p-2 rounded-xl bg-cyan/20 border border-border-cyan shrink-0">
                   <Lightbulb className="w-5 h-5 text-cyan" />
@@ -256,7 +256,7 @@ export function WhatIfLabScreen({ onBack }: WhatIfLabScreenProps) {
             </div>
 
             {/* Comparison View */}
-            <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-md">
+            <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-sm md:backdrop-blur-md">
               <h3 className="text-white text-sm mb-3">Score Comparison</h3>
               <div className="space-y-3">
                 {[
@@ -322,7 +322,7 @@ export function WhatIfLabScreen({ onBack }: WhatIfLabScreenProps) {
 
         {/* Beta Badge */}
         <div className="text-center pt-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple/20 border border-border-purple">
+          <div className="inline-flex items-center gap-2 px-4 py-3 rounded-full bg-purple/20 border border-border-purple">
             <Zap className="w-4 h-4 text-purple" />
             <span className="text-purple text-sm">What-If Lab • Beta v1.1.0-beta.3</span>
           </div>

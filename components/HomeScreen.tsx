@@ -16,7 +16,7 @@ interface HomeScreenProps {
 export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenProps) {
   const [showCapabilities, setShowCapabilities] = useState(false);
   return (
-    <div className="w-full min-h-screen relative overflow-hidden pb-32" style={{
+    <div className="w-full min-h-[100dvh] relative overflow-hidden pb-[max(4rem,env(safe-area-inset-bottom))]" style={{
       background: BRAND_COLORS.gradients.background
     }}>
       {/* Background Enhancement */}
@@ -45,7 +45,7 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
             stiffness: 200,
             damping: 15
           }}
-          className="absolute top-24 right-6 z-20"
+          className="absolute sm:top-24 top-20 sm:right-6 right-4 z-20"
         >
           <motion.button
             onClick={() => setShowCapabilities(true)}
@@ -55,7 +55,7 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
               borderColor: `${BRAND_COLORS.cyan}CC`
             }}
             whileTap={{ scale: 0.95 }}
-            className="w-14 h-14 rounded-full backdrop-blur-md flex items-center justify-center transition-all duration-300 btn-press shadow-xl relative overflow-hidden group"
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full backdrop-blur-sm md:backdrop-blur-md flex items-center justify-center transition-all duration-300 btn-press shadow-xl relative overflow-hidden group"
             style={{
               background: 'rgba(255, 255, 255, 0.15)',
               border: `2px solid ${BRAND_COLORS.cyan}66`,
@@ -107,7 +107,7 @@ export function HomeScreen({ onStartAnalysis, error, onClearError }: HomeScreenP
         <div className="px-6">
           {/* Hero Card */}
           <div className="mb-8">
-            <div className="backdrop-blur-xl rounded-3xl p-8 border text-center shadow-2xl relative overflow-hidden" style={{
+            <div className="backdrop-blur-sm md:backdrop-blur-md md:backdrop-blur-xl rounded-3xl p-8 border text-center shadow-2xl relative overflow-hidden" style={{
               background: 'linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
               borderColor: 'rgba(255, 255, 255, 0.2)',
               boxShadow: `0 25px 50px ${BRAND_COLORS.cyan}1A`

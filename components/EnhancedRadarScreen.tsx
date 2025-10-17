@@ -30,9 +30,9 @@ export function EnhancedRadarScreen({ onSubmit, enabledScenarios, onBack }: Enha
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-navy via-deep-blue to-navy">
+    <div className="min-h-[100dvh] bg-gradient-to-b from-navy via-deep-blue to-navy">
       {/* Mode Selector Header */}
-      <div className="sticky top-0 z-10 bg-glass backdrop-blur-md border-b border-border">
+      <div className="sticky top-0 z-10 bg-glass backdrop-blur-sm md:backdrop-blur-md border-b border-border" style={ top: "env(safe-area-inset-top)" }>
         <div className="px-6 py-4">
           <div className="flex items-center gap-4 mb-4">
             <button
@@ -52,7 +52,7 @@ export function EnhancedRadarScreen({ onSubmit, enabledScenarios, onBack }: Enha
           <div className="flex gap-2 overflow-x-auto pb-2">
             <button
               onClick={() => setActiveMode('standard')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl whitespace-nowrap transition-all btn-press ${
+              className={`flex items-center gap-2 px-4 py-3 rounded-xl whitespace-nowrap transition-all btn-press ${
                 activeMode === 'standard'
                   ? 'bg-cyan text-navy'
                   : 'bg-glass border border-border text-white/60 hover:bg-glass-strong'
@@ -65,7 +65,7 @@ export function EnhancedRadarScreen({ onSubmit, enabledScenarios, onBack }: Enha
 
             <button
               onClick={() => setActiveMode('whatif')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl whitespace-nowrap transition-all btn-press ${
+              className={`flex items-center gap-2 px-4 py-3 rounded-xl whitespace-nowrap transition-all btn-press ${
                 activeMode === 'whatif'
                   ? 'bg-purple text-white'
                   : 'bg-glass border border-border text-white/60 hover:bg-glass-strong'
@@ -78,7 +78,7 @@ export function EnhancedRadarScreen({ onSubmit, enabledScenarios, onBack }: Enha
 
             <button
               onClick={() => setActiveMode('targeted')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl whitespace-nowrap transition-all btn-press ${
+              className={`flex items-center gap-2 px-4 py-3 rounded-xl whitespace-nowrap transition-all btn-press ${
                 activeMode === 'targeted'
                   ? 'bg-teal text-white'
                   : 'bg-glass border border-border text-white/60 hover:bg-glass-strong'
@@ -109,7 +109,7 @@ export function EnhancedRadarScreen({ onSubmit, enabledScenarios, onBack }: Enha
                   placeholder="What-if scenario context (optional)"
                   value={whatIfContext}
                   onChange={(e) => setWhatIfContext(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-glass border border-border text-white placeholder-white/40 text-sm"
+                  className="w-full px-3 py-3 rounded-lg bg-glass border border-border text-white placeholder-white/40 text-sm"
                 />
               </div>
             )}
@@ -133,7 +133,7 @@ export function EnhancedRadarScreen({ onSubmit, enabledScenarios, onBack }: Enha
         {/* Mode Indicator Overlay */}
         {activeMode !== 'standard' && (
           <div className="fixed bottom-24 left-6 right-6 z-20">
-            <div className={`rounded-2xl border p-3 backdrop-blur-md ${
+            <div className={`rounded-2xl border p-3 backdrop-blur-sm md:backdrop-blur-md ${
               activeMode === 'whatif'
                 ? 'bg-purple/10 border-border-purple'
                 : 'bg-teal/10 border-teal/30'
@@ -157,7 +157,7 @@ export function EnhancedRadarScreen({ onSubmit, enabledScenarios, onBack }: Enha
 
       {/* Beta Badge (absolute positioned at bottom) */}
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple/90 border border-border-purple backdrop-blur-md shadow-lg">
+        <div className="inline-flex items-center gap-2 px-4 py-3 rounded-full bg-purple/90 border border-border-purple backdrop-blur-sm md:backdrop-blur-md shadow-lg">
           <Zap className="w-4 h-4 text-white" />
           <span className="text-white text-sm">Enhanced Radar • Beta v1.1.0-beta.5</span>
         </div>

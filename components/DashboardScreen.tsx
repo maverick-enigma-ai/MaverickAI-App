@@ -133,7 +133,7 @@ export default function DashboardScreen({ analysisData }: { analysisData: Proces
     <div className="p-8 space-y-6">
       {/* KPI cards */}
       {show.kpis && (
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[
             { label: 'Power', val: analysisData.powerScore, color: BRAND_COLORS.pink },
             { label: 'Gravity', val: analysisData.gravityScore, color: BRAND_COLORS.cyan },
@@ -178,17 +178,17 @@ export default function DashboardScreen({ analysisData }: { analysisData: Proces
       {show.classification && (
         <section className="flex flex-wrap gap-3">
           {analysisData.issueType && (
-            <span className="text-xs text-white/80 px-3 py-1 rounded-full bg-pink-500/20 border border-pink-500/30">
+            <span className="text-xs text-white/80 px-3 py-2 rounded-full bg-pink-500/20 border border-pink-500/30">
               {clean(analysisData.issueType)}
             </span>
           )}
           {analysisData.issueCategory && (
-            <span className="text-xs text-white/80 px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/30">
+            <span className="text-xs text-white/80 px-3 py-2 rounded-full bg-purple-500/20 border border-purple-500/30">
               {clean(analysisData.issueCategory)}
             </span>
           )}
           {analysisData.issueLayer && (
-            <span className="text-xs text-white/80 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/30">
+            <span className="text-xs text-white/80 px-3 py-2 rounded-full bg-cyan-500/20 border border-cyan-500/30">
               {clean(analysisData.issueLayer)}
             </span>
           )}
@@ -291,7 +291,7 @@ export default function DashboardScreen({ analysisData }: { analysisData: Proces
         <div className="pt-6">
           <button
             onClick={() => window.print()}
-            className="px-6 py-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold"
+            className="px-6 py-3 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold"
           >
             Export to PDF
           </button>

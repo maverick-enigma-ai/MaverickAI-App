@@ -35,7 +35,7 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
   }, []);
 
   return (
-    <div className="w-full min-h-screen flex flex-col relative" style={{ background: BRAND_COLORS.gradients.background }}>
+    <div className="w-full min-h-[100dvh] flex flex-col relative" style={{ background: BRAND_COLORS.gradients.background }}>
       {/* Background Enhancement */}
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5" />
       <div className="absolute top-1/4 left-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2 animate-pulse" />
@@ -50,7 +50,7 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
           stiffness: 200,
           damping: 15
         }}
-        className="absolute top-6 right-6 z-20"
+        className="absolute sm:top-6 top-4 sm:right-6 right-4 z-20"
       >
         <motion.button
           onClick={() => setShowCapabilities(true)}
@@ -60,7 +60,7 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
             borderColor: `${BRAND_COLORS.cyan}CC`
           }}
           whileTap={{ scale: 0.95 }}
-          className="w-14 h-14 rounded-full bg-white/15 backdrop-blur-md border-2 border-cyan-400/40 flex items-center justify-center transition-all duration-300 btn-press shadow-xl shadow-cyan-500/30 hover:shadow-cyan-500/50 relative overflow-hidden group"
+          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/15 backdrop-blur-sm md:backdrop-blur-md border-2 border-cyan-400/40 flex items-center justify-center transition-all duration-300 btn-press shadow-xl shadow-cyan-500/30 hover:shadow-cyan-500/50 relative overflow-hidden group"
           data-name="btn_info_capabilities"
           aria-label="View platform capabilities"
         >
@@ -126,7 +126,7 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
             
             <div className="text-center relative z-10">
               {/* Radar Animation - PREMIUM UPGRADE */}
-              <div className="relative w-36 h-36 mx-auto mb-8">
+              <div className="relative w-28 h-28 sm:w-36 sm:h-36 mx-auto mb-8">
                 {/* Outer glow ring */}
                 <div 
                   className="absolute inset-0 rounded-full animate-ping"
@@ -158,7 +158,7 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
                 {/* Center pulse - EXACT FIGMA GRADIENT */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div 
-                    className="w-16 h-16 rounded-full animate-pulse"
+                    className="w-12 h-12 sm:w-16 sm:h-16 rounded-full animate-pulse"
                     style={{ 
                       background: BRAND_COLORS.gradients.cyanBlue,
                       boxShadow: `0 0 30px ${BRAND_COLORS.cyan}80, 0 0 60px ${BRAND_COLORS.cyan}40`
@@ -415,7 +415,7 @@ export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHo
               onClick={onGoHome}
               whileHover={{ scale: 1.03, y: -2 }}
               whileTap={{ scale: 0.97 }}
-              className="flex items-center gap-3 px-8 py-5 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full border-2 border-white/20 hover:border-cyan-400/40 transition-all duration-300 min-h-[60px] shadow-xl hover:shadow-cyan-500/30 group relative overflow-hidden"
+              className="flex items-center gap-3 px-8 py-5 bg-white/10 hover:bg-white/20 backdrop-blur-sm md:backdrop-blur-md rounded-full border-2 border-white/20 hover:border-cyan-400/40 transition-all duration-300 min-h-[60px] shadow-xl hover:shadow-cyan-500/30 group relative overflow-hidden"
               data-name="btn_go_home"
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}
             >

@@ -173,7 +173,7 @@ export function LandingPageTabbed({
             <div className="hidden md:flex items-center gap-2">
               <button
                 onClick={() => setActiveTab('services')}
-                className="px-6 py-2 rounded-xl transition-all btn-press"
+                className="px-6 py-3 rounded-xl transition-all btn-press"
                 style={{
                   background: activeTab === 'services' ? BRAND_COLORS.cyan : BRAND_COLORS.glass.normal,
                   color: activeTab === 'services' ? '#ffffff' : 'rgba(255, 255, 255, 0.8)',  // White text on cyan
@@ -189,7 +189,7 @@ export function LandingPageTabbed({
 
               <button
                 onClick={() => setActiveTab('book')}
-                className="px-6 py-2 rounded-xl transition-all btn-press"
+                className="px-6 py-3 rounded-xl transition-all btn-press"
                 style={{
                   background: activeTab === 'book' ? BRAND_COLORS.purple : BRAND_COLORS.glass.normal,
                   color: BRAND_COLORS.text.white
@@ -204,7 +204,7 @@ export function LandingPageTabbed({
 
               <button
                 onClick={() => setActiveTab('app')}
-                className="px-6 py-2 rounded-xl transition-all btn-press"
+                className="px-6 py-3 rounded-xl transition-all btn-press"
                 style={{
                   background: activeTab === 'app' ? BRAND_COLORS.gradients.cyanBlue : BRAND_COLORS.glass.normal,
                   color: activeTab === 'app' ? '#ffffff' : 'rgba(255, 255, 255, 0.8)',  // White text on gradient
@@ -222,7 +222,7 @@ export function LandingPageTabbed({
             {/* Sign In Button */}
             <button
               onClick={onSignIn}
-              className="px-6 py-2 rounded-xl transition-all btn-press"
+              className="px-6 py-3 rounded-xl transition-all btn-press"
               style={{
                 background: `${BRAND_COLORS.deepBlue}80`,  // Semi-transparent deep blue
                 border: `1px solid ${BRAND_COLORS.borders.subtle}`,
@@ -246,7 +246,7 @@ export function LandingPageTabbed({
           <div className="md:hidden flex items-center gap-2 mt-4">
             <button
               onClick={() => setActiveTab('services')}
-              className="flex-1 px-4 py-2 rounded-xl transition-all btn-press text-sm"
+              className="flex-1 px-4 py-3 rounded-xl transition-all btn-press text-sm"
               style={{
                 background: activeTab === 'services' ? BRAND_COLORS.cyan : BRAND_COLORS.glass.normal,
                 color: '#ffffff',  // White text for all states
@@ -259,7 +259,7 @@ export function LandingPageTabbed({
 
             <button
               onClick={() => setActiveTab('book')}
-              className="flex-1 px-4 py-2 rounded-xl transition-all btn-press text-sm"
+              className="flex-1 px-4 py-3 rounded-xl transition-all btn-press text-sm"
               style={{
                 background: activeTab === 'book' ? BRAND_COLORS.purple : BRAND_COLORS.glass.normal,
                 color: '#ffffff',
@@ -272,7 +272,7 @@ export function LandingPageTabbed({
 
             <button
               onClick={() => setActiveTab('app')}
-              className="flex-1 px-4 py-2 rounded-xl transition-all btn-press text-sm"
+              className="flex-1 px-4 py-3 rounded-xl transition-all btn-press text-sm"
               style={{
                 background: activeTab === 'app' ? BRAND_COLORS.gradients.cyanBlue : BRAND_COLORS.glass.normal,
                 color: '#ffffff',  // White text for all states
@@ -329,14 +329,14 @@ export function LandingPageTabbed({
           viewport={{ once: true }}
           className="max-w-2xl mx-auto text-center"
         >
-          <h2 className="text-white text-4xl mb-4">Join the Waiting List</h2>
+          <h2 className="text-white text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl mb-4">Join the Waiting List</h2>
           <p className="text-white/70 text-lg mb-8">
             Get early access to our services, book pre-orders, and the revolutionary Enigma Radar app.
           </p>
 
           {isSubmitted ? (
-            <div className="rounded-2xl bg-glass-strong border border-border-cyan p-8 backdrop-blur-md">
-              <CheckCircle className="w-16 h-16 text-cyan mx-auto mb-4" />
+            <div className="rounded-2xl bg-glass-strong border border-border-cyan p-8 backdrop-blur-sm md:backdrop-blur-md">
+              <CheckCircle className="w-12 h-12 sm:w-16 sm:h-16 text-cyan mx-auto mb-4" />
               <h3 className="text-white text-2xl mb-2">You're on the list!</h3>
               <p className="text-white/70">
                 We'll notify you as soon as we launch. Check your email for confirmation.
@@ -351,7 +351,7 @@ export function LandingPageTabbed({
                 <button
                   type="button"
                   onClick={() => toggleInterest('services')}
-                  className={`px-4 py-2 rounded-xl transition-all btn-press ${
+                  className={`px-4 py-3 rounded-xl transition-all btn-press ${
                     interests.includes('services')
                       ? 'bg-cyan text-navy'
                       : 'bg-glass border border-border text-white/60'
@@ -367,7 +367,7 @@ export function LandingPageTabbed({
                 <button
                   type="button"
                   onClick={() => toggleInterest('book')}
-                  className={`px-4 py-2 rounded-xl transition-all btn-press ${
+                  className={`px-4 py-3 rounded-xl transition-all btn-press ${
                     interests.includes('book')
                       ? 'bg-purple text-white'
                       : 'bg-glass border border-border text-white/60'
@@ -383,7 +383,7 @@ export function LandingPageTabbed({
                 <button
                   type="button"
                   onClick={() => toggleInterest('app')}
-                  className={`px-4 py-2 rounded-xl transition-all btn-press ${
+                  className={`px-4 py-3 rounded-xl transition-all btn-press ${
                     interests.includes('app')
                       ? 'bg-gradient-to-r from-cyan to-teal text-navy'
                       : 'bg-glass border border-border text-white/60'
@@ -528,11 +528,11 @@ function ServicesSection({
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <div className="inline-block px-4 py-2 rounded-full bg-cyan/20 border border-border-cyan text-cyan text-sm mb-6">
+            <div className="inline-block px-4 py-3 rounded-full bg-cyan/20 border border-border-cyan text-cyan text-sm mb-6">
               Strategic Advisory & Training
             </div>
             
-            <h1 className="text-white text-5xl md:text-6xl mb-6 leading-tight">
+            <h1 className="text-white text-2xl md:text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl xl:text-5xl md:text-lg md:text-2xl xl:text-3xl md:text-2xl md:text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl xl:text-5xl xl:text-6xl mb-6 leading-tight">
               Transform Decision-Making<br />
               <span className="text-cyan">Through Psychological Intelligence</span>
             </h1>
@@ -594,22 +594,22 @@ function ServicesSection({
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-white text-4xl mb-4">Premium Services</h2>
+            <h2 className="text-white text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl mb-4">Premium Services</h2>
             <p className="text-white/70 text-lg max-w-2xl mx-auto">
               Tailored programs for executives, teams, and organizations seeking strategic advantage.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
             {/* Executive Coaching */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="rounded-2xl bg-glass border border-border-cyan p-8 backdrop-blur-md hover:scale-105 transition-transform"
+              className="rounded-2xl bg-glass border border-border-cyan p-8 backdrop-blur-sm md:backdrop-blur-md hover:scale-105 transition-transform"
             >
-              <div className="w-16 h-16 rounded-2xl bg-cyan/20 border border-border-cyan flex items-center justify-center mb-6">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-cyan/20 border border-border-cyan flex items-center justify-center mb-6">
                 <GraduationCap className="w-8 h-8 text-cyan" />
               </div>
               
@@ -652,9 +652,9 @@ function ServicesSection({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="rounded-2xl bg-glass border border-border-purple p-8 backdrop-blur-md hover:scale-105 transition-transform"
+              className="rounded-2xl bg-glass border border-border-purple p-8 backdrop-blur-sm md:backdrop-blur-md hover:scale-105 transition-transform"
             >
-              <div className="w-16 h-16 rounded-2xl bg-purple/20 border border-border-purple flex items-center justify-center mb-6">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-purple/20 border border-border-purple flex items-center justify-center mb-6">
                 <Lightbulb className="w-8 h-8 text-purple" />
               </div>
               
@@ -697,9 +697,9 @@ function ServicesSection({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="rounded-2xl bg-glass border border-border p-8 backdrop-blur-md hover:scale-105 transition-transform"
+              className="rounded-2xl bg-glass border border-border p-8 backdrop-blur-sm md:backdrop-blur-md hover:scale-105 transition-transform"
             >
-              <div className="w-16 h-16 rounded-2xl bg-teal/20 border border-border flex items-center justify-center mb-6">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-teal/20 border border-border flex items-center justify-center mb-6">
                 <Building className="w-8 h-8 text-teal" />
               </div>
               
@@ -748,13 +748,13 @@ function ServicesSection({
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-white text-4xl mb-4">What Clients Say</h2>
+            <h2 className="text-white text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl mb-4">What Clients Say</h2>
             <p className="text-white/70 text-lg">
               Trusted by executives at Fortune 500 companies and high-growth startups.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
             {[
               {
                 quote: "This transformed how I approach board meetings. I now see the power dynamics before they unfold.",
@@ -781,7 +781,7 @@ function ServicesSection({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="rounded-2xl bg-glass border border-border p-6 backdrop-blur-md"
+                className="rounded-2xl bg-glass border border-border p-6 backdrop-blur-sm md:backdrop-blur-md"
               >
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: testimonial.rating }).map((_, i) => (
@@ -812,7 +812,7 @@ function ServicesSection({
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-white text-4xl mb-4">Meet Your Strategic Advisor</h2>
+            <h2 className="text-white text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl mb-4">Meet Your Strategic Advisor</h2>
             <p className="text-white/70 text-lg">
               Leading psychological intelligence consulting backed by decades of experience.
             </p>
@@ -826,7 +826,7 @@ function ServicesSection({
           >
             {/* Premium Founder Card with Circular Glow */}
             <div className="relative">
-              <div className="rounded-3xl bg-gradient-to-br from-purple via-deep-blue to-navy p-12 shadow-2xl shadow-cyan/30 border border-border-cyan backdrop-blur-md">
+              <div className="rounded-3xl bg-gradient-to-br from-purple via-deep-blue to-navy p-12 shadow-2xl shadow-cyan/30 border border-border-cyan backdrop-blur-sm md:backdrop-blur-md">
                 <div className="flex flex-col md:flex-row items-center gap-8">
                   {/* Profile Photo with Beautiful Circular Glow */}
                   <div className="relative shrink-0">
@@ -844,7 +844,7 @@ function ServicesSection({
 
                   {/* Bio Content */}
                   <div className="flex-1 text-center md:text-left">
-                    <h3 className="text-white text-3xl mb-2">Muhammad Qureshi</h3>
+                    <h3 className="text-white text-lg md:text-2xl xl:text-3xl mb-2">Muhammad Qureshi</h3>
                     <p className="text-cyan text-lg mb-4">Founder & CEO, MaverickAI</p>
                     
                     <p className="text-white/80 text-base leading-relaxed mb-6">
@@ -883,7 +883,7 @@ function ServicesSection({
                         href="https://linkedin.com/in/muhammad--qureshi"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-glass-strong border border-border-cyan text-cyan hover:bg-cyan hover:text-navy transition-all btn-press"
+                        className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-glass-strong border border-border-cyan text-cyan hover:bg-cyan hover:text-navy transition-all btn-press"
                       >
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -894,7 +894,7 @@ function ServicesSection({
                       {/* Email Badge */}
                       <a
                         href="mailto:athar@maverickenigma.com"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-glass border border-border text-white/80 hover:bg-glass-strong hover:text-white transition-all btn-press"
+                        className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-glass border border-border text-white/80 hover:bg-glass-strong hover:text-white transition-all btn-press"
                       >
                         <MessageSquare className="w-5 h-5" />
                         Schedule Consultation
@@ -914,9 +914,9 @@ function ServicesSection({
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-6 mt-16"
+            className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mt-16"
           >
-            <div className="rounded-2xl bg-glass border border-border-cyan p-6 backdrop-blur-md">
+            <div className="rounded-2xl bg-glass border border-border-cyan p-6 backdrop-blur-sm md:backdrop-blur-md">
               <div className="w-12 h-12 rounded-xl bg-cyan/20 border border-border-cyan flex items-center justify-center mb-4">
                 <Shield className="w-6 h-6 text-cyan" />
               </div>
@@ -926,7 +926,7 @@ function ServicesSection({
               </p>
             </div>
 
-            <div className="rounded-2xl bg-glass border border-border-purple p-6 backdrop-blur-md">
+            <div className="rounded-2xl bg-glass border border-border-purple p-6 backdrop-blur-sm md:backdrop-blur-md">
               <div className="w-12 h-12 rounded-xl bg-purple/20 border border-border-purple flex items-center justify-center mb-4">
                 <Target className="w-6 h-6 text-purple" />
               </div>
@@ -936,7 +936,7 @@ function ServicesSection({
               </p>
             </div>
 
-            <div className="rounded-2xl bg-glass border border-border p-6 backdrop-blur-md">
+            <div className="rounded-2xl bg-glass border border-border p-6 backdrop-blur-sm md:backdrop-blur-md">
               <div className="w-12 h-12 rounded-xl bg-gold/20 border border-border flex items-center justify-center mb-4">
                 <Star className="w-6 h-6 text-gold" />
               </div>
@@ -982,7 +982,7 @@ function BookSection({ onPreOrder }: { onPreOrder: () => void }) {
                     <div className="w-12 h-12 mb-6">
                       <MasterAppIcon />
                     </div>
-                    <h3 className="text-white text-3xl mb-2">The Enigma<br />Radar</h3>
+                    <h3 className="text-white text-lg md:text-2xl xl:text-3xl mb-2">The Enigma<br />Radar</h3>
                     <p className="text-cyan text-sm mb-8">Decode Power. Master Strategy.</p>
                   </div>
                   
@@ -1002,11 +1002,11 @@ function BookSection({ onPreOrder }: { onPreOrder: () => void }) {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
             >
-              <div className="inline-block px-4 py-2 rounded-full bg-purple/20 border border-border-purple text-purple text-sm mb-6">
+              <div className="inline-block px-4 py-3 rounded-full bg-purple/20 border border-border-purple text-purple text-sm mb-6">
                 Pre-Order Now - Publishing Q2 2025
               </div>
               
-              <h1 className="text-white text-5xl md:text-6xl mb-6 leading-tight">
+              <h1 className="text-white text-2xl md:text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl xl:text-5xl md:text-lg md:text-2xl xl:text-3xl md:text-2xl md:text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl xl:text-5xl xl:text-6xl mb-6 leading-tight">
                 The Framework Behind<br />
                 <span className="text-purple">The Revolution</span>
               </h1>
@@ -1093,7 +1093,7 @@ function BookSection({ onPreOrder }: { onPreOrder: () => void }) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-white text-4xl mb-4">What's Inside</h2>
+            <h2 className="text-white text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl mb-4">What's Inside</h2>
             <p className="text-white/70 text-lg">
               12 chapters covering the complete psychological intelligence framework.
             </p>
@@ -1116,7 +1116,7 @@ function BookSection({ onPreOrder }: { onPreOrder: () => void }) {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="rounded-xl bg-glass border border-border p-6 backdrop-blur-md hover:border-purple transition-colors"
+                className="rounded-xl bg-glass border border-border p-6 backdrop-blur-sm md:backdrop-blur-md hover:border-purple transition-colors"
               >
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-xl bg-purple/20 border border-border-purple flex items-center justify-center shrink-0">
@@ -1198,11 +1198,11 @@ function AppSection({
               animate={{ opacity: 1, y: 0 }}
               className={heroRadar.enabled ? '' : 'text-center mx-auto max-w-4xl'}
             >
-              <div className="inline-block px-4 py-2 rounded-full bg-cyan/20 border border-border-cyan text-cyan text-sm mb-6">
+              <div className="inline-block px-4 py-3 rounded-full bg-cyan/20 border border-border-cyan text-cyan text-sm mb-6">
                 {config.badge || 'AI-Powered Intelligence Platform'}
               </div>
               
-              <h1 className="text-white text-5xl md:text-6xl mb-6 leading-tight">
+              <h1 className="text-white text-2xl md:text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl xl:text-5xl md:text-lg md:text-2xl xl:text-3xl md:text-2xl md:text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl xl:text-5xl xl:text-6xl mb-6 leading-tight">
                 {config.headline || 'Decode Power Dynamics.'}<br />
                 <span className="text-cyan">Master Any Situation.</span>
               </h1>
@@ -1283,7 +1283,7 @@ function AppSection({
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-white text-4xl mb-4">See It In Action</h2>
+            <h2 className="text-white text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl mb-4">See It In Action</h2>
             <p className="text-white/70 text-lg max-w-2xl mx-auto">
               Watch how MaverickAI Enigma Radar transforms complex situations into clear strategic insights.
             </p>
@@ -1296,11 +1296,11 @@ function AppSection({
             className="grid md:grid-cols-2 gap-12 items-center"
           >
             {/* Video Player */}
-            <div className="rounded-2xl bg-glass border border-border-cyan p-4 backdrop-blur-md">
+            <div className="rounded-2xl bg-glass border border-border-cyan p-4 backdrop-blur-sm md:backdrop-blur-md">
               <div className="aspect-video rounded-xl overflow-hidden bg-navy/50 flex items-center justify-center">
                 {/* Replace with actual video embed URL */}
                 <div className="text-center p-8">
-                  <Play className="w-16 h-16 text-cyan mx-auto mb-4" />
+                  <Play className="w-12 h-12 sm:w-16 sm:h-16 text-cyan mx-auto mb-4" />
                   <p className="text-white/60 text-sm">
                     Upload your demo video to YouTube or Vimeo
                   </p>
@@ -1386,13 +1386,13 @@ function AppSection({
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-white text-4xl mb-4">Premium Intelligence Features</h2>
+            <h2 className="text-white text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl mb-4">Premium Intelligence Features</h2>
             <p className="text-white/70 text-lg max-w-2xl mx-auto">
               Advanced AI analysis for strategic decision-making in real-time.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
             {[
               {
                 icon: Target,
@@ -1437,7 +1437,7 @@ function AppSection({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="rounded-2xl bg-glass border border-border-cyan p-8 backdrop-blur-md hover:scale-105 transition-transform"
+                className="rounded-2xl bg-glass border border-border-cyan p-8 backdrop-blur-sm md:backdrop-blur-md hover:scale-105 transition-transform"
               >
                 <div className="w-12 h-12 rounded-xl bg-cyan/20 border border-border-cyan flex items-center justify-center mb-4">
                   <feature.icon className="w-6 h-6 text-cyan" />
@@ -1460,24 +1460,24 @@ function AppSection({
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-white text-4xl mb-4">Choose Your Power Level</h2>
+            <h2 className="text-white text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl mb-4">Choose Your Power Level</h2>
             <p className="text-white/70 text-lg">
               Flexible plans for individuals and teams.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
             {/* Free Tier */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="rounded-2xl bg-glass border border-border p-8 backdrop-blur-md"
+              className="rounded-2xl bg-glass border border-border p-8 backdrop-blur-sm md:backdrop-blur-md"
             >
               <div className="mb-6">
                 <h3 className="text-white text-2xl mb-2">Basic</h3>
                 <div className="flex items-baseline gap-2 mb-4">
-                  <span className="text-white text-4xl">Free</span>
+                  <span className="text-white text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl">Free</span>
                 </div>
                 <p className="text-white/60">Perfect for trying out the platform</p>
               </div>
@@ -1512,16 +1512,16 @@ function AppSection({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="rounded-2xl bg-glass-strong border-2 border-cyan p-8 backdrop-blur-md relative"
+              className="rounded-2xl bg-glass-strong border-2 border-cyan p-8 backdrop-blur-sm md:backdrop-blur-md relative"
             >
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-cyan text-navy text-xs">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-cyan text-navy text-xs">
                 Most Popular
               </div>
               
               <div className="mb-6">
                 <h3 className="text-white text-2xl mb-2">Premium</h3>
                 <div className="flex items-baseline gap-2 mb-4">
-                  <span className="text-white text-4xl">$79</span>
+                  <span className="text-white text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl">$79</span>
                   <span className="text-white/60">/month</span>
                 </div>
                 <p className="text-white/60">For serious strategists</p>
@@ -1565,12 +1565,12 @@ function AppSection({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="rounded-2xl bg-glass border border-border-purple p-8 backdrop-blur-md"
+              className="rounded-2xl bg-glass border border-border-purple p-8 backdrop-blur-sm md:backdrop-blur-md"
             >
               <div className="mb-6">
                 <h3 className="text-white text-2xl mb-2">Professional</h3>
                 <div className="flex items-baseline gap-2 mb-4">
-                  <span className="text-white text-4xl">$199</span>
+                  <span className="text-white text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl">$199</span>
                   <span className="text-white/60">/month</span>
                 </div>
                 <p className="text-white/60">For teams and organizations</p>
@@ -1734,7 +1734,7 @@ function ScreenshotsGallery() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-white text-4xl mb-4">Award-Winning Interface</h2>
+          <h2 className="text-white text-xl md:text-lg md:text-2xl xl:text-3xl xl:text-4xl mb-4">Award-Winning Interface</h2>
           <p className="text-white/70 text-lg max-w-2xl mx-auto">
             Every screen designed with strategic decision-makers in mind—beautiful, powerful, and intuitive.
           </p>
@@ -1748,7 +1748,7 @@ function ScreenshotsGallery() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="group rounded-3xl bg-glass/50 border border-border/50 backdrop-blur-md overflow-hidden hover:scale-[1.02] hover:shadow-2xl hover:shadow-cyan/20 hover:border-cyan/30 transition-all duration-500"
+              className="group rounded-3xl bg-glass/50 border border-border/50 backdrop-blur-sm md:backdrop-blur-md overflow-hidden hover:scale-[1.02] hover:shadow-2xl hover:shadow-cyan/20 hover:border-cyan/30 transition-all duration-500"
             >
               <div className="aspect-[9/16] bg-gradient-to-br from-navy/80 to-navy/40 relative overflow-hidden p-4 flex items-center justify-center">
                 <ImageWithFallback

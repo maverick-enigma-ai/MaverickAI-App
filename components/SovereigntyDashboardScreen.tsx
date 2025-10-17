@@ -82,9 +82,9 @@ export function SovereigntyDashboardScreen({ onBack }: SovereigntyDashboardScree
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-navy via-deep-blue to-navy pb-8">
+    <div className="min-h-[100dvh] bg-gradient-to-b from-navy via-deep-blue to-navy pb-8">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-glass backdrop-blur-md border-b border-border">
+      <div className="sticky top-0 z-10 bg-glass backdrop-blur-sm md:backdrop-blur-md border-b border-border" style={ top: "env(safe-area-inset-top)" }>
         <div className="flex items-center gap-4 px-6 py-4">
           <button
             onClick={onBack}
@@ -100,7 +100,7 @@ export function SovereigntyDashboardScreen({ onBack }: SovereigntyDashboardScree
           <div className="flex gap-2">
             <button
               onClick={() => setSelectedPeriod('week')}
-              className={`px-4 py-2 rounded-xl text-sm transition-all btn-press ${
+              className={`px-4 py-3 rounded-xl text-sm transition-all btn-press ${
                 selectedPeriod === 'week'
                   ? 'bg-cyan text-navy'
                   : 'bg-glass border border-border text-white/60'
@@ -111,7 +111,7 @@ export function SovereigntyDashboardScreen({ onBack }: SovereigntyDashboardScree
             </button>
             <button
               onClick={() => setSelectedPeriod('month')}
-              className={`px-4 py-2 rounded-xl text-sm transition-all btn-press ${
+              className={`px-4 py-3 rounded-xl text-sm transition-all btn-press ${
                 selectedPeriod === 'month'
                   ? 'bg-cyan text-navy'
                   : 'bg-glass border border-border text-white/60'
@@ -134,9 +134,9 @@ export function SovereigntyDashboardScreen({ onBack }: SovereigntyDashboardScree
         </div>
 
         {/* Core Metrics */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {/* Power Score */}
-          <div className="rounded-2xl bg-glass border border-border-cyan p-4 backdrop-blur-md">
+          <div className="rounded-2xl bg-glass border border-border-cyan p-4 backdrop-blur-sm md:backdrop-blur-md">
             <div className="flex items-center justify-between mb-2">
               <Target className="w-5 h-5 text-cyan" />
               {getTrendIcon(mockWeeklyKPIs.currentWeek.powerChange)}
@@ -150,7 +150,7 @@ export function SovereigntyDashboardScreen({ onBack }: SovereigntyDashboardScree
           </div>
 
           {/* Gravity Score */}
-          <div className="rounded-2xl bg-glass border border-border-purple p-4 backdrop-blur-md">
+          <div className="rounded-2xl bg-glass border border-border-purple p-4 backdrop-blur-sm md:backdrop-blur-md">
             <div className="flex items-center justify-between mb-2">
               <Activity className="w-5 h-5 text-purple" />
               {getTrendIcon(mockWeeklyKPIs.currentWeek.gravityChange)}
@@ -164,7 +164,7 @@ export function SovereigntyDashboardScreen({ onBack }: SovereigntyDashboardScree
           </div>
 
           {/* Risk Score */}
-          <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-md">
+          <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-sm md:backdrop-blur-md">
             <div className="flex items-center justify-between mb-2">
               <Shield className="w-5 h-5 text-teal" />
               {getTrendIcon(mockWeeklyKPIs.currentWeek.riskChange)}
@@ -179,26 +179,26 @@ export function SovereigntyDashboardScreen({ onBack }: SovereigntyDashboardScree
         </div>
 
         {/* Activity Metrics */}
-        <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-md">
+        <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-sm md:backdrop-blur-md">
           <h2 className="text-white mb-4">Weekly Activity</h2>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <div className="text-center">
-              <p className="text-cyan text-3xl mb-1">{mockWeeklyKPIs.currentWeek.analysesCount}</p>
+              <p className="text-cyan text-lg md:text-2xl xl:text-3xl mb-1">{mockWeeklyKPIs.currentWeek.analysesCount}</p>
               <p className="text-white/60 text-xs">Analyses Run</p>
             </div>
             <div className="text-center">
-              <p className="text-purple text-3xl mb-1">{mockWeeklyKPIs.currentWeek.alertsResolved}</p>
+              <p className="text-purple text-lg md:text-2xl xl:text-3xl mb-1">{mockWeeklyKPIs.currentWeek.alertsResolved}</p>
               <p className="text-white/60 text-xs">Alerts Resolved</p>
             </div>
             <div className="text-center">
-              <p className="text-teal text-3xl mb-1">{mockWeeklyKPIs.currentWeek.strategicMovesCompleted}</p>
+              <p className="text-teal text-lg md:text-2xl xl:text-3xl mb-1">{mockWeeklyKPIs.currentWeek.strategicMovesCompleted}</p>
               <p className="text-white/60 text-xs">Moves Executed</p>
             </div>
           </div>
         </div>
 
         {/* Trend Chart (Simple Bar Chart) */}
-        <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-md">
+        <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-sm md:backdrop-blur-md">
           <h2 className="text-white mb-4">Monthly Trend</h2>
           <div className="space-y-3">
             {mockWeeklyKPIs.monthlyTrend.map((week, index) => (
@@ -273,7 +273,7 @@ export function SovereigntyDashboardScreen({ onBack }: SovereigntyDashboardScree
               return (
                 <div
                   key={insight.id}
-                  className={`rounded-2xl border p-4 backdrop-blur-md ${colorClasses}`}
+                  className={`rounded-2xl border p-4 backdrop-blur-sm md:backdrop-blur-md ${colorClasses}`}
                 >
                   <div className="flex gap-3">
                     <div className={`p-2 rounded-xl bg-glass border border-border shrink-0`}>
@@ -292,7 +292,7 @@ export function SovereigntyDashboardScreen({ onBack }: SovereigntyDashboardScree
 
         {/* Beta Badge */}
         <div className="text-center pt-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple/20 border border-border-purple">
+          <div className="inline-flex items-center gap-2 px-4 py-3 rounded-full bg-purple/20 border border-border-purple">
             <Zap className="w-4 h-4 text-purple" />
             <span className="text-purple text-sm">Sovereignty Dashboard • Beta v1.1.0-beta.2</span>
           </div>

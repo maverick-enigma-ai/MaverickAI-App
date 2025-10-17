@@ -100,17 +100,17 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
 
   return (
     <>
-      <div className="w-full h-screen flex flex-col overflow-hidden" style={{
+      <div className="w-full min-h-[100dvh] flex flex-col overflow-hidden pb-[max(6rem,env(safe-area-inset-bottom))]" style={{
         background: BRAND_COLORS.gradients.background
       }}>
         {/* Header */}
         <BrandHeader subtitle="Upload content for strategic analysis" />
 
         {/* Chat Area - Scrollable with hidden scrollbar */}
-        <div className="flex-1 overflow-y-auto p-4 pb-64 scrollbar-hide">
+        <div className="flex-1 overflow-y-auto p-4 pb-[max(7rem,env(safe-area-inset-bottom))] scrollbar-hide">
           <div className="max-w-md mx-auto">
             {/* Welcome Message - More Compact */}
-            <div className="rounded-2xl p-4 mb-4 backdrop-blur-md" style={{
+            <div className="rounded-2xl p-4 mb-4 backdrop-blur-sm md:backdrop-blur-md" style={{
               background: BRAND_COLORS.glass.normal,
               border: `1px solid ${BRAND_COLORS.borders.normal}`
             }}>
@@ -293,7 +293,7 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
                   Attached Files ({uploadedFiles.length}):
                 </p>
                 {uploadedFiles.map((file, index) => (
-                  <div key={index} className="flex items-center gap-3 backdrop-blur-md rounded-lg p-3" style={{
+                  <div key={index} className="flex items-center gap-3 backdrop-blur-sm md:backdrop-blur-md rounded-lg p-3" style={{
                     background: BRAND_COLORS.glass.normal,
                     border: `1px solid ${BRAND_COLORS.borders.normal}`
                   }}>
