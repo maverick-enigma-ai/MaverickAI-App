@@ -4,7 +4,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { BRAND_COLORS } from '../utils/brand-colors';
+import { BRAND_COLORS, BRAND_STYLES} from '../utils/brand-colors';
 import { ProcessedAnalysis } from '../services/runradar-service';
 import {
   loadActionItemsForAnalysis,
@@ -14,6 +14,28 @@ import {
   type Section,
   updateOverallCompletion,        // ⬅️ NEW
 } from '../services/action-items-service';
+
+// --- BEGIN Imported props section from DashboardScreen.tsx (Figma) ---
+// We keep our existing `analysisData` prop and add the rest exactly as in Figma.
+type UserLite = {
+  uid: string;
+  email: string;
+  paymentPlan: string;
+  displayName?: string;
+};
+// Imported props from Figma (some may be unused right now)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export interface DashboardScreenProps {
+  analysisData: ProcessedAnalysis;   // keep existing name used in this file/app
+  inputText?: string;
+  uploadedFiles?: File[];
+  isHistorical?: boolean;
+  onGoHome?: () => void;
+  onTabChange?: (tab: string) => void;
+  activeTab?: string;
+  user?: UserLite;
+}
+// --- END Imported props section from DashboardScreen.tsx (Figma) ---
 
 const SECTION_LABEL: Record<Section, string> = {
   immediate_move: 'Immediate Move',
@@ -34,7 +56,7 @@ function ProgressBadge({ pct }: { pct: number }) {
             : pct >= 50
             ? `${BRAND_COLORS.cyan}40`
             : `${BRAND_COLORS.pink}40`,
-        border: `1px solid ${BRAND_COLORS.glass.border}`,
+        border: `1px solid ${BRAND_STYLES.glassCard.border}`,
       }}
     >
       {pct}% complete
@@ -42,8 +64,19 @@ function ProgressBadge({ pct }: { pct: number }) {
   );
 }
 
-export default function DashboardScreen({ analysisData }: { analysisData: ProcessedAnalysis }) {
-  // ---- display switches ----
+//export default function DashboardScreen({ analysisData }: { analysisData: ProcessedAnalysis }) {
+
+export default function DashboardScreen({
+  analysisData,
+  inputText,
+  uploadedFiles,
+  isHistorical,
+  onGoHome,
+  onTabChange,
+  activeTab,
+  user,
+}: DashboardScreenProps) {
+// ---- display switches ----
   const show = {
     kpis: true,
     classification: true,
@@ -137,7 +170,7 @@ export default function DashboardScreen({ analysisData }: { analysisData: Proces
           {[
             { label: 'Power', val: analysisData.powerScore, color: BRAND_COLORS.pink },
             { label: 'Gravity', val: analysisData.gravityScore, color: BRAND_COLORS.cyan },
-            { label: 'Risk', val: analysisData.riskScore, color: BRAND_COLORS.yellow },
+            { label: 'Risk', val: analysisData.riskScore, color: BRAND_COLORS.gold },
           ].map((k, i) => (
             <motion.div
               key={k.label}
@@ -258,7 +291,7 @@ export default function DashboardScreen({ analysisData }: { analysisData: Proces
             if (!list || list.length === 0) return null;
 
             return (
-              <div key={sec} className="rounded-2xl p-4 border bg-white/5" style={{ borderColor: `${BRAND_COLORS.glass.border}` }}>
+              <div key={sec} className="rounded-2xl p-4 border bg-white/5" style={{ borderColor: `${BRAND_STYLES.glassCard.border}` }}>
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="text-white font-semibold">{SECTION_LABEL[sec]}</h4>
                   <ProgressBadge pct={pct} />

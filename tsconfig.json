@@ -2,17 +2,17 @@
   "compilerOptions": {
     "target": "ES2021",
     "lib": ["ES2021", "DOM"],
-    "jsx": "react-jsx",
+    "module": "ESNext",
     "moduleResolution": "bundler",
+    "jsx": "react-jsx",
 
     // 🔓 Relaxations
-    "strict": false,
+    "strict": true,
     "noImplicitAny": false,
     "useUnknownInCatchVariables": false,
     "exactOptionalPropertyTypes": false,
     "noUncheckedIndexedAccess": false,
     "skipLibCheck": true,
-    "suppressImplicitAnyIndexErrors": true,
 
     // QoL
     "allowJs": true,

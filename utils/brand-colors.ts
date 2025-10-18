@@ -20,6 +20,7 @@ export const BRAND_COLORS = {
   purple: '#8b5cf6',
   gold: '#fbbf24',
   pink: '#ec4899',
+  green: '##00ff99',
 
   // Gradients - EXACT FIGMA MATCH ✨
   gradients: {
