@@ -12,8 +12,15 @@ import { createClient } from '@supabase/supabase-js';
 // import { runRadarServer } from '../services/runradar-service';
 
 // AFTER (uses the duplicated copy under api/_lib)
-import { runRadarServer, type ServerAttachment } from './_lib/services/runradar-service';
+//import { runRadarServer, type ServerAttachment } from './_lib/services/runradar-service';
+// ✅ explicit .js is required for Node ESM
+import { runRadarServer } from './_lib/services/runradar-service.js';
 
+type ServerAttachment = {
+  name: string;
+  type?: string;
+  bytes: Uint8Array;
+};
 
 
 type Body = {
