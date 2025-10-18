@@ -38,7 +38,7 @@ const mockInsights = [
     id: '1',
     type: 'improvement',
     title: 'Power Dynamics Improving',
-    message: 'Your average power score increased by 12% this week. You\'re gaining strategic advantage.',
+    message: "Your average power score increased by 12% this week. You're gaining strategic advantage.",
     icon: TrendingUp,
     color: 'cyan'
   },
@@ -46,7 +46,7 @@ const mockInsights = [
     id: '2',
     type: 'milestone',
     title: 'Risk Reduction Milestone',
-    message: 'You\'ve reduced your risk exposure by 35% over the past month. Excellent progress.',
+    message: "You've reduced your risk exposure by 35% over the past month. Excellent progress.",
     icon: Shield,
     color: 'teal'
   },
@@ -84,7 +84,10 @@ export function SovereigntyDashboardScreen({ onBack }: SovereigntyDashboardScree
   return (
     <div className="min-h-[100dvh] bg-gradient-to-b from-navy via-deep-blue to-navy pb-8">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-glass backdrop-blur-sm md:backdrop-blur-md border-b border-border" style={ top: "env(safe-area-inset-top)" }>
+      <div
+        className="sticky top-0 z-10 bg-glass backdrop-blur-sm md:backdrop-blur-md border-b border-border"
+        style={{ top: 'env(safe-area-inset-top)' }} // ✅ fixed: style must be an object
+      >
         <div className="flex items-center gap-4 px-6 py-4">
           <button
             onClick={onBack}
@@ -134,7 +137,7 @@ export function SovereigntyDashboardScreen({ onBack }: SovereigntyDashboardScree
         </div>
 
         {/* Core Metrics */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {/* Power Score */}
           <div className="rounded-2xl bg-glass border border-border-cyan p-4 backdrop-blur-sm md:backdrop-blur-md">
             <div className="flex items-center justify-between mb-2">
@@ -181,7 +184,7 @@ export function SovereigntyDashboardScreen({ onBack }: SovereigntyDashboardScree
         {/* Activity Metrics */}
         <div className="rounded-2xl bg-glass border border-border p-4 backdrop-blur-sm md:backdrop-blur-md">
           <h2 className="text-white mb-4">Weekly Activity</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <div className="text-center">
               <p className="text-cyan text-lg md:text-2xl xl:text-3xl mb-1">{mockWeeklyKPIs.currentWeek.analysesCount}</p>
               <p className="text-white/60 text-xs">Analyses Run</p>
