@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChatInterface } from './ChatInterface';
 import { FlaskConical, Target, Zap, ArrowLeft } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface EnhancedRadarScreenProps {
   onSubmit: (text: string, files: File[]) => Promise<void>;
@@ -32,16 +33,16 @@ export function EnhancedRadarScreen({ onSubmit, enabledScenarios, onBack }: Enha
   return (
     <div className="min-h-[100dvh] bg-gradient-to-b from-navy via-deep-blue to-navy">
       {/* Mode Selector Header */}
-      <div className="sticky top-0 z-10 bg-glass backdrop-blur-sm md:backdrop-blur-md border-b border-border" style={ top: "env(safe-area-inset-top)" }>
+      <div className="sticky top-0 z-10 bg-glass backdrop-blur-sm md:backdrop-blur-md border-b border-border" style={ {top: "env(safe-area-inset-top)" }}>
         <div className="px-6 py-4">
           <div className="flex items-center gap-4 mb-4">
-            <button
+            <Button
               onClick={onBack}
               className="p-2 rounded-xl bg-glass hover:bg-glass-strong border border-border transition-all btn-press"
               data-name="btn_back_from_enhanced_radar"
             >
               <ArrowLeft className="w-5 h-5 text-cyan" />
-            </button>
+            </Button>
             <div className="flex-1">
               <h1 className="text-white">Enhanced Radar</h1>
               <p className="text-white/60 text-sm">Advanced analysis modes</p>
