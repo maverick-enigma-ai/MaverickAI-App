@@ -5,7 +5,8 @@ import { SampleScenariosModal } from './SampleScenariosModal';
 import { BrandHeader } from './BrandHeader';
 import { RadarIcon } from './RadarIcon';
 import { type ScenarioCategory } from '../types/sample-scenarios';
-import { BRAND_COLORS } from '../utils/brand-colors';
+import { BRAND_COLORS, BRAND_STYLES } from '../utils/brand-colors';
+import { Button } from './ui/button';
 
 interface ChatInterfaceProps {
   onSubmit: (text: string, files: File[]) => void;
@@ -336,7 +337,7 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
             {/* Text Input with side buttons */}
             <div className="flex items-start gap-3 mb-3">
               {/* File Upload Button */}
-              <button
+              <Button
                 onClick={() => setIsFileModalOpen(true)}
                 className="flex-shrink-0 w-[52px] h-[52px] rounded-full flex items-center justify-center transition-colors"
                 style={{
@@ -347,7 +348,7 @@ export function ChatInterface({ onSubmit, enabledScenarios = ['corporate', 'pers
                 data-name="btn_attach_files"
               >
                 <Plus className="w-6 h-6" style={{ color: BRAND_COLORS.cyan }} />
-              </button>
+              </Button>
 
               {/* Text Input - GLOWING CONTAINER */}
               <div className="relative flex-1">

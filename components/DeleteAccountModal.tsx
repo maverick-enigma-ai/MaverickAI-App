@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AlertTriangle, X } from 'lucide-react';
-import { BRAND_COLORS } from '../utils/brand-colors';
+import { BRAND_COLORS, BRAND_STYLES } from '../utils/brand-colors';
+import { Button } from './ui/button';
 
 interface DeleteAccountModalProps {
   onClose: () => void;
@@ -40,13 +41,13 @@ export function DeleteAccountModal({ onClose, onConfirm, userEmail }: DeleteAcco
               Delete Account
             </h3>
           </div>
-          <button
+          <Button
             onClick={onClose}
             className="text-cyan-400 hover:text-cyan-300 transition-colors p-2"
             data-name="btn_close_delete_modal"
           >
             <X className="w-6 h-6" />
-          </button>
+          </Button>
         </div>
 
         <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-4 mb-6">

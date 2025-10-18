@@ -4,6 +4,7 @@ import { BrandHeader } from './BrandHeader';
 import { AnalyticsDashboard } from './AnalyticsDashboard';
 import { NavigationBar } from './NavigationBar';
 import { APP_VERSION, APP_NAME } from '../utils/constants';
+import { Button } from './ui/button';
 
 interface SettingsScreenProps {
   onBack: () => void;
@@ -135,7 +136,7 @@ export function SettingsScreen({ onBack, activeTab = 'moves', onTabChange, onRad
                   </p>
                 </div>
               </div>
-              <button
+              <Button
                 onClick={() => setNotifications(!notifications)}
                 className={`relative w-12 h-7 rounded-full transition-colors ${
                   notifications ? 'bg-green-500' : 'bg-white/20'
@@ -147,7 +148,7 @@ export function SettingsScreen({ onBack, activeTab = 'moves', onTabChange, onRad
                     notifications ? 'translate-x-5' : 'translate-x-0.5'
                   }`}
                 />
-              </button>
+              </Button>
             </div>
 
             {/* Email Updates */}
@@ -196,7 +197,7 @@ export function SettingsScreen({ onBack, activeTab = 'moves', onTabChange, onRad
                   </p>
                 </div>
               </div>
-              <button
+              <Button
                 onClick={() => setAnalyticsSharing(!analyticsSharing)}
                 className={`relative w-12 h-7 rounded-full transition-colors ${
                   analyticsSharing ? 'bg-green-500' : 'bg-white/20'
@@ -208,7 +209,7 @@ export function SettingsScreen({ onBack, activeTab = 'moves', onTabChange, onRad
                     analyticsSharing ? 'translate-x-5' : 'translate-x-0.5'
                   }`}
                 />
-              </button>
+              </Button>
             </div>
 
             {/* Data Privacy */}

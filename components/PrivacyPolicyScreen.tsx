@@ -1,5 +1,6 @@
 import { ArrowLeft, Shield } from 'lucide-react';
 import { BRAND_COLORS } from '../utils/brand-colors';
+import { Button } from './ui/button';
 
 interface PrivacyPolicyScreenProps {
   onBack: () => void;
@@ -14,13 +15,13 @@ export function PrivacyPolicyScreen({ onBack }: PrivacyPolicyScreenProps) {
         borderColor: BRAND_COLORS.borders.normal
       }}>
         <div className="flex items-center gap-3">
-          <button
+          <Button
             onClick={onBack}
             className="p-3 hover:bg-white/10 rounded-xl transition-colors min-h-[48px] min-w-[48px]"
             data-name="btn_back_from_privacy"
           >
             <ArrowLeft className="w-6 h-6 text-cyan-400" />
-          </button>
+          </Button>
           <div className="flex items-center gap-2">
             <Shield className="w-6 h-6 text-cyan-400" />
             <h1 className="text-white text-xl" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>

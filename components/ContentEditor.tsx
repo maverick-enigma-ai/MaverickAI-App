@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Save, X, Edit2, Eye, Download, Upload } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface ContentConfig {
   meta: {
@@ -120,22 +121,22 @@ export function ContentEditor({ onClose }: { onClose: () => void }) {
             <div className="flex items-center gap-3">
               {/* View Mode Toggle */}
               <div className="flex gap-2 bg-glass rounded-lg p-1">
-                <button
+                <Button
                   onClick={() => setViewMode('edit')}
                   className={`px-4 py-2 rounded-lg transition-all ${
                     viewMode === 'edit' ? 'bg-cyan text-navy' : 'text-white/70 hover:text-white'
                   }`}
                 >
                   <Edit2 className="w-4 h-4" />
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => setViewMode('json')}
                   className={`px-4 py-2 rounded-lg transition-all ${
                     viewMode === 'json' ? 'bg-purple text-white' : 'text-white/70 hover:text-white'
                   }`}
                 >
                   <Eye className="w-4 h-4" />
-                </button>
+                </Button>
               </div>
               
               {/* Upload Config */}
@@ -165,12 +166,12 @@ export function ContentEditor({ onClose }: { onClose: () => void }) {
               </button>
               
               {/* Close */}
-              <button
+              <Button
                 onClick={onClose}
                 className="px-4 py-2 rounded-lg bg-glass border border-border text-white hover:bg-glass-strong transition-all"
               >
                 <X className="w-4 h-4" />
-              </button>
+              </Button>
             </div>
           </div>
         </div>

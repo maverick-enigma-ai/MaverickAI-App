@@ -8,6 +8,7 @@ import {
   Archive,
   Code
 } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface FilePreviewProps {
   file: File;
@@ -86,12 +87,12 @@ export function FilePreview({ file, onRemove }: FilePreviewProps) {
       <p className="font-['Inter:Regular',_sans-serif] font-normal leading-[normal] not-italic relative shrink-0 text-[#eaf4ff] text-[9px] text-nowrap whitespace-pre flex-1 overflow-hidden">
         {truncateFileName(file.name, 10)}
       </p>
-      <button 
+      <Button
         onClick={onRemove}
         className="font-['Inter:Bold',_sans-serif] font-bold leading-[normal] not-italic relative shrink-0 text-[10px] text-[rgba(255,255,255,0.6)] text-nowrap whitespace-pre hover:text-white transition-colors cursor-pointer"
       >
         <X className="w-2.5 h-2.5" />
-      </button>
+      </Button>
     </div>
   );
 }

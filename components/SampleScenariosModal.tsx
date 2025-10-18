@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { X, RefreshCw, ChevronRight } from 'lucide-react';
 import { getRandomScenario, categoryInfo, type ScenarioCategory } from '../types/sample-scenarios';
+import { Button } from './ui/button';
 
 interface SampleScenariosModalProps {
   isOpen: boolean;
@@ -89,7 +90,7 @@ export function SampleScenariosModal({
               </button>
             )}
             
-            <button
+            <Button
               onClick={() => {
                 setSelectedCategory(null);
                 onClose();
@@ -98,7 +99,7 @@ export function SampleScenariosModal({
               data-name="btn_close_scenarios_modal"
             >
               <X className="w-4 h-4 text-white" />
-            </button>
+            </Button>
           </div>
         </div>
 

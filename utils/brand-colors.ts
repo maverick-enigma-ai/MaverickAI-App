@@ -65,6 +65,7 @@ export const BRAND_COLORS = {
     whiteSubtle: 'rgba(255, 255, 255, 0.85)',     // Increased from 0.7 for mobile
     whiteFaded: 'rgba(255, 255, 255, 0.7)',       // Increased from 0.5 for mobile
     whiteVeryFaded: 'rgba(255, 255, 255, 0.5)',   // Increased from 0.3 for mobile
+    light: '#E2E8F0',
   },
 
   // Semantic Colors
@@ -114,4 +115,46 @@ export const BRAND_STYLES = {
   purpleGlow: {
     boxShadow: '0 0 20px rgba(139, 92, 246, 0.4), 0 0 40px rgba(139, 92, 246, 0.2)',
   },
+} as const;
+
+/**
+ * ────────────────────────────────────────────────────────────────────────────────
+ * LEGACY ALIASES (read-only)
+ * Keeps old token names working without touching existing code.
+ * Map any legacy references to the closest current brand tokens.
+ * ────────────────────────────────────────────────────────────────────────────────
+ */
+export const LEGACY_COLORS = {
+  // Legacy text tokens
+  text: {
+    // was: BRAND_COLORS.text.light
+    light: BRAND_COLORS.text.whiteSubtle,
+    // common legacy “muted” usage
+    muted: BRAND_COLORS.text.whiteFaded,
+    // convenience: direct white
+    white: BRAND_COLORS.text.white,
+  },
+
+  // Legacy background tokens
+  background: {
+    navy: BRAND_COLORS.navy,
+    deepBlue: BRAND_COLORS.deepBlue,
+    // typical “glass” background fallback
+    glass: BRAND_COLORS.glass.normal,
+  },
+
+  // Legacy border tokens
+  border: {
+    default: BRAND_COLORS.borders.normal,
+    cyan: BRAND_COLORS.borders.cyan,
+    purple: BRAND_COLORS.borders.purple,
+    teal: BRAND_COLORS.borders.teal,
+  },
+
+  // Common flat colors referenced in legacy code
+  yellow: BRAND_COLORS.gold,   // legacy “yellow” → current “gold”
+  cyan: BRAND_COLORS.cyan,
+  purple: BRAND_COLORS.purple,
+  teal: BRAND_COLORS.teal,
+  blue: BRAND_COLORS.blue,
 } as const;

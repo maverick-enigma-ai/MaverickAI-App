@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { Plus } from 'lucide-react';
 import { FilePreview } from './FilePreview';
+import { Button } from './ui/button';
 
 export function FileUpload() {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -42,7 +43,7 @@ export function FileUpload() {
       <div className="flex items-center gap-4">
         {/* Upload Button */}
         <div className="relative">
-          <button
+          <Button
             onClick={handleClick}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
@@ -61,7 +62,7 @@ export function FileUpload() {
             <Plus className={`w-6 h-6 transition-colors duration-300 ${
               isDragOver ? 'text-[#5eceff]' : 'text-[#eaf4ff]'
             }`} />
-          </button>
+          </Button>
           
           {/* Hidden File Input */}
           <input

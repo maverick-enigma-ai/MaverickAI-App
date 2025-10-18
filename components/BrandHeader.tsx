@@ -1,10 +1,11 @@
-import React, { ReactNode } from 'react';
-import { MasterAppIcon } from 'components/icons/MasterAppIcon.tsx';
-import { BRAND_COLORS } from '../utils/brand-colors';
-import { ChevronLeft } from 'lucide-react'; // ⬅️ tiny icon package (already included in your stack)
+import { ReactNode } from 'react';
+import { ChevronLeft } from 'lucide-react';
+import { MasterAppIcon } from './icons/MasterAppIcon';
+import { BRAND_COLORS, BRAND_STYLES } from '../utils/brand-colors';
 
-export interface BrandHeaderProps {
-  title: string;
+interface BrandHeaderProps {
+  /** Title is optional for backward compatibility with older screens */
+  title?: string;
   subtitle?: string;
   showPulse?: boolean;
   rightContent?: ReactNode;
@@ -13,8 +14,8 @@ export interface BrandHeaderProps {
 }
 
 export function BrandHeader({
-  title,
-  subtitle = "Decoding Psychological Power Dynamics",
+  title = 'MaverickAI Enigma Radar™', // ← default keeps Figma/legacy screens working
+  subtitle = 'Decoding Psychological Power Dynamics',
   showPulse = false,
   rightContent,
   showBorder = true,
@@ -24,51 +25,74 @@ export function BrandHeader({
     <div
       style={{
         flexShrink: 0,
-        padding: '1rem 1.5rem',
+        // Figma/legacy spacing vibe
+        padding: '4rem 1.5rem 1.5rem',
         borderBottom: showBorder ? `1px solid ${BRAND_COLORS.borders.normal}` : 'none',
         background: `linear-gradient(to bottom, ${BRAND_COLORS.navy}, transparent)`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
       }}
     >
-      {/* LEFT SECTION */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-        {/* ⬅️ Back Button */}
-        {onBack && (
-          <button
-            onClick={onBack}
-            style={{
-              border: 'none',
-              background: 'none',
-              cursor: 'pointer',
-              padding: '0.25rem',
-              color: BRAND_COLORS.text.light,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            aria-label="Go Back"
-          >
-            <ChevronLeft size={22} strokeWidth={2.5} />
-          </button>
-        )}
-
-        {/* Title + Subtitle */}
-        <div>
-          <div style={{ fontWeight: 600, fontSize: '1.1rem', color: BRAND_COLORS.text.light }}>
-            {title}
-          </div>
-          {subtitle && (
-            <div style={{ fontSize: '0.85rem', opacity: 0.7 }}>
-              {subtitle}
-            </div>
+      <div
+        className={`flex items-center ${
+          rightContent || onBack ? 'justify-between' : 'justify-center'
+        } mb-2`}
+      >
+        <div className="flex items-center gap-3">
+          {/* Optional back button (from current API) */}
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="p-2 rounded-xl"
+              style={{
+                background: BRAND_COLORS.glass.normal,
+                border: `1px solid ${BRAND_COLORS.borders.normal}`,
+              }}
+              aria-label="Back"
+            >
+              <ChevronLeft size={18} color={BRAND_COLORS.cyan} />
+            </button>
           )}
+
+          {/* Figma/legacy visual: app icon + optional cyan pulse */}
+          <div style={{ position: 'relative' }}>
+            <MasterAppIcon size={40} />
+            {showPulse && (
+              <div
+                className="absolute inset-0 rounded-full blur-xl animate-pulse"
+                style={{ background: `${BRAND_COLORS.cyan}26` }} // subtle cyan glow
+                aria-hidden
+              />
+            )}
+          </div>
+
+          {/* Title (prop or default) */}
+          <div className="text-left">
+            <h1
+              style={{
+                color: BRAND_COLORS.text.white,
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+                fontWeight: 600,
+              }}
+            >
+              {title}
+            </h1>
+          </div>
         </div>
+
+        {rightContent}
       </div>
 
-      {/* RIGHT SECTION (optional) */}
-      <div>{rightContent}</div>
+      {/* Subtitle in Figma cyan tone if provided */}
+      {subtitle && (
+        <p
+          className={`text-sm ${rightContent || onBack ? 'text-left' : 'text-center'} leading-relaxed`}
+          style={{
+            color: BRAND_COLORS.cyanText, // Figma/legacy cyan subtitle
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+          }}
+        >
+          {subtitle}
+        </p>
+      )}
     </div>
   );
 }

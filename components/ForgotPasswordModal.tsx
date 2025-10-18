@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Mail, X, CheckCircle } from 'lucide-react';
 import { BRAND_COLORS } from '../utils/brand-colors';
+import { Button } from './ui/button';
 
 interface ForgotPasswordModalProps {
   onClose: () => void;
@@ -72,13 +73,13 @@ export function ForgotPasswordModal({ onClose, onSubmit }: ForgotPasswordModalPr
           <h3 className="text-white text-xl" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>
             Reset Password
           </h3>
-          <button
+          <Button
             onClick={onClose}
             className="text-cyan-400 hover:text-cyan-300 transition-colors p-2"
             data-name="btn_close_modal"
           >
             <X className="w-6 h-6" />
-          </button>
+          </Button>
         </div>
 
         <p className="text-cyan-200 mb-6" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>

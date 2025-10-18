@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { X, Upload, Zap } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface FirstTimeTooltipProps {
   isOpen: boolean;
@@ -184,13 +185,13 @@ export function FirstTimeTooltip({ isOpen, onClose }: FirstTimeTooltipProps) {
       )}
 
       {/* Skip button - always visible */}
-      <button
+      <Button
         onClick={onClose}
         className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white/20 transition-colors pointer-events-auto"
         data-name="btn_skip_tutorial"
       >
         <X className="w-5 h-5 text-white" />
-      </button>
+      </Button>
     </div>
   );
 }

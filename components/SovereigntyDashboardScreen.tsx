@@ -1,5 +1,6 @@
 import { ArrowLeft, TrendingUp, TrendingDown, Activity, Target, Shield, Zap } from 'lucide-react';
 import { useState } from 'react';
+import { Button } from './ui/button';
 
 interface SovereigntyDashboardScreenProps {
   onBack: () => void;
@@ -89,13 +90,13 @@ export function SovereigntyDashboardScreen({ onBack }: SovereigntyDashboardScree
         style={{ top: 'env(safe-area-inset-top)' }} // ✅ fixed: style must be an object
       >
         <div className="flex items-center gap-4 px-6 py-4">
-          <button
+          <Button
             onClick={onBack}
             className="p-2 rounded-xl bg-glass hover:bg-glass-strong border border-border transition-all btn-press"
             data-name="btn_back_from_sovereignty_dashboard"
           >
             <ArrowLeft className="w-5 h-5 text-cyan" />
-          </button>
+          </Button>
           <div className="flex-1">
             <h1 className="text-white">Sovereignty Dashboard</h1>
             <p className="text-white/60 text-sm">Track your strategic intelligence over time</p>

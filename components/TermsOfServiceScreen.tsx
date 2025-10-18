@@ -1,4 +1,5 @@
 import { ArrowLeft, FileText } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface TermsOfServiceScreenProps {
   onBack: () => void;
@@ -10,13 +11,13 @@ export function TermsOfServiceScreen({ onBack }: TermsOfServiceScreenProps) {
       {/* Header */}
       <div className="sticky top-0 bg-gradient-to-b from-[#14123F] to-[#342FA5] border-b border-white/10 p-4 z-10">
         <div className="flex items-center gap-3">
-          <button
+          <Button
             onClick={onBack}
             className="p-3 hover:bg-white/10 rounded-xl transition-colors min-h-[48px] min-w-[48px]"
             data-name="btn_back_from_terms"
           >
             <ArrowLeft className="w-6 h-6 text-cyan-400" />
-          </button>
+          </Button>
           <div className="flex items-center gap-2">
             <FileText className="w-6 h-6 text-cyan-400" />
             <h1 className="text-white text-xl" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 600 }}>

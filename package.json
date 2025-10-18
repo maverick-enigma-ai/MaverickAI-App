@@ -1,4 +1,9 @@
 {
+"overrides": {
+  "esbuild": "^0.25.11",
+  "undici": "^5.28.6",
+  "path-to-regexp": "^6.2.3"
+},
   "name": "maverickai-enigma-radar",
   "version": "1.0.0",
   "description": "Premium psychological intelligence platform for decoding power dynamics",
@@ -45,11 +50,11 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.0.0",
     "cmdk": "^1.1.1",
-    "dependencies": "^0.0.1",
+    "dompurify": "^3.3.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.24",
     "input-otp": "^1.4.2",
-    "jspdf": "^2.5.2",
+    "jspdf": "^3.0.3",
     "lucide-react": "^0.487.0",
     "next-themes": "^0.4.6",
     "openai": "^4.104.0",

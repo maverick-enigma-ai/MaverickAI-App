@@ -5,6 +5,7 @@ import { DeleteAccountModal } from './DeleteAccountModal';
 import { categoryInfo, type ScenarioCategory } from '../types/sample-scenarios';
 import { APP_VERSION, APP_NAME } from '../utils/constants';
 import { BRAND_COLORS } from '../utils/brand-colors';
+import { Button } from './ui/button';
 
 interface ProfileScreenProps {
   user: any;
@@ -217,7 +218,7 @@ export function ProfileScreen({
                     </div>
                   </div>
                   
-                  <button
+                  <Button
                     onClick={() => onToggleScenario?.(category)}
                     className={`relative w-12 h-6 rounded-full transition-all duration-200 ${
                       isEnabled ? 'bg-gradient-to-r from-cyan-400 to-blue-500' : 'bg-white/20'
@@ -229,7 +230,7 @@ export function ProfileScreen({
                         isEnabled ? 'translate-x-[26px]' : 'translate-x-0.5'
                       }`}
                     />
-                  </button>
+                  </Button>
                 </div>
               );
             })}

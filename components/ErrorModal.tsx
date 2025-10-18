@@ -1,5 +1,6 @@
 import { AlertCircle, X, RefreshCw, Home } from 'lucide-react';
 import { BRAND_COLORS } from '../utils/brand-colors';
+import { Button } from './ui/button';
 
 interface ErrorModalProps {
   isOpen: boolean;
@@ -41,7 +42,7 @@ export function ErrorModal({
         >
           {/* Close Button */}
           <div className="flex justify-end p-4">
-            <button
+            <Button
               onClick={onClose}
               className="w-10 h-10 rounded-full flex items-center justify-center transition-colors min-h-[48px] min-w-[48px]"
               style={{
@@ -52,7 +53,7 @@ export function ErrorModal({
               data-name="btn_close_error"
             >
               <X className="w-5 h-5" style={{ color: BRAND_COLORS.text.white }} />
-            </button>
+            </Button>
           </div>
 
           {/* Content */}

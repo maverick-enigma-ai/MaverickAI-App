@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { analytics } from '../services/analytics-service';
 import { BrandHeader } from './BrandHeader';
 import { X, BarChart3, Clock, TrendingUp, Activity } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface AnalyticsDashboardProps {
   onClose: () => void;
@@ -39,15 +40,15 @@ export function AnalyticsDashboard({ onClose }: AnalyticsDashboardProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#14123F] via-[#342FA5] to-[#14123F] text-white">
-      <BrandHeader />
+      <BrandHeader/>
 
       {/* Close Button */}
-      <button
+      <Button
         onClick={onClose}
         className="fixed top-6 right-6 z-50 flex items-center justify-center size-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all duration-200"
       >
         <X className="size-6" />
-      </button>
+      </Button>
 
       <div className="container mx-auto px-6 pt-32 pb-20 max-w-4xl">
         {/* Performance Summary */}

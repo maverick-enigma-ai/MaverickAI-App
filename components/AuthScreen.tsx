@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { RadarLogoIcon } from './icons/RadarLogoIcon';
 import { ForgotPasswordModal } from './ForgotPasswordModal';
-import { BRAND_COLORS } from '../utils/brand-colors';
+import { BRAND_COLORS, BRAND_STYLES } from '../utils/brand-colors';
+import { Button } from './ui/button';
 
 interface AuthScreenProps {
   onSignIn: (email: string, password: string) => Promise<void>;
@@ -140,7 +141,7 @@ export function AuthScreen({ onSignIn, onSignUp, onGoogleSignIn, onPasswordReset
                   </p>
                 </div>
                 {onClearError && (
-                  <button
+                  <Button
                     type="button"
                     onClick={onClearError}
                     className="flex-shrink-0 transition-colors"
@@ -149,7 +150,7 @@ export function AuthScreen({ onSignIn, onSignUp, onGoogleSignIn, onPasswordReset
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
-                  </button>
+                  </Button>
                 )}
               </div>
             </div>

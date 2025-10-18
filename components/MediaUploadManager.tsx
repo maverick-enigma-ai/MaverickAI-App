@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Upload, X, Image as ImageIcon, Video, Check, Loader2 } from 'lucide-react';
 import { supabase } from '../utils/supabase/client';
+import { Button } from './ui/button';
 
 interface MediaUploadManagerProps {
   onClose: () => void;
@@ -125,12 +126,12 @@ export function MediaUploadManager({
               {' '}({uploadedFiles.length}/{maxFiles} used)
             </p>
           </div>
-          <button
+          <Button
             onClick={onClose}
             className="px-4 py-2 rounded-lg bg-glass border border-border text-white hover:bg-glass-strong transition-all"
           >
             <X className="w-5 h-5" />
-          </button>
+          </Button>
         </div>
 
         {/* Error Message */}
@@ -195,12 +196,12 @@ export function MediaUploadManager({
                   </div>
 
                   {/* Remove Button */}
-                  <button
+                  <Button
                     onClick={() => handleRemove(index)}
                     className="absolute top-2 right-2 p-2 rounded-lg bg-error text-white opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     <X className="w-4 h-4" />
-                  </button>
+                  </Button>
                 </div>
               ))}
             </div>

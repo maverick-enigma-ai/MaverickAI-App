@@ -1,5 +1,6 @@
 import { ArrowLeft, Target, CheckCircle, Trophy, Flame, Brain, Zap, Clock } from 'lucide-react';
 import { useState } from 'react';
+import { Button } from './ui/button';
 
 interface ReflexTrainerScreenProps {
   onBack: () => void;
@@ -208,13 +209,13 @@ export function ReflexTrainerScreen({ onBack }: ReflexTrainerScreenProps) {
         {/* Header */}
         <div className="sticky top-0 z-10 bg-glass backdrop-blur-md border-b border-border">
           <div className="flex items-center gap-4 px-6 py-4">
-            <button
+            <Button
               onClick={onBack}
               className="p-2 rounded-xl bg-glass hover:bg-glass-strong border border-border transition-all btn-press"
               data-name="btn_back_from_reflex_trainer"
             >
               <ArrowLeft className="w-5 h-5 text-cyan" />
-            </button>
+            </Button>
             <div className="flex-1">
               <h1 className="text-white">Reflex Trainer</h1>
               <p className="text-white/60 text-sm">Sharpen your strategic instincts</p>
@@ -358,7 +359,7 @@ export function ReflexTrainerScreen({ onBack }: ReflexTrainerScreenProps) {
       {/* Header */}
       <div className="sticky top-0 z-10 bg-glass backdrop-blur-md border-b border-border">
         <div className="flex items-center gap-4 px-6 py-4">
-          <button
+          <Button
             onClick={() => {
               setActiveDrill(null);
               setSelectedOption(null);
@@ -368,7 +369,7 @@ export function ReflexTrainerScreen({ onBack }: ReflexTrainerScreenProps) {
             data-name="btn_back_to_drills"
           >
             <ArrowLeft className="w-5 h-5 text-cyan" />
-          </button>
+          </Button>
           <div className="flex-1">
             <h1 className="text-white">{activeDrill.title}</h1>
             <div className="flex items-center gap-2">

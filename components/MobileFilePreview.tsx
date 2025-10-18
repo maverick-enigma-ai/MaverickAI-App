@@ -9,6 +9,7 @@ import {
   Code,
   Download
 } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface MobileFilePreviewProps {
   file: File;
@@ -166,13 +167,13 @@ export function MobileFilePreview({ file, onRemove, index }: MobileFilePreviewPr
 
         {/* Actions */}
         <div className="flex items-center gap-2 shrink-0">
-          <button
+          <Button
             onClick={onRemove}
             className="w-12 h-12 rounded-xl bg-red-500/20 backdrop-blur-sm flex items-center justify-center hover:bg-red-500/30 transition-colors border border-red-500/20 min-h-[48px] min-w-[48px]"
             data-name={`btn_remove_${index}`}
           >
             <X className="w-5 h-5 text-red-400" />
-          </button>
+          </Button>
         </div>
       </div>
     </div>
