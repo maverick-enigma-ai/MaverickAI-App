@@ -80,8 +80,8 @@ export default function DashboardScreen({
   const show = {
     kpis: true,
     classification: true,
-    diagnosis: false,
-    psychProfile: false,
+    diagnosis: true,
+    psychProfile: true,
     narrative: true,
     strategicPlan: true,
     actionItems: true,

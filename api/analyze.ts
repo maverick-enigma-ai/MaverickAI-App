@@ -2,9 +2,18 @@
 // Server route that implements the "submission-first → analysis → completed" flow.
 
 import { createClient } from '@supabase/supabase-js';
-import { runRadarServer, type ServerAttachment } from '../services/runradar-service';
+//import { runRadarServer, type ServerAttachment } from '../services/runradar-service';
 //import { runRadarServer, type FileDTO, type ProcessedAnalysis } from '../services/runradar-service';
-import { db } from '../utils/database/database-adapter';
+//import { db } from '../utils/database/database-adapter';
+
+// BEFORE (what was failing in prod)
+// import { runRadarServer } from 'services/runradar-service';
+// or
+// import { runRadarServer } from '../services/runradar-service';
+
+// AFTER (uses the duplicated copy under api/_lib)
+import { runRadarServer, type ServerAttachment } from './_lib/services/runradar-service';
+
 
 
 type Body = {
