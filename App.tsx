@@ -849,5 +849,6 @@ const [enabledScenarios, setEnabledScenarios] = useState<ScenarioCategory[]>([
         <FirstTimeTooltip isOpen={showFirstTimeTooltip && appState === 'radar'} onClose={handleTooltipClose} />
       </div>
     </>
-  );
+    )};
+  };
 }
