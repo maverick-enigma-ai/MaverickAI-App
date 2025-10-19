@@ -679,15 +679,6 @@ const [enabledScenarios, setEnabledScenarios] = useState<ScenarioCategory[]>([
       </Suspense>
     </div>
   );
-        }
-      default:
-        return (
-          <div className="size-full">
-            <LandingPageTabbed onGetStarted={handleLandingGetStarted} onViewPricing={handleLandingViewPricing} onSignIn={handleLandingSignIn} />
-          </div>
-        );
-    }
-  }
 
   // Auth screen (unless viewing legal pages/landing)
   if (!user && !['privacy', 'terms', 'landing'].includes(appState)) {
