@@ -667,18 +667,21 @@ const [enabledScenarios, setEnabledScenarios] = useState<ScenarioCategory[]>([
             <LandingPage onGetStarted={handleLandingGetStarted} onViewPricing={handleLandingViewPricing} onSignIn={handleLandingSignIn} />
           </div>
         );
-      case 'premium':
-  return (
-    <div className="size-full">
-      <Suspense fallback={<LandingPageTabbed onGetStarted={handleLandingGetStarted} onViewPricing={handleLandingViewPricing} onSignIn={handleLandingSignIn} />}>
-        <MaverickLandingPremium
-          onGetStarted={handleLandingGetStarted}
-          onViewPricing={handleLandingViewPricing}
-          onSignIn={handleLandingSignIn}
-        />
-      </Suspense>
-    </div>
-  );
+        case 'premium':
+  return <div className="p-6 text-white">Premium page temporarily disabled</div>;
+
+     // case 'premium':
+  //return (
+    //<div className="size-full">
+      //<Suspense fallback={<LandingPageTabbed onGetStarted={handleLandingGetStarted} onViewPricing={handleLandingViewPricing} onSignIn={handleLandingSignIn} />}>
+        //<MaverickLandingPremium
+          //onGetStarted={handleLandingGetStarted}
+          //onViewPricing={handleLandingViewPricing}
+          //onSignIn={handleLandingSignIn}
+        ///>
+      //</Suspense>
+    //</div>
+  //);
 
   // Auth screen (unless viewing legal pages/landing)
   if (!user && !['privacy', 'terms', 'landing'].includes(appState)) {
