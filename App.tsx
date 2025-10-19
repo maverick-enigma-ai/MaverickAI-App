@@ -667,8 +667,8 @@ const [enabledScenarios, setEnabledScenarios] = useState<ScenarioCategory[]>([
             <LandingPage onGetStarted={handleLandingGetStarted} onViewPricing={handleLandingViewPricing} onSignIn={handleLandingSignIn} />
           </div>
         );
-        case 'premium':
-  return <div className="p-6 text-white">Premium page temporarily disabled</div>;
+       // case 'premium':
+  // return <div className="p-6 text-white">Premium page temporarily disabled</div>;
 
      // case 'premium':
   //return (
