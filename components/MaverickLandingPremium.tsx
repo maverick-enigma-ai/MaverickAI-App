@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { ChevronDown, Info } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from 'framer-motion';
 import { BRAND_COLORS } from "../utils/brand-colors";
 
 // --- Radar Visualization with tooltips & reduced motion support ---
