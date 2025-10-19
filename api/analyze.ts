@@ -20,11 +20,11 @@ const ALLOWED_ORIGIN = process.env.NEXT_PUBLIC_APP_ORIGIN ?? '*';
 
 // Small helper to generate a job id (Edge/Node safe)
 const genJobId = () => {
-  // Prefer web crypto if available
-  // @ts-ignore
-  const genJobId = () => {
-  // Prefer Web Crypto if available (Node exposes globalThis.crypto too)
-  if (typeof globalThis.crypto !== 'undefined' && typeof globalThis.crypto.randomUUID === 'function') {
+  // Prefer Web Crypto; Node 18+ also exposes globalThis.crypto
+  if (
+    typeof globalThis.crypto !== 'undefined' &&
+    typeof globalThis.crypto.randomUUID === 'function'
+  ) {
     return globalThis.crypto.randomUUID();
   }
   // Fallback to Node's crypto
@@ -34,7 +34,7 @@ const genJobId = () => {
   // Ultra-fallback (never ideal, but avoids crash)
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 };
-};
+
 
 // Minimal CORS helper for preflight & response headers
 function setCorsHeaders(res: VercelResponse) {
@@ -206,6 +206,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const authUserId = authData?.user?.id;
 
       // --- Universal fail-safe catch at end of handler ---
+} // --- Universal fail-safe catch at end of handler ---
 } catch (err: any) {
   console.error('analyze.ts error:', err);
 
@@ -215,15 +216,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       global: { headers: { Authorization: req.headers.authorization ?? '' } },
     });
 
-    // attempt to recover jobId + user
+    // recover user + job id if possible
     const authData = await supabase.auth.getUser();
     const authUserId = authData.data.user?.id;
-
-    // We may still have a jobId in body or previously set variable
     const maybeJobId =
       (req.body && (req.body.jobId as string)) || undefined;
 
-    // Mark submission as failed if we can recover both user and jobId
     if (authUserId && maybeJobId) {
       await supabase
         .from('submissions')
@@ -240,25 +238,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // Always return a proper JSON error to client
-  return res
-    .status(500)
-    .json({
-      success: false,
-      error: err?.message ?? 'analysis_failed',
-      message: 'Internal error while processing analysis',
-    });
-}   
-      // We don't always have the jobId if failure happened pre-insert; noop in that case.
-      //const maybeJobId = (req.body && (req.body.jobId as string)) || undefined;
-      //if (authUserId && maybeJobId) {
-        //await supabase
-          //.from('submissions')
-          //.update({ status: 'failed', updated_at: new Date().toISOString() })
-          //.eq('job_id', maybeJobId)
-          //.eq('user_id', authUserId);
-      //}
-    //} catch {
-      // swallow
-    //}
+  return res.status(500).json({
+    success: false,
+    error: err?.message ?? 'analysis_failed',
+    message: 'Internal error while processing analysis',
+  });
+} // ← end catch
 
-    //return res.status(500).json({ success: false, error: err?.message ?? 'Internal error' });
+} // ← end handler function
