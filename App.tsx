@@ -31,7 +31,7 @@ import { analytics, trackEvent, trackWithUser, startTimer, endTimer } from './se
 import { applyScreenshotPolicy } from './utils/screenshot-prevention';
 import type { ScenarioCategory } from './types/sample-scenarios';
 // at the top, also import React if you need Suspense
-import React, { Suspense } from 'react';
+//import React, { Suspense } from 'react';
 
 // lazy load the premium component
 //const MaverickLandingPremium = React.lazy(() => import('./components/MaverickLandingPremium'));
