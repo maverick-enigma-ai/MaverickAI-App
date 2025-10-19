@@ -4,6 +4,8 @@
 // Returns analysis data for /api/analyze to write into Supabase. No mocks.
 // -----------------------------------------------------------------------------
 
+import OpenAI from 'openai';
+
 // Safe globals for hybrid builds
 declare const Deno:
   | { env: { get: (k: string) => string | undefined } }
@@ -306,12 +308,28 @@ let _OpenAIClient: any | null = null;
 
 function getOpenAIClient() {
   // Lazy require to avoid bundlers exploding if package is optional in some envs
-  if (_OpenAIClient) return _OpenAIClient;
-  const OpenAI = require("openai");
-  const apiKey = requireEnv("OPENAI_API_KEY");
-  const organization = getEnv("OPENAI_ORG");
-  _OpenAIClient = new OpenAI({ apiKey, organization });
-  return _OpenAIClient;
+let openAIClient: OpenAI | null = null;
+
+function getOpenAIClient(): OpenAI {
+  if (openAIClient) return openAIClient;
+
+  const apiKey =
+    process.env.OPENAI_API_KEY ??
+    getEnv?.('OPENAI_API_KEY');
+
+  if (!apiKey) {
+    throw new Error('OPENAI_API_KEY is missing');
+  }
+
+  const organization =
+    process.env.OPENAI_ORG ??
+    getEnv?.('OPENAI_ORG') ??
+    undefined;
+
+  // OpenAI expects a config object, not positional args
+  openAIClient = new OpenAI({ apiKey, organization });
+  return openAIClient;
+}
 }
 
 async function uploadToVectorStore(files: ServerAttachment[]): Promise<{ vectorStoreId?: string }> {
