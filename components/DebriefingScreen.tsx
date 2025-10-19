@@ -4,6 +4,40 @@ import { BrandHeader } from './BrandHeader';
 import { PlatformCapabilitiesModal } from './PlatformCapabilitiesModal';
 import { motion } from 'framer-motion';
 import { BRAND_COLORS } from '../utils/brand-colors';
+import { supabase } from '../utils/supabase/client';
+
+export function DebriefingScreen({ jobId, onCompleted, ...props }) {
+  useEffect(() => {
+    if (!jobId) return;
+    const channel = supabase
+      .channel(`submission-status-${jobId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'submissions',
+          filter: `job_id=eq.${jobId}`,
+        },
+        (payload) => {
+          const newStatus = payload.new.status;
+          if (newStatus === 'completed') {
+            const analysisId = payload.new.analysis_id;
+            onCompleted?.(analysisId);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [jobId, onCompleted]);
+
+  // ... existing Debriefing UI logic ...
+}
+
+
 
 interface DebriefingScreenProps {
   inputText: string;
@@ -12,7 +46,7 @@ interface DebriefingScreenProps {
   onGoHome?: () => void;
 }
 
-export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHome }: DebriefingScreenProps) {
+//export function DebriefingScreen({ inputText, uploadedFiles, onStartOver, onGoHome }: DebriefingScreenProps) {
   const [processingStep, setProcessingStep] = useState(0);
   const [showCapabilities, setShowCapabilities] = useState(false);
 

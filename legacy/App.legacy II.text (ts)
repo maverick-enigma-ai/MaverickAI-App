@@ -90,8 +90,6 @@ export default function App() {
   const [analysisError, setAnalysisError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [enabledScenarios, setEnabledScenarios] = useState<
-  // NEW: DB-driven job tracking
-  const [jobId, setJobId] = useState<string | null>(null);
     import('./types/sample-scenarios').ScenarioCategory[]
   >(['corporate', 'personal', 'wealth', 'legal']);
 
@@ -448,35 +446,24 @@ export default function App() {
         throw new Error(err.error || `API request failed: ${response.status}`);
       }
 
-      // ---------- DB-DRIVEN RESPONSE (NEW) ----------
       const result = await response.json();
+      if (!result.success || !result.data) throw new Error(result.error || 'Analysis failed');
 
-      // DB-DRIVEN: expect only { success, jobId } from /api/analyze
-      if (!result.success || !result.jobId) throw new Error(result.error || 'Analysis failed');
+      analysisResults = result.data as ProcessedAnalysis;
 
-      // NEW: capture jobId and keep Debriefing visible; Dashboard will show when DB flips to 'completed'
-      setJobId(result.jobId);
-      setAppState('processing');
+      const totalTime = endTimer('time_to_dashboard');
+      setCurrentAnalysis(analysisResults);
+      setAppState('dashboard');
       setActiveTab('home');
 
-      // ---- OLD SYNCHRONOUS PATH (commented out, kept for reference) ---------------
-      // const result = await response.json();
-      // if (!result.success || !result.data) throw new Error(result.error || 'Analysis failed');
-      // analysisResults = result.data as ProcessedAnalysis;
-      // const totalTime = endTimer('time_to_dashboard');
-      // setCurrentAnalysis(analysisResults);
-      // setAppState('dashboard');
-      // setActiveTab('home');
-      //
-      // analytics.trackTimeToDashboard(user.uid, user.email);
-      // trackWithUser('analysis_completed', user.uid, user.email, {
-      //   jobId: analysisResults.jobId,
-      //   powerScore: analysisResults.powerScore,
-      //   gravityScore: analysisResults.gravityScore,
-      //   riskScore: analysisResults.riskScore,
-      // });
-      // trackWithUser('dashboard_viewed', user.uid, user.email, { is_historical: false });
-      // ----------------------------------------------------------------------------- 
+      analytics.trackTimeToDashboard(user.uid, user.email);
+      trackWithUser('analysis_completed', user.uid, user.email, {
+        jobId: analysisResults.jobId,
+        powerScore: analysisResults.powerScore,
+        gravityScore: analysisResults.gravityScore,
+        riskScore: analysisResults.riskScore,
+      });
+      trackWithUser('dashboard_viewed', user.uid, user.email, { is_historical: false });
     } catch (e: any) {
       const msg = e?.message ?? 'Unknown error occurred';
       setAnalysisError(msg);
@@ -712,29 +699,11 @@ export default function App() {
           {appState === 'radar' && <ChatInterface onSubmit={handleSubmit} enabledScenarios={enabledScenarios} />}
 
           {appState === 'processing' && (
-            <DebriefingScreen
-              jobId={jobId!}
-              inputText={submissionData.text}
-              uploadedFiles={submissionData.files}
-              onStartOver={handleStartOver}
-              onGoHome={handleGoHome}
-              onCompleted={(analysisId) => {
-                setViewingHistoricalScan(null);
-                setCurrentAnalysis(null); // source of truth is DB by job_id
-                setAppState('dashboard');
-                setActiveTab('home');
-                if (user) {
-                  analytics.trackTimeToDashboard(user.uid, user.email);
-                  trackWithUser('analysis_completed', user.uid, user.email, { job_id: jobId });
-                  trackWithUser('dashboard_viewed', user.uid, user.email, { is_historical: false });
-                }
-              }}
-            />
+            <DebriefingScreen inputText={submissionData.text} uploadedFiles={submissionData.files} onStartOver={handleStartOver} onGoHome={handleGoHome} />
           )}
 
           {appState === 'dashboard' && (
             <DashboardScreen
-              jobId={jobId || (currentAnalysis?.jobId ?? null)}
               analysisData={currentAnalysis}
               inputText={submissionData.text}
               uploadedFiles={submissionData.files}
