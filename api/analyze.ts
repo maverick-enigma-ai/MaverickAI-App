@@ -5,6 +5,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 //import { runRadarServer } from '../services/runradar-service';
 import type { RadarResult } from '../services/runradar-service';
+import { randomUUID as nodeRandomUUID } from 'node:crypto';
 
 
 // If you're deploying on Edge, you can keep this; otherwise remove it safely.
@@ -21,16 +22,18 @@ const ALLOWED_ORIGIN = process.env.NEXT_PUBLIC_APP_ORIGIN ?? '*';
 const genJobId = () => {
   // Prefer web crypto if available
   // @ts-ignore
-  if (typeof crypto !== 'undefined' && crypto?.randomUUID) return crypto.randomUUID();
-  try {
-    // Node fallback
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { randomUUID } = require('crypto');
-    return randomUUID();
-  } catch {
-    // Ultra-fallback
-    return 'job_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+  const genJobId = () => {
+  // Prefer Web Crypto if available (Node exposes globalThis.crypto too)
+  if (typeof globalThis.crypto !== 'undefined' && typeof globalThis.crypto.randomUUID === 'function') {
+    return globalThis.crypto.randomUUID();
   }
+  // Fallback to Node's crypto
+  if (typeof nodeRandomUUID === 'function') {
+    return nodeRandomUUID();
+  }
+  // Ultra-fallback (never ideal, but avoids crash)
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+};
 };
 
 // Minimal CORS helper for preflight & response headers
@@ -202,19 +205,60 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { data: authData } = await supabase.auth.getUser();
       const authUserId = authData?.user?.id;
 
-      // We don't always have the jobId if failure happened pre-insert; noop in that case.
-      const maybeJobId = (req.body && (req.body.jobId as string)) || undefined;
-      if (authUserId && maybeJobId) {
-        await supabase
-          .from('submissions')
-          .update({ status: 'failed', updated_at: new Date().toISOString() })
-          .eq('job_id', maybeJobId)
-          .eq('user_id', authUserId);
-      }
-    } catch {
-      // swallow
-    }
+      // --- Universal fail-safe catch at end of handler ---
+} catch (err: any) {
+  console.error('analyze.ts error:', err);
 
-    return res.status(500).json({ success: false, error: err?.message ?? 'Internal error' });
+  try {
+    // create a Supabase client using anon + caller token
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      global: { headers: { Authorization: req.headers.authorization ?? '' } },
+    });
+
+    // attempt to recover jobId + user
+    const authData = await supabase.auth.getUser();
+    const authUserId = authData.data.user?.id;
+
+    // We may still have a jobId in body or previously set variable
+    const maybeJobId =
+      (req.body && (req.body.jobId as string)) || undefined;
+
+    // Mark submission as failed if we can recover both user and jobId
+    if (authUserId && maybeJobId) {
+      await supabase
+        .from('submissions')
+        .update({
+          status: 'failed',
+          error_json: String(err?.message || err),
+          updated_at: new Date().toISOString(),
+        })
+        .eq('job_id', maybeJobId)
+        .eq('user_id', authUserId);
+    }
+  } catch (inner) {
+    console.error('Secondary error during fail-safe update:', inner);
   }
-}
+
+  // Always return a proper JSON error to client
+  return res
+    .status(500)
+    .json({
+      success: false,
+      error: err?.message ?? 'analysis_failed',
+      message: 'Internal error while processing analysis',
+    });
+}   
+      // We don't always have the jobId if failure happened pre-insert; noop in that case.
+      //const maybeJobId = (req.body && (req.body.jobId as string)) || undefined;
+      //if (authUserId && maybeJobId) {
+        //await supabase
+          //.from('submissions')
+          //.update({ status: 'failed', updated_at: new Date().toISOString() })
+          //.eq('job_id', maybeJobId)
+          //.eq('user_id', authUserId);
+      //}
+    //} catch {
+      // swallow
+    //}
+
+    //return res.status(500).json({ success: false, error: err?.message ?? 'Internal error' });
