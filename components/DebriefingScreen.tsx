@@ -443,10 +443,10 @@ interface DebriefingScreenProps {
         </div>
 
         {/* Home Button - Award-Winning */}
-        {onGoHome && (
+        {Home && (
           <div className="flex justify-center">
             <motion.button
-              onClick={onGoHome}
+              onClick={Home}
               whileHover={{ scale: 1.03, y: -2 }}
               whileTap={{ scale: 0.97 }}
               className="flex items-center gap-3 px-8 py-5 bg-white/10 hover:bg-white/20 backdrop-blur-sm md:backdrop-blur-md rounded-full border-2 border-white/20 hover:border-cyan-400/40 transition-all duration-300 min-h-[60px] shadow-xl hover:shadow-cyan-500/30 group relative overflow-hidden"
@@ -478,4 +478,3 @@ interface DebriefingScreenProps {
       />
     </div>
   );
-}
