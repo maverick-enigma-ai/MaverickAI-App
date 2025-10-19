@@ -34,7 +34,7 @@ import type { ScenarioCategory } from './types/sample-scenarios';
 import React, { Suspense } from 'react';
 
 // lazy load the premium component
-const MaverickLandingPremium = React.lazy(() => import('./components/MaverickLandingPremium'));
+//const MaverickLandingPremium = React.lazy(() => import('./components/MaverickLandingPremium'));
 
 
 
