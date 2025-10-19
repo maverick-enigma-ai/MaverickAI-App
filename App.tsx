@@ -29,7 +29,8 @@ import type { ProcessedAnalysis } from './services/runradar-service';
 import { supabase } from './utils/supabase/client';
 import { analytics, trackEvent, trackWithUser, startTimer, endTimer } from './services/analytics-service';
 import { applyScreenshotPolicy } from './utils/screenshot-prevention';
- import('./types/sample-scenarios').ScenarioCategory[];
+import type { ScenarioCategory } from './types/sample-scenarios';
+
 
 type AppState =
   | 'landing'
@@ -90,7 +91,12 @@ export default function App() {
   const [currentAnalysis, setCurrentAnalysis] = useState<ProcessedAnalysis | null>(null);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [enabledScenarios, setEnabledScenarios] = useState<
+// const [enabledScenarios, setEnabledScenarios] = useState<import('./types/sample-scenarios').ScenarioCategory[]>(...);
+// after
+const [enabledScenarios, setEnabledScenarios] = useState<ScenarioCategory[]>([
+  'corporate', 'personal', 'wealth', 'legal',
+]);
+
   // NEW: DB-driven job tracking
   const [jobId, setJobId] = useState<string | null>(null);
   >(['corporate', 'personal', 'wealth', 'legal']);
