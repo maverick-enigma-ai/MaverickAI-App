@@ -99,7 +99,7 @@ const [enabledScenarios, setEnabledScenarios] = useState<ScenarioCategory[]>([
 
   // NEW: DB-driven job tracking
   const [jobId, setJobId] = useState<string | null>(null);
-  >(['corporate', 'personal', 'wealth', 'legal']);
+  (['corporate', 'personal', 'wealth', 'legal']);
 
   // Splash / onboarding state
   const [showSplash] = useState(true);
