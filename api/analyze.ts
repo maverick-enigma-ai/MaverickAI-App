@@ -204,30 +204,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
       const { data: authData } = await supabase.auth.getUser();
       const authUserId = authData?.user?.id;
-
-      // --- Universal fail-safe catch at end of handler ---
-} // --- Universal fail-safe catch at end of handler ---
+  
+    // ---- universal fail-safe at the very end of the handler ----
 } catch (err: any) {
   console.error('analyze.ts error:', err);
 
   try {
-    // create a Supabase client using anon + caller token
+    // create a Supabase client using the caller token so RLS still applies
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       global: { headers: { Authorization: req.headers.authorization ?? '' } },
     });
 
-    // recover user + job id if possible
-    const authData = await supabase.auth.getUser();
-    const authUserId = authData.data.user?.id;
-    const maybeJobId =
-      (req.body && (req.body.jobId as string)) || undefined;
+    // recover auth + (maybe) jobId
+    const { data: authData } = await supabase.auth.getUser();
+    const authUserId = authData.user?.id;
+    const maybeJobId = (req.body && (req.body.jobId as string)) || undefined;
 
+    // best-effort mark the submission row as failed
     if (authUserId && maybeJobId) {
       await supabase
         .from('submissions')
         .update({
           status: 'failed',
-          error_json: String(err?.message || err),
+          error_json: String(err?.message ?? err),
           updated_at: new Date().toISOString(),
         })
         .eq('job_id', maybeJobId)
@@ -237,12 +236,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.error('Secondary error during fail-safe update:', inner);
   }
 
-  // Always return a proper JSON error to client
   return res.status(500).json({
     success: false,
     error: err?.message ?? 'analysis_failed',
     message: 'Internal error while processing analysis',
   });
-} // ← end catch
-
-} // ← end handler function
+}
