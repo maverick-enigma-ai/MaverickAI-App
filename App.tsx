@@ -105,7 +105,6 @@ const [enabledScenarios, setEnabledScenarios] = useState<ScenarioCategory[]>([
 
   // NEW: DB-driven job tracking
   const [jobId, setJobId] = useState<string | null>(null);
-  (['corporate', 'personal', 'wealth', 'legal']);
 
   // Splash / onboarding state
   const [showSplash] = useState(true);
@@ -649,39 +648,57 @@ const [enabledScenarios, setEnabledScenarios] = useState<ScenarioCategory[]>([
   };
 
   // Landing when not signed-in
-  if (!user && appState === 'landing') {
-    const handleLandingGetStarted = () => setAppState('auth');
-    const handleLandingViewPricing = () => setAppState('auth');
-    const handleLandingSignIn = () => setAppState('auth');
+ // Landing when not signed-in
+if (!user && appState === 'landing') {
+  const handleLandingGetStarted = () => setAppState('auth');
+  const handleLandingViewPricing = () => setAppState('auth');
+  const handleLandingSignIn = () => setAppState('auth');
 
-    switch (ACTIVE_LANDING_PAGE) {
-      case 'tabbed':
-        return (
-          <div className="size-full">
-            <LandingPageTabbed onGetStarted={handleLandingGetStarted} onViewPricing={handleLandingViewPricing} onSignIn={handleLandingSignIn} />
-          </div>
-        );
-      case 'basic':
-        return (
-          <div className="size-full">
-            <LandingPage onGetStarted={handleLandingGetStarted} onViewPricing={handleLandingViewPricing} onSignIn={handleLandingSignIn} />
-          </div>
-        );
-       // case 'premium':
-  // return <div className="p-6 text-white">Premium page temporarily disabled</div>;
-
-     // case 'premium':
-  //return (
-    //<div className="size-full">
-      //<Suspense fallback={<LandingPageTabbed onGetStarted={handleLandingGetStarted} onViewPricing={handleLandingViewPricing} onSignIn={handleLandingSignIn} />}>
-        //<MaverickLandingPremium
-          //onGetStarted={handleLandingGetStarted}
-          //onViewPricing={handleLandingViewPricing}
-          //onSignIn={handleLandingSignIn}
-        ///>
-      //</Suspense>
-    //</div>
-  //);
+  switch (ACTIVE_LANDING_PAGE) {
+    case 'tabbed':
+      return (
+        <div className="size-full">
+          <LandingPageTabbed
+            onGetStarted={handleLandingGetStarted}
+            onViewPricing={handleLandingViewPricing}
+            onSignIn={handleLandingSignIn}
+          />
+        </div>
+      );
+    case 'basic':
+      return (
+        <div className="size-full">
+          <LandingPage
+            onGetStarted={handleLandingGetStarted}
+            onViewPricing={handleLandingViewPricing}
+            onSignIn={handleLandingSignIn}
+          />
+        </div>
+      );
+    // case 'premium':
+    //   return (
+    //     <div className="size-full">
+    //       <Suspense fallback={<LandingPageTabbed onGetStarted={handleLandingGetStarted} onViewPricing={handleLandingViewPricing} onSignIn={handleLandingSignIn} />}>
+    //         <MaverickLandingPremium
+    //           onGetStarted={handleLandingGetStarted}
+    //           onViewPricing={handleLandingViewPricing}
+    //           onSignIn={handleLandingSignIn}
+    //         />
+    //       </Suspense>
+    //     </div>
+    //   );
+    default:
+      return (
+        <div className="size-full">
+          <LandingPageTabbed
+            onGetStarted={handleLandingGetStarted}
+            onViewPricing={handleLandingViewPricing}
+            onSignIn={handleLandingSignIn}
+          />
+        </div>
+      );
+  }
+}
 
   // Auth screen (unless viewing legal pages/landing)
   if (!user && !['privacy', 'terms', 'landing'].includes(appState)) {
@@ -852,6 +869,5 @@ const [enabledScenarios, setEnabledScenarios] = useState<ScenarioCategory[]>([
         <FirstTimeTooltip isOpen={showFirstTimeTooltip && appState === 'radar'} onClose={handleTooltipClose} />
       </div>
     </>
-    )};
-  };
+    );
 }
