@@ -3,7 +3,8 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-//import { runRadarServer } from '../services/runradar-service';
+import { runRadarServer } from '../services/runradar-service';
+import {RadarActionItem} from '../services/runradar-service';
 import type { RadarResult } from '../services/runradar-service';
 import { randomUUID as nodeRandomUUID } from 'node:crypto';
 
@@ -102,7 +103,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // 4) Orchestrate analysis via runradar-service (single source of truth)
     //     - We pass through inputText and any uploaded files your service expects.
     // ---------------------------------------------------------------------------------
-    const { runRadarServer } = await import('../services/runradar-service.js');
+    //const { runRadarServer } = await import('../services/runradar-service');
     const radar: RadarResult = await runRadarServer({
       inputText,
       files: Array.isArray(files) ? files : [],

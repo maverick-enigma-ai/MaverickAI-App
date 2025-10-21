@@ -25,7 +25,7 @@ import { FirstTimeTooltip } from './components/FirstTimeTooltip';
 import { ErrorModal } from './components/ErrorModal';
 import { AnimatedSplashScreen } from './components/AnimatedSplashScreen';
 //import { TestDashboard } from './components/TestDashboard';
-import type { ProcessedAnalysis } from './services/runradar-service';
+//import type { ProcessedAnalysis } from './services/runradar-service';
 import { supabase } from './utils/supabase/client';
 import { analytics, trackEvent, trackWithUser, startTimer, endTimer } from './services/analytics-service';
 import { applyScreenshotPolicy } from './utils/screenshot-prevention';
@@ -59,6 +59,36 @@ type AppState =
   | 'enhanced-radar'
   | 'test';
 
+type DashboardAnalysis = {
+  id: string;
+  jobId: string;
+  userId: string;
+  title?: string;
+  inputText: string;
+  summary?: string;
+  powerScore?: number;
+  gravityScore?: number;
+  riskScore?: number;
+  confidenceLevel?: number;
+  whatsHappening?: string;
+  whyItMatters?: string;
+  narrativeSummary?: string;
+  immediateMove?: string;
+  strategicTool?: string;
+  analyticalCheck?: string;
+  longTermFix?: string;
+  powerExplanation?: string;
+  gravityExplanation?: string;
+  riskExplanation?: string;
+  issueType?: string;
+  issueCategory?: string;
+  issueLayer?: string;
+  status?: 'processing' | 'completed' | 'failed';
+  isReady?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
 interface HistoryScan {
   id: string;
   title: string;
@@ -81,7 +111,7 @@ interface HistoryScan {
   issueLayer?: string;
   files: { name: string; type: string }[];
   text: string;
-  fullAnalysis?: ProcessedAnalysis;
+  fullAnalysis?: any;
 }
 
 export default function App() {
@@ -94,10 +124,10 @@ export default function App() {
     files: [],
   });
   const [viewingHistoricalScan, setViewingHistoricalScan] = useState<HistoryScan | null>(null);
-  const [currentAnalysis, setCurrentAnalysis] = useState<ProcessedAnalysis | null>(null);
+  const [currentAnalysis, setCurrentAnalysis] = useState<DashboardAnalysis | null>(null);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-// const [enabledScenarios, setEnabledScenarios] = useState<import('./types/sample-scenarios').ScenarioCategory[]>(...);
+  //const [enabledScenarios, setEnabledScenarios] = useState<import('./types/sample-scenarios').ScenarioCategory[]>(...);
 // after
 const [enabledScenarios, setEnabledScenarios] = useState<ScenarioCategory[]>([
   'corporate', 'personal', 'wealth', 'legal',
@@ -426,7 +456,7 @@ const [enabledScenarios, setEnabledScenarios] = useState<ScenarioCategory[]>([
     trackWithUser('processing_started', user.uid, user.email);
 
     try {
-      let analysisResults: ProcessedAnalysis;
+      //let analysisResults: ProcessedAnalysis;
 
       // Get RLS JWT
       const {
@@ -547,7 +577,7 @@ const [enabledScenarios, setEnabledScenarios] = useState<ScenarioCategory[]>([
     if (scan.fullAnalysis) {
       setCurrentAnalysis(scan.fullAnalysis);
     } else {
-      const analysis: ProcessedAnalysis = {
+      const analysis = {
         id: scan.id,
         jobId: scan.id,
         userId: user?.uid || '',
@@ -576,7 +606,7 @@ const [enabledScenarios, setEnabledScenarios] = useState<ScenarioCategory[]>([
         createdAt: scan.date,
         updatedAt: scan.date,
       };
-      setCurrentAnalysis(analysis);
+      //setCurrentAnalysis(analysis);
     }
 
     setAppState('dashboard');
