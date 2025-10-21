@@ -138,11 +138,7 @@ async function runWithAssistant(
 ): Promise<RadarResult> {
   const client = getOpenAIClient() as any;
   const assistantId = process.env.OPENAI_ASSISTANT_ID;
-
-  if (!assistantId) {
-    // No assistant configured; fall back to chat.
-    return runWithChat(prompt);
-  }
+  if (!assistantId) return runWithChat(prompt);
 
   const { vectorStoreId } = await uploadToVectorStore(files);
 
@@ -150,46 +146,40 @@ async function runWithAssistant(
   const thread = await client.beta.threads.create();
   const thread_id: string = thread.id;
 
-  // 2) Thread with user's prompt
-  await client.beta.threads.messages.create({
+  // 2) Add user's message — POSITIONAL
+  await client.beta.threads.messages.create(
     thread_id,
-    role: 'user',
-    content: prompt,
-  });
+    { role: 'user', content: prompt }
+  );
 
-  // 3) Start the run (use explicit object signature)
-  const run = await client.beta.threads.runs.create({
+  // 3) Start the run — POSITIONAL
+  const run = await client.beta.threads.runs.create(
     thread_id,
-    assistant_id: assistantId,
-    ...(vectorStoreId
-      ? {
-          tool_resources: {
-            file_search: { vector_store_ids: [vectorStoreId] },
-          },
-        }
-      : {}),
-  });
+    {
+      assistant_id: assistantId,
+      ...(vectorStoreId
+        ? { tool_resources: { file_search: { vector_store_ids: [vectorStoreId] } } }
+        : {}),
+    }
+  );
   const run_id: string = run.id;
 
-  // 4) Poll until completed (explicit object signature)
-  const start = Date.now();
+  // 4) Poll — POSITIONAL + guards
   const timeoutMs = 90_000;
-
+  const t0 = Date.now();
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const current = await client.beta.threads.runs.retrieve({ thread_id, run_id });
+    const current = await client.beta.threads.runs.retrieve(thread_id, run_id);
     if (current.status === 'completed') break;
-    if (current.status === 'failed' || current.status === 'cancelled' || current.status === 'expired') {
+    if (['failed', 'cancelled', 'expired'].includes(current.status)) {
       throw new Error(`Assistant run ended with status=${current.status}`);
     }
-    if (Date.now() - start > timeoutMs) {
-      throw new Error('Assistant run timed out');
-    }
+    if (Date.now() - t0 > timeoutMs) throw new Error('Assistant run timed out');
     await new Promise(r => setTimeout(r, 1200));
   }
 
-  // 5) Fetch assistant messages (explicit object signature)
-  const list = await client.beta.threads.messages.list({ thread_id, limit: 10 });
+  // 5) Read assistant messages — POSITIONAL
+  const list = await client.beta.threads.messages.list(thread_id, { limit: 10 });
 
   const rawText = (list?.data ?? [])
     .filter((m: any) => m.role === 'assistant')
