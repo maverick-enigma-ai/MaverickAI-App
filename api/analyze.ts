@@ -3,9 +3,9 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import { runRadarServer } from '../services/runradar-service';
-import {RadarActionItem} from '../services/runradar-service';
-import type { RadarResult } from '../services/runradar-service';
+import { runRadarServer } from 'services/runradar-service.ts';
+import {RadarActionItem} from 'services/runradar-service.ts';
+import type { RadarResult } from 'services/runradar-service.ts';
 import { randomUUID as nodeRandomUUID } from 'node:crypto';
 
 
@@ -130,7 +130,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           risk_score: radar.riskScore ?? null,
           confidence: radar.confidence ?? null,
 
-          psychological_profile: radar.psychologicalProfile ?? null,
+          //psychological_profile: radar.psychologicalProfile ?? null,
           //summary: radar.summary ?? null,
           //recommendations: radar.recommendations ?? null,
           //red_flags: radar.redFlags ?? null,
@@ -207,7 +207,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const authUserId = authData?.user?.id;
   
     // ---- universal fail-safe at the very end of the handler ----
-} catch (err: any) {
+    } catch (err: any) {
   console.error('analyze.ts error:', err);
 
   try {
@@ -241,5 +241,4 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     success: false,
     error: err?.message ?? 'analysis_failed',
     message: 'Internal error while processing analysis',
-  });
-}
+  })}}}
