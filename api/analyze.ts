@@ -3,9 +3,9 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import { runRadarServer } from '/services/runradar-service.ts';
-import {RadarActionItem} from '/services/runradar-service.ts';
-import type { RadarResult } from '/services/runradar-service.ts';
+import { runRadarServer } from 'services/runradar-service.ts';
+import {RadarActionItem} from 'services/runradar-service.ts';
+import type { RadarResult } from 'services/runradar-service.ts';
 import { randomUUID as nodeRandomUUID } from 'node:crypto';
 
 
