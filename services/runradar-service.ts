@@ -138,46 +138,51 @@ async function runWithAssistant(
 
   const { vectorStoreId } = await uploadToVectorStore(files);
 
-  // 1) Thread with user's prompt
-  const thread = await client.beta.threads.create({
-    messages: [{ role: 'user', content: prompt }],
+  // 1) Create an empty thread
+  const thread = await client.beta.threads.create();
+  const thread_id: string = thread.id;
+
+  // 2) Thread with user's prompt
+  await client.beta.threads.messages.create({
+    thread_id,
+    role: 'user',
+    content: prompt,
   });
 
-  // 2) Start a run
-  const run = await client.beta.threads.runs.create(thread.id, {
+  // 3) Start the run (use explicit object signature)
+  const run = await client.beta.threads.runs.create({
+    thread_id,
     assistant_id: assistantId,
     ...(vectorStoreId
       ? {
-          // If you use the File Search tool configured on the assistant,
-          // some SDK versions need the tool association via vector store IDs.
-          // Adjust to your assistant's tool config if needed.
-          additional_instructions: '',
+          tool_resources: {
+            file_search: { vector_store_ids: [vectorStoreId] },
+          },
         }
       : {}),
   });
+  const run_id: string = run.id;
 
-  // 3) Poll until completed (simple polling loop)
-  let status = run.status as string;
+  // 4) Poll until completed (explicit object signature)
   const start = Date.now();
-  const timeoutMs = 90_000; // 90s guard
+  const timeoutMs = 90_000;
 
-  while (status !== 'completed') {
-    // Avoid hammering the API
-    await new Promise((r) => setTimeout(r, 1200));
-    const current = await client.beta.threads.runs.retrieve(thread.id, run.id);
-    status = current.status as string;
-
-    if (status === 'failed' || status === 'cancelled' || status === 'expired') {
-      throw new Error(`Assistant run ended with status=${status}`);
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const current = await client.beta.threads.runs.retrieve({ thread_id, run_id });
+    if (current.status === 'completed') break;
+    if (current.status === 'failed' || current.status === 'cancelled' || current.status === 'expired') {
+      throw new Error(`Assistant run ended with status=${current.status}`);
     }
     if (Date.now() - start > timeoutMs) {
       throw new Error('Assistant run timed out');
     }
+    await new Promise(r => setTimeout(r, 1200));
   }
 
-  // 4) Retrieve the final assistant message(s)
-  const list = await client.beta.threads.messages.list(thread.id, { limit: 10 });
-  // Merge all assistant message text parts into one string
+  // 5) Fetch assistant messages (explicit object signature)
+  const list = await client.beta.threads.messages.list({ thread_id, limit: 10 });
+
   const rawText = (list?.data ?? [])
     .filter((m: any) => m.role === 'assistant')
     .map((m: any) =>
@@ -189,13 +194,8 @@ async function runWithAssistant(
     .join('\n\n')
     .trim();
 
-  // Try to extract a JSON block if present, else fallback to raw text
   const normalized = normalizeToRadarResult(rawText);
-
-  return {
-    ...normalized,
-    rawText,
-  };
+  return { ...normalized, rawText };
 }
 
 // ----------------------
