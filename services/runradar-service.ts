@@ -1,7 +1,15 @@
 // services/runradar-service.ts
 // ESM-safe, Vercel-ready. No `require()` anywhere.
 
+
 import OpenAI from 'openai';
+
+// TEMP: verify SDK version in Vercel
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import openaiPkg from 'openai/package.json' assert { type: 'json' };
+console.log('OpenAI SDK version at runtime:', openaiPkg.version);
+
 
 // ----------------------
 // Types your API expects
