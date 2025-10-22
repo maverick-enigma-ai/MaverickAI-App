@@ -2,8 +2,8 @@
 // ESM-safe, Vercel-ready. No `require()` anywhere.
 
 
-//import OpenAI from 'openai';
-import OpenAI from 'ai';
+import OpenAI from 'openai';
+//import OpenAI from 'ai';
 
 // TEMP: verify SDK version in Vercel
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
