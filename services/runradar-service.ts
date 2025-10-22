@@ -133,6 +133,9 @@ async function uploadToVectorStore(
 // Assistants (beta) path
 // ----------------------
 
+// ----------------------
+// Assistants (beta) path
+// ----------------------
 async function runWithAssistant(
   prompt: string,
   files: ServerAttachment[] | undefined | null
@@ -141,36 +144,35 @@ async function runWithAssistant(
   const assistantId = process.env.OPENAI_ASSISTANT_ID;
   if (!assistantId) return runWithChat(prompt);
 
+  // Optional file context
   const { vectorStoreId } = await uploadToVectorStore(files);
 
-  // 1) Create an empty thread
+  // 1) Create thread
   const thread = await client.beta.threads.create();
   const thread_id: string = thread.id;
 
-  // 2) Add user's message — POSITIONAL
-  await client.beta.threads.messages.create(
+  // 2) Add user message (object-form args)
+  await client.beta.threads.messages.create({
     thread_id,
-    { role: 'user', content: prompt }
-  );
+    role: 'user',
+    content: prompt,
+  });
 
-  // 3) Start the run — POSITIONAL
-  const run = await client.beta.threads.runs.create(
+  // 3) Start run (object-form args)
+  const run = await client.beta.threads.runs.create({
     thread_id,
-    {
-      assistant_id: assistantId,
-      ...(vectorStoreId
-        ? { tool_resources: { file_search: { vector_store_ids: [vectorStoreId] } } }
-        : {}),
-    }
-  );
+    assistant_id: assistantId,
+    ...(vectorStoreId
+      ? { tool_resources: { file_search: { vector_store_ids: [vectorStoreId] } } }
+      : {}),
+  });
   const run_id: string = run.id;
 
-  // 4) Poll — POSITIONAL + guards
-  const timeoutMs = 90_000;
+  // 4) Poll (object-form args)
+  const timeoutMs = Number(process.env.RADAR_TIMEOUT_MS ?? 120_000);
   const t0 = Date.now();
-  // eslint-disable-next-line no-constant-condition
   while (true) {
-    const current = await client.beta.threads.runs.retrieve(thread_id, run_id);
+    const current = await client.beta.threads.runs.retrieve({ thread_id, run_id });
     if (current.status === 'completed') break;
     if (['failed', 'cancelled', 'expired'].includes(current.status)) {
       throw new Error(`Assistant run ended with status=${current.status}`);
@@ -179,16 +181,15 @@ async function runWithAssistant(
     await new Promise(r => setTimeout(r, 1200));
   }
 
-  // 5) Read assistant messages — POSITIONAL
-  const list = await client.beta.threads.messages.list(thread_id, { limit: 10 });
+  // 5) Read assistant messages (object-form args)
+  const list = await client.beta.threads.messages.list({ thread_id, order: 'desc', limit: 10 });
 
   const rawText = (list?.data ?? [])
     .filter((m: any) => m.role === 'assistant')
-    .map((m: any) =>
+    .flatMap((m: any) =>
       (m.content ?? [])
         .filter((c: any) => c.type === 'text' && c.text?.value)
         .map((c: any) => c.text.value)
-        .join('\n')
     )
     .join('\n\n')
     .trim();
