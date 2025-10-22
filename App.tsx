@@ -472,7 +472,7 @@ const [enabledScenarios, setEnabledScenarios] = useState<ScenarioCategory[]>([
           files.map(async (file) => {
             const buffer = await file.arrayBuffer();
             const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-            return { name: file.name, type: file.type, size: file.size, data: base64 };
+            return { name: file.name, type: file.type, base64 };
             })
         );
         body.files = filesData;
