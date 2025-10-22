@@ -166,12 +166,19 @@ async function _runsRetrieve(client: any, thread_id: string, run_id: string) {
 }
 
 async function _messagesList(client: any, thread_id: string, opts: any) {
-  try { return await client.beta.threads.messages.list({ thread_id, ...opts }); }
-  catch (e) {
-    if (_isPathParamError(e)) return await client.beta.threads.messages.list(thread_id, opts);
-    throw e;
+  // Try the SDK’s current (v6.5.x) positional signature first.
+  try {
+    return await client.beta.threads.messages.list(thread_id, opts ?? {});
+  } catch (e) {
+    // Fallback to the older object-form signature.
+    try {
+      return await client.beta.threads.messages.list({ thread_id, ...(opts ?? {}) });
+    } catch {
+      throw e;
+    }
   }
 }
+
 
 // ----------------------
 // Assistants (beta) path
