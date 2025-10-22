@@ -3,6 +3,8 @@
 
 
 import OpenAI from 'openai';
+import 'dotenv/config';
+
 //import OpenAI from 'ai';
 
 // TEMP: verify SDK version in Vercel
